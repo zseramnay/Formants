@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Regenerate spectral envelope overview images, grouped by family
+# Spectral envelope images — one image per instrument (not grouped)
 # + Build HTML + DOCX summary pages
 import os
 import numpy as np
@@ -147,102 +147,149 @@ FP_KEY_MAP = {
     'Contrebasse': 'Contrabass', 'Vln ens.': 'Violin_Ensemble', 'Alt ens.': 'Viola_Ensemble', 'Vcl ens.': 'Violoncello_Ensemble', 'Cb ens.': 'Contrabass_Ensemble',
 }
 
-summaries = []
+
+def make_slug(family_name, display):
+    """Build a safe filename slug from family + instrument name."""
+    chars = {'û': 'u', 'é': 'e', 'è': 'e', 'ê': 'e', 'à': 'a', 'ô': 'o', ' ': '_', '.': '', "'": ''}
+    s = (family_name + '_' + display).lower()
+    for k, v in chars.items():
+        s = s.replace(k, v)
+    return s
+
+
+def render_instrument(ax, display, samples, color, fp_key):
+    """Draw one instrument's envelope on ax. Returns (n_samples, fp_median, f2_std)."""
+    envs = [s['envelope'] for s in samples]
+    mean_env = np.mean(envs, axis=0)
+    mask = freqs <= 5500
+    ax.plot(freqs[mask], mean_env[mask], color=color, linewidth=2)
+    if len(envs) > 3:
+        std_env = np.std(envs, axis=0)
+        ax.fill_between(freqs[mask], (mean_env - std_env)[mask], (mean_env + std_env)[mask], color=color, alpha=0.1)
+    for fi in range(min(4, max(len(s['formants']) for s in samples))):
+        fi_freqs = sorted([s['formants'][fi][0] for s in samples if fi < len(s['formants'])])
+        if fi_freqs:
+            fval = fi_freqs[len(fi_freqs) // 2]
+            bin_idx = min(int(fval / FREQ_RES), len(mean_env) - 1)
+            ax.plot(fval, mean_env[bin_idx], 'v', color='#D32F2F', markersize=6, zorder=5)
+            yo = 3 if fi % 2 == 0 else -5
+            ax.annotate(f'F{fi + 1}\n{fval:.0f}', (fval, mean_env[bin_idx] + yo),
+                        fontsize=6, ha='center', color='#D32F2F', fontweight='bold')
+    fp_band = FP_BANDS.get(fp_key, (600, 1400))
+    fps = [compute_band_centroid(s['envelope'], fp_band[0], fp_band[1]) for s in samples]
+    fps = [f for f in fps if f]
+    fp_med = None
+    if fps:
+        fp_med = np.median(fps)
+        fp_std_val = np.std(fps)
+        ax.axvline(fp_med, color='#2E7D32', linewidth=2, alpha=0.7)
+        ax.text(fp_med, mean_env[min(int(fp_med / FREQ_RES), len(mean_env) - 1)] + 3,
+                f'Fp={fp_med:.0f}\n(σ={fp_std_val:.0f})', fontsize=7, ha='center',
+                color='#2E7D32', fontweight='bold',
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8, edgecolor='#2E7D32'))
+    f2_all = [s['formants'][1][0] for s in samples if len(s['formants']) > 1]
+    f2_std = np.std(f2_all) if f2_all else 0
+    ax.set_title(f'{display}  —  n={len(samples)}  σ(F2)={f2_std:.0f} Hz',
+                 fontsize=11, fontweight='bold', color=color)
+    ax.set_xlabel('Hz', fontsize=9)
+    ax.set_ylabel('dB', fontsize=9)
+    ax.grid(True, alpha=0.2)
+    ax.set_xlim(50, 5500)
+    ax.tick_params(labelsize=8)
+    return len(samples), fp_med, f2_std
+
+
+# ─── Generate one image per instrument ───────────────────────────────────────
+# summaries_by_family: {family_name: [{'display', 'path', 'rel', 'n', 'fp', 'f2_std'}, ...]}
+summaries_by_family = {}
+
 for family_name, instruments in FAMILIES.items():
-    n_inst = len(instruments)
-    # ncols = 4 if n_inst > 6 else 3
-    ncols = 2
-    nrows = (n_inst + ncols - 1) // ncols
-    fig, axes = plt.subplots(nrows, ncols, figsize=(ncols * 6.5, nrows * 4.5))
-    axes_flat = axes.flatten() if n_inst > 1 else [axes]
     color = FAMILY_COLORS[family_name]
-    loaded_count = 0
-    sample_total = 0
-    for idx, (display, directory, fname, techs) in enumerate(instruments):
-        ax = axes_flat[idx]
+    family_items = []
+    for display, directory, fname, techs in instruments:
+        slug = make_slug(family_name, display)
         filepath = os.path.join(directory, fname)
+
+        fig, ax = plt.subplots(figsize=(9.6, 4.8), dpi=150)
+
         if not os.path.exists(filepath):
-            ax.text(0.5, 0.5, f'{display}\nFICHIER MANQUANT', ha='center', va='center', transform=ax.transAxes)
-            continue
-        samples = load_ordinario(filepath, techs)
-        if not samples:
-            ax.text(0.5, 0.5, f'{display}\nPAS DE DONNÉES', ha='center', va='center', transform=ax.transAxes)
-            continue
-        loaded_count += 1
-        sample_total += len(samples)
-        envs = [s['envelope'] for s in samples]
-        mean_env = np.mean(envs, axis=0)
-        mask = freqs <= 5500
-        ax.plot(freqs[mask], mean_env[mask], color=color, linewidth=2)
-        if len(envs) > 3:
-            std_env = np.std(envs, axis=0)
-            ax.fill_between(freqs[mask], (mean_env - std_env)[mask], (mean_env + std_env)[mask], color=color, alpha=0.1)
-        for fi in range(min(4, max(len(s['formants']) for s in samples))):
-            fi_freqs = sorted([s['formants'][fi][0] for s in samples if fi < len(s['formants'])])
-            if fi_freqs:
-                fval = fi_freqs[len(fi_freqs) // 2]
-                bin_idx = min(int(fval / FREQ_RES), len(mean_env) - 1)
-                ax.plot(fval, mean_env[bin_idx], 'v', color='#D32F2F', markersize=6, zorder=5)
-                yo = 3 if fi % 2 == 0 else -5
-                ax.annotate(f'F{fi + 1}\n{fval:.0f}', (fval, mean_env[bin_idx] + yo), fontsize=6, ha='center', color='#D32F2F', fontweight='bold')
-        fp_key = FP_KEY_MAP.get(display)
-        fp_band = FP_BANDS.get(fp_key, (600, 1400))
-        fps = [compute_band_centroid(s['envelope'], fp_band[0], fp_band[1]) for s in samples]
-        fps = [f for f in fps if f]
-        if fps:
-            fp_med = np.median(fps)
-            fp_std = np.std(fps)
-            ax.axvline(fp_med, color='#2E7D32', linewidth=2, alpha=0.7)
-            ax.text(fp_med, mean_env[min(int(fp_med / FREQ_RES), len(mean_env) - 1)] + 3, f'Fp={fp_med:.0f}\n(σ={fp_std:.0f})', fontsize=7, ha='center', color='#2E7D32', fontweight='bold', bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8, edgecolor='#2E7D32'))
-        f2_all = [s['formants'][1][0] for s in samples if len(s['formants']) > 1]
-        f2_std = np.std(f2_all) if f2_all else 0
-        ax.set_title(f'{display}\nn={len(samples)} σ(F2)={f2_std:.0f} Hz', fontsize=10, fontweight='bold', color=color)
-        ax.set_xlabel('Hz', fontsize=8)
-        ax.set_ylabel('dB', fontsize=8)
-        ax.grid(True, alpha=0.2)
-        ax.set_xlim(50, 5500)
-        ax.tick_params(labelsize=7)
-    for idx in range(len(instruments), len(axes_flat)):
-        axes_flat[idx].set_visible(False)
-    plt.suptitle(f'{family_name} — Enveloppes spectrales moyennes (ordinario)\n▼ F1–F4 (rouge) │ Fp centroïde (vert) │ ±1σ (bande)', fontsize=14, fontweight='bold', y=1.0)
-    plt.tight_layout(rect=[0, 0, 1, 0.97])
-    outpath = os.path.join(OUT, f'enveloppes_{family_name.lower()}.png')
-    fig.savefig(outpath, dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    summaries.append({'family': family_name, 'path': outpath, 'rel': f'media/enveloppes_{family_name.lower()}.png', 'loaded_count': loaded_count, 'instrument_count': len(instruments), 'sample_total': sample_total})
-    print(f' ✓ {outpath} ({len(instruments)} instruments)')
+            ax.text(0.5, 0.5, f'{display}\nFICHIER MANQUANT', ha='center', va='center',
+                    transform=ax.transAxes, fontsize=14, color='red')
+            n, fp_med, f2_std = 0, None, 0
+        else:
+            samples = load_ordinario(filepath, techs)
+            if not samples:
+                ax.text(0.5, 0.5, f'{display}\nPAS DE DONNÉES', ha='center', va='center',
+                        transform=ax.transAxes, fontsize=14, color='orange')
+                n, fp_med, f2_std = 0, None, 0
+            else:
+                fp_key = FP_KEY_MAP.get(display)
+                n, fp_med, f2_std = render_instrument(ax, display, samples, color, fp_key)
+
+        fig.suptitle(
+            f'{family_name} — Enveloppe spectrale moyenne (ordinario)\n'
+            '▼ F1–F4 (rouge) │ Fp centroïde (vert) │ ±1σ (bande)',
+            fontsize=12, fontweight='bold', y=1.01
+        )
+        plt.tight_layout()
+        outpath = os.path.join(OUT, f'env_{slug}.png')
+        fig.savefig(outpath, dpi=150, bbox_inches='tight')
+        plt.close(fig)
+
+        rel = f'media/env_{slug}.png'
+        family_items.append({'display': display, 'path': outpath, 'rel': rel,
+                              'n': n, 'fp': fp_med, 'f2_std': f2_std})
+        print(f'  ✓ [{family_name}] {display:<20s}  n={n}  → {rel}')
+
+    summaries_by_family[family_name] = family_items
 
 
+# ─── HTML ─────────────────────────────────────────────────────────────────────
 def build_html(output_path):
-    parts = []
     intros = {
         'Bois': "Les bois montrent la plus grande diversité de profils d'enveloppe, du piccolo à la flûte contrebasse.",
         'Cuivres': "Les cuivres présentent des enveloppes plus concentrées, avec des zones d'énergie très lisibles dans le medium.",
         'Cordes': "Les cordes se distinguent par des plateaux spectraux et des résonances larges ; le repère Fp y est particulièrement utile.",
     }
-    for s in summaries:
-        parts.append(f'''<h2>{s['family']}</h2>
-<p>{intros.get(s['family'], '')}</p>
-<p><strong>Instruments chargés :</strong> {s['loaded_count']} / {s['instrument_count']} — <strong>Échantillons :</strong> {s['sample_total']}</p>
-<img src="{s['rel']}" alt="Enveloppes {s['family']}"/>''')
+    family_colors_hex = {'Bois': '#1565C0', 'Cuivres': '#C62828', 'Cordes': '#2E7D32'}
+
+    parts = []
+    for family_name, items in summaries_by_family.items():
+        fc = family_colors_hex[family_name]
+        parts.append(f'<h2 style="color:{fc}; border-left:4px solid {fc}; padding-left:12px;">'
+                     f'{family_name}</h2>')
+        parts.append(f'<p>{intros.get(family_name, "")}</p>')
+        for item in items:
+            fp_str = f'Fp = {item["fp"]:.0f} Hz' if item['fp'] else ''
+            parts.append(f'''<div class="instrument-card">
+  <h3>{item["display"]}</h3>
+  <img src="{item["rel"]}" alt="{item["display"]}"/>
+  <p class="stats">n={item["n"]} échantillons &nbsp;|&nbsp; σ(F2)={item["f2_std"]:.0f} Hz
+  {'&nbsp;|&nbsp; <span class="fp">' + fp_str + '</span>' if fp_str else ''}</p>
+</div>''')
+
     html = f'''<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Référence Formantique — Enveloppes spectrales</title>
+<title>Référence Formantique — Enveloppes spectrales individuelles</title>
 <style>
 body {{ font-family: 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 20px; background: #fafafa; color: #333; }}
 h1 {{ color: #1a237e; border-bottom: 3px solid #1a237e; padding-bottom: 10px; }}
-h2 {{ color: #283593; margin-top: 40px; border-left: 4px solid #283593; padding-left: 12px; }}
+h2 {{ margin-top: 40px; }}
+h3 {{ color: #444; margin: 8px 0 4px; }}
+.instrument-card {{ background: white; border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }}
+.instrument-card img {{ max-width: 100%; border: 1px solid #eee; border-radius: 4px; }}
+.stats {{ font-size: 0.88em; color: #555; margin-top: 6px; }}
+.fp {{ color: #2e7d32; font-weight: bold; }}
 .section-intro {{ background: #e8eaf6; padding: 15px; border-radius: 6px; margin: 15px 0; }}
-img {{ max-width: 100%; border: 1px solid #ddd; border-radius: 4px; margin: 15px 0; }}
 .source-note {{ font-size: 0.85em; color: #888; margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; }}
 </style>
 </head>
 <body>
-<h1>VII. Enveloppes spectrales par famille</h1>
+<h1>VII. Enveloppes spectrales par famille — images individuelles</h1>
 <div class="section-intro">
-<p>Ces planches regroupent les enveloppes spectrales moyennes calculées directement à partir des données specenv brutes. Les marqueurs rouges indiquent F1–F4, la ligne verte indique Fp et la bande colorée représente ±1σ.</p>
+<p>Chaque instrument est représenté par une image individuelle. Les marqueurs rouges indiquent F1–F4, la ligne verte indique Fp et la bande colorée représente ±1σ.</p>
 </div>
 {''.join(parts)}
 <p class="source-note">Sources : exports specenv bruts SOL2020 + Yan_Adds-Divers.</p>
@@ -252,6 +299,7 @@ img {{ max-width: 100%; border: 1px solid #ddd; border-radius: 4px; margin: 15px
         f.write(html)
 
 
+# ─── DOCX ─────────────────────────────────────────────────────────────────────
 def build_docx(output_path):
     doc = Document()
     sec = doc.sections[0]
@@ -261,42 +309,71 @@ def build_docx(output_path):
     sec.right_margin = Cm(2)
     doc.styles['Normal'].font.name = 'Calibri'
     doc.styles['Normal'].font.size = Pt(10)
+
     p = doc.add_paragraph()
     p.style = doc.styles['Title']
-    r = p.add_run('VII. Enveloppes spectrales par famille')
+    r = p.add_run('VII. Enveloppes spectrales par famille — images individuelles')
     r.font.color.rgb = RGBColor(26, 35, 126)
-    for txt in [
+
+    for bullet in [
         'Enveloppes spectrales moyennes calculées à partir des données specenv brutes.',
         'Marqueurs rouges : F1–F4 ; ligne verte : Fp ; bande : ±1σ.',
     ]:
         para = doc.add_paragraph(style='List Bullet')
-        para.add_run(txt)
+        para.add_run(bullet)
+
     intros = {
         'Bois': "Les bois montrent la plus grande diversité de profils d'enveloppe, du piccolo à la flûte contrebasse.",
         'Cuivres': "Les cuivres présentent des enveloppes plus concentrées, avec des zones d'énergie très lisibles dans le medium.",
         'Cordes': "Les cordes se distinguent par des plateaux spectraux et des résonances larges ; le repère Fp y est particulièrement utile.",
     }
-    for s in summaries:
-        p = doc.add_paragraph()
-        p.style = doc.styles['Heading 1']
-        p.add_run(s['family'])
-        doc.add_paragraph(intros.get(s['family'], ''))
-        doc.add_paragraph(f"Instruments chargés : {s['loaded_count']} / {s['instrument_count']} — Échantillons : {s['sample_total']}")
-        if os.path.exists(s['path']):
-            p_img = doc.add_paragraph()
-            p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            p_img.add_run().add_picture(s['path'], width=Inches(6.8))
-    p = doc.add_paragraph()
-    r = p.add_run('Sources : exports specenv bruts SOL2020 + Yan_Adds-Divers.')
-    r.font.size = Pt(9)
+    family_rgb = {'Bois': (21, 101, 192), 'Cuivres': (198, 40, 40), 'Cordes': (46, 125, 50)}
+
+    for family_name, items in summaries_by_family.items():
+        rgb = family_rgb[family_name]
+        h = doc.add_paragraph()
+        h.style = doc.styles['Heading 1']
+        r = h.add_run(family_name)
+        r.font.color.rgb = RGBColor(*rgb)
+
+        doc.add_paragraph(intros.get(family_name, ''))
+
+        for item in items:
+            h2 = doc.add_paragraph()
+            h2.style = doc.styles['Heading 2']
+            r2 = h2.add_run(item['display'])
+            r2.font.color.rgb = RGBColor(*rgb)
+
+            if item['path'] and os.path.exists(item['path']):
+                p_img = doc.add_paragraph()
+                p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p_img.add_run().add_picture(item['path'], width=Inches(6.2))
+
+            stats = f"n={item['n']} échantillons  |  σ(F2)={item['f2_std']:.0f} Hz"
+            if item['fp']:
+                stats += f"  |  Fp = {item['fp']:.0f} Hz"
+            p_stats = doc.add_paragraph()
+            r_stats = p_stats.add_run(stats)
+            r_stats.font.size = Pt(9)
+            r_stats.italic = True
+
+            doc.add_paragraph()
+
+    p_src = doc.add_paragraph()
+    r_src = p_src.add_run('Sources : exports specenv bruts SOL2020 + Yan_Adds-Divers.')
+    r_src.font.size = Pt(9)
+
     doc.save(output_path)
 
 
-html_path = os.path.join(OUT_DIR, 'section_enveloppes.html')
-docx_path = os.path.join(OUT_DIR, 'section_enveloppes.docx')
+# ─── Run ──────────────────────────────────────────────────────────────────────
+html_path = os.path.join(OUT_DIR, 'section_enveloppes_individuelles.html')
+docx_path = os.path.join(OUT_DIR, 'section_enveloppes_individuelles.docx')
 build_html(html_path)
 build_docx(docx_path)
+
+total_images = sum(len(v) for v in summaries_by_family.values())
 print(f"\n{'=' * 60}")
 print(f'HTML: {html_path}')
 print(f'DOCX: {docx_path}')
-print(f'Images: {len(summaries)}')
+print(f'Images individuelles générées : {total_images}')
