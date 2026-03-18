@@ -179,7 +179,14 @@ def make_convergence_matrix(instruments_dict, filename, title, threshold=80):
         for j in range(n):
             delta_matrix[i, j] = abs(f1s[i] - f1s[j])
 
-    fig, ax = plt.subplots(figsize=(max(10, n*0.55), max(8, n*0.5)), dpi=100)
+    # Taille de cellule adaptée au nombre d'instruments
+    # Pour n~20 : 0.65 cm/cellule ; pour n~40 : 0.55 cm/cellule
+    cell_size = 0.65 if n <= 22 else 0.55
+    fig_w = max(12, n * cell_size + 3)   # +3 pour colorbar + labels Y
+    fig_h = max(10, n * cell_size + 2)   # +2 pour labels X rotatés + titre
+    dpi   = 200                           # haute résolution pour zoom sans pixelisation
+
+    fig, ax = plt.subplots(figsize=(fig_w, fig_h), dpi=dpi)
 
     # Colormap : vert = convergence forte, blanc = neutre, rouge = divergence
     from matplotlib.colors import LinearSegmentedColormap
@@ -189,27 +196,31 @@ def make_convergence_matrix(instruments_dict, filename, title, threshold=80):
     vmax = 500
     im = ax.imshow(np.clip(delta_matrix, 0, vmax), cmap=cmap, aspect='auto', vmin=0, vmax=vmax)
 
+    # Taille de police adaptée
+    tick_fs  = 8  if n <= 22 else 6.5
+    cell_fs  = 7  if n <= 22 else 5.5
+
     ax.set_xticks(range(n))
     ax.set_yticks(range(n))
-    ax.set_xticklabels(names, rotation=60, ha='right', fontsize=7)
-    ax.set_yticklabels(names, fontsize=7)
+    ax.set_xticklabels(names, rotation=55, ha='right', fontsize=tick_fs)
+    ax.set_yticklabels(names, fontsize=tick_fs)
 
-    # Valeurs dans les cellules (seulement si convergence notable)
+    # Valeurs dans les cellules
     for i in range(n):
         for j in range(n):
             if i != j:
                 delta = int(delta_matrix[i, j])
                 color = 'white' if delta < threshold else ('#333' if delta < 300 else '#aaa')
-                fontsize = 7 if n < 25 else 5
                 ax.text(j, i, str(delta), ha='center', va='center',
-                        fontsize=fontsize, color=color, fontweight='bold' if delta < threshold else 'normal')
+                        fontsize=cell_fs, color=color,
+                        fontweight='bold' if delta < threshold else 'normal')
 
     plt.colorbar(im, ax=ax, label='Δ F1 (Hz)', shrink=0.8)
-    ax.set_title(title, fontsize=11, fontweight='bold', pad=12)
+    ax.set_title(title, fontsize=11, fontweight='bold', pad=14)
     plt.tight_layout()
 
     out = os.path.join(OUT_IMG, f"{filename}.png")
-    fig.savefig(out, dpi=100, bbox_inches='tight', facecolor='white')
+    fig.savefig(out, dpi=dpi, bbox_inches='tight', facecolor='white')
     plt.close(fig)
     return out
 
