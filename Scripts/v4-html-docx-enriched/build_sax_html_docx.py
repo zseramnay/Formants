@@ -57,11 +57,11 @@ ANALYSIS = {
 
 DOUBLURES = {
     'Saxophone alto': [
-        {'instr':'Basson',       'f1_a':'398','f1_b':'502','delta':104,'quality':'Bonne','note':'Zone /o/ partagée, couleur boisée chaude'},
-        {'instr':'Cor anglais',  'f1_a':'398','f1_b':'452','delta':54, 'quality':'Excellente','note':'Proche du cluster /o/, bois graves expressifs'},
-        {'instr':'Cor',          'f1_a':'398','f1_b':'457','delta':59, 'quality':'Excellente','note':'Zone /o/ — bois-cuivres classique'},
-        {'instr':'Violoncelle',  'f1_a':'398','f1_b':'499','delta':101,'quality':'Bonne','note':'Zone /o/–/å/ — chant lyrique'},
-        {'instr':'Clarinette Sib','f1_a':'398','f1_b':'1 016','delta':618,'quality':'Complémentaire','note':'Complémentarité spectrale grave-aigu'},
+        {'instr':'Basson',       'f1_a':'398','f1_b':'502','delta':104,'quality':'Bonne','rapport':'Unisson','note':'Zone /o/ partagée, couleur boisée chaude'},
+        {'instr':'Cor anglais',  'f1_a':'398','f1_b':'452','delta':54, 'quality':'Excellente','rapport':'Unisson','note':'Proche du cluster /o/, bois graves expressifs'},
+        {'instr':'Cor',          'f1_a':'398','f1_b':'457','delta':59, 'quality':'Excellente','rapport':'Unisson','note':'Zone /o/ — bois-cuivres classique'},
+        {'instr':'Violoncelle',  'f1_a':'398','f1_b':'499','delta':101,'quality':'Bonne','rapport':'Unisson','note':'Zone /o/–/å/ — chant lyrique'},
+        {'instr':'Clarinette Sib','f1_a':'398','f1_b':'1 016','delta':618,'quality':'Complémentaire','rapport':'Octave','note':'Clarinette Sib sonne une octave au-dessus'},
     ],
 }
 
@@ -207,21 +207,7 @@ def build_docx(output_path):
         dbl_items = DOUBLURES.get(info['display'], [])
         if dbl_items:
             add_heading(doc, "Doublures recommandées", level=3, color=(245, 127, 23))
-            table = doc.add_table(rows=1, cols=5)
-            table.style = 'Table Grid'
-            for idx, h in enumerate(['Instrument associé', 'F1', 'F1 associé', 'Écart', 'Qualité']):
-                set_cell_text(table.rows[0].cells[idx], h, bold=True, size=9, color=(255, 255, 255))
-                set_cell_shading(table.rows[0].cells[idx], 'F57F17')
-            for it in dbl_items:
-                row = table.add_row().cells
-                delta = it.get('delta', '')
-                delta_str = f"Δ={delta} Hz" if isinstance(delta, (int, float)) else str(delta)
-                for idx, v in enumerate([it.get('instr', ''), it.get('f1_a', '—'),
-                                          it.get('f1_b', '—'), delta_str, it.get('quality', '')]):
-                    set_cell_text(row[idx], v, bold=(idx == 0), size=9)
-            for row_obj in table.rows:
-                for cell, w in zip(row_obj.cells, [3.5, 1.8, 1.8, 2.0, 3.0]):
-                    cell.width = Cm(w)
+            doublures_table_docx(doc, dbl_items)
 
     doc.save(output_path)
     print(f"  ✓ DOCX: {output_path}")

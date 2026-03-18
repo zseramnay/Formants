@@ -293,7 +293,9 @@ def ref_table_html(rows_data):
 # ─── Section doublures HTML ──────────────────────────────────
 def doublures_html(items):
     """
-    items : liste de dicts avec clés : instr, f1_a, f1_b, delta, note
+    items : liste de dicts avec clés :
+      instr, f1_a, f1_b, delta, quality, rapport, note
+      rapport : 'Unisson' | 'Octave' | '2 octaves' | 'Complémentaire' | etc.
     """
     if not items:
         return ""
@@ -305,6 +307,15 @@ def doublures_html(items):
         else:
             delta_str = str(delta)
         quality = it.get('quality', '')
+        rapport = it.get('rapport', '—')
+        # Colorier le rapport
+        rapport_color = {
+            'Unisson':       '#1B5E20',
+            'Octave':        '#1565C0',
+            '2 octaves':     '#4A148C',
+            'Complémentaire':'#E65100',
+        }.get(rapport, '#555')
+        rapport_html = f'<span style="color:{rapport_color};font-weight:bold;">{rapport}</span>'
         rows += (
             f'<tr>'
             f'<td><b>{it.get("instr","")}</b></td>'
@@ -312,6 +323,7 @@ def doublures_html(items):
             f'<td>{it.get("f1_b","—")}</td>'
             f'<td>{delta_str}</td>'
             f'<td>{quality}</td>'
+            f'<td>{rapport_html}</td>'
             f'<td>{it.get("note","")}</td>'
             f'</tr>'
         )
@@ -321,7 +333,8 @@ def doublures_html(items):
         '<table class="doublures-table">'
         '<tr class="header">'
         '<th>Instrument associé</th><th>F1 (instrument)</th>'
-        '<th>F1 (associé)</th><th>Écart</th><th>Qualité</th><th>Commentaire</th>'
+        '<th>F1 (associé)</th><th>Écart</th><th>Qualité</th>'
+        '<th>Rapport de tessiture</th><th>Commentaire</th>'
         '</tr>'
         + rows +
         '</table></div>'
@@ -491,6 +504,33 @@ def ref_table_docx(doc, rows_data):
     for row_obj in table.rows:
         for cell, width in zip(row_obj.cells, widths_cm):
             cell.width = Cm(width)
+
+def doublures_table_docx(doc, dbl_items, header_color='F57F17'):
+    """
+    Rend un tableau de doublures en DOCX avec colonne Rapport de tessiture.
+    dbl_items : même format que doublures_html (clé 'rapport' optionnelle).
+    """
+    if not dbl_items:
+        return
+    table = doc.add_table(rows=1, cols=6)
+    table.style = 'Table Grid'
+    headers = ['Instrument associé', 'F1', 'F1 associé', 'Écart', 'Qualité', 'Rapport tessiture']
+    hdr = table.rows[0].cells
+    for idx, h in enumerate(headers):
+        set_cell_text(hdr[idx], h, bold=True, size=9, color=(255, 255, 255))
+        set_cell_shading(hdr[idx], header_color)
+    for it in dbl_items:
+        row = table.add_row().cells
+        delta = it.get('delta', '')
+        delta_str = f"Δ={delta} Hz" if isinstance(delta, (int, float)) else str(delta)
+        rapport = it.get('rapport', '—')
+        vals = [it.get('instr', ''), it.get('f1_a', '—'), it.get('f1_b', '—'),
+                delta_str, it.get('quality', ''), rapport]
+        for idx, v in enumerate(vals):
+            set_cell_text(row[idx], v, bold=(idx == 0), size=9)
+    for row_obj in table.rows:
+        for cell, w in zip(row_obj.cells, [3.2, 1.6, 1.6, 1.8, 2.5, 2.5]):
+            cell.width = Cm(w)
 
 def add_heading(doc, text, level=1, color=None):
     style_name = f'Heading {level}' if level <= 4 else 'Normal'

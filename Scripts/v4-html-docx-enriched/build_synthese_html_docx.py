@@ -292,27 +292,27 @@ def rel(img):
 # DONNÉES DOUBLURES VÉRIFIÉES (classées par Δ)
 # ═══════════════════════════════════════════════════════════
 DOUBLURES_VERIFIEES = [
-    # (inst_a, f1_a, inst_b, f1_b, delta, qualité, zone, note)
-    ('Basson',        502, 'Violoncelle',      499, 3,   'Quasi-parfaite ★', '/o/', 'Timbres frères Meyer — Δ minimal du corpus'),
-    ('Trombone',      491, 'Violoncelle',      499, 8,   'Quasi-parfaite',   '/o/', 'Cluster /o/ — fondation orchestre'),
-    ('Trombone',      491, 'Tuba contrebasse', 471, 20,  'Quasi-parfaite',   '/o/', 'Section cuivres graves'),
-    ('Cor',           457, 'Tuba contrebasse', 471, 14,  'Quasi-parfaite',   '/o/', 'Cluster /o/ — cuivres'),
-    ('Cor anglais',   452, 'Cor',              457, 5,   'Quasi-parfaite',   '/o/', 'Cluster /o/ — bois-cuivres'),
-    ('Trombone',      491, 'Basson',           502, 11,  'Quasi-parfaite',   '/o/', 'Cluster /o/'),
-    ('Cor',           457, 'Violoncelle',      499, 42,  'Excellente',       '/o/', 'Fusion bois-cordes classique'),
-    ('Cor anglais',   452, 'Basson',           502, 50,  'Excellente',       '/o/', 'Famille /o/ des bois graves'),
-    ('Cor anglais',   452, 'Violoncelle',      499, 47,  'Excellente',       '/o/', 'Cluster /o/ bois-cordes'),
-    ('Cor',           457, 'Basson',           502, 45,  'Excellente',       '/o/', 'Cluster /o/ — timbres frères'),
-    ('Trb. basse',    894, 'Cl. basse',        909, 15,  'Quasi-parfaite',   '/a/', 'Zone /a/ — puissance grave'),
-    ('Cl. Sib',      1016, 'Cor anglais Fp',  1045, 29,  'Excellente',       '/a/', 'Zone /a/ — Fp convergence'),
-    ('Trombone',      491, 'Cor anglais',      452, 39,  'Excellente',       '/o/', 'Cluster /o/ bois-cuivres'),
-    ('Contrebasson',  226, 'Tuba basse',       249, 23,  'Excellente',       '/u/', 'Fondation grave extrême'),
-    ('Contrebasson',  226, 'Contrebasse',      200, 26,  'Excellente',       '/u/', 'Graves extrêmes bois-cordes'),
-    ('Ens. violons', 1556, 'Hautbois',        1460, 96,  'Excellente',       '/e/', 'Zone /e/ — brillance'),
-    ('Violon Fp',     893, 'Cl. Sib Fp',      1412,519,  'Complémentaire',   '/a/', 'Enrichissement spectral'),
-    ('Hautbois',      743, 'Violon Fp',        893, 150, 'Bonne',            '/å/', 'Zone medium'),
-    ('Flûte Fp',     1535, 'Hautbois',        1460, 75,  'Bonne',            '/e/', 'Zone /e/ partagée'),
-    ('Cor Fp',        738, 'Trompette Fp',    1046, 308, 'Complémentaire',   '/a/', 'Homogénéité cuivres'),
+    # (inst_a, f1_a, inst_b, f1_b, delta, qualité, zone, rapport, note)
+    ('Basson',        502, 'Violoncelle',      499, 3,   'Quasi-parfaite ★', '/o/', 'Unisson',       'Timbres frères Meyer — Δ minimal du corpus'),
+    ('Trombone',      491, 'Violoncelle',      499, 8,   'Quasi-parfaite',   '/o/', 'Unisson',       'Cluster /o/ — fondation orchestre'),
+    ('Trombone',      491, 'Tuba contrebasse', 471, 20,  'Quasi-parfaite',   '/o/', 'Octave',        'Trombone sonne une octave au-dessus'),
+    ('Cor',           457, 'Tuba contrebasse', 471, 14,  'Quasi-parfaite',   '/o/', 'Octave',        'Cor sonne une octave au-dessus'),
+    ('Cor anglais',   452, 'Cor',              457, 5,   'Quasi-parfaite',   '/o/', 'Unisson',       'Cluster /o/ — bois-cuivres'),
+    ('Trombone',      491, 'Basson',           502, 11,  'Quasi-parfaite',   '/o/', 'Unisson',       'Cluster /o/'),
+    ('Cor',           457, 'Violoncelle',      499, 42,  'Excellente',       '/o/', 'Unisson',       'Fusion bois-cordes classique'),
+    ('Cor anglais',   452, 'Basson',           502, 50,  'Excellente',       '/o/', 'Unisson',       'Famille /o/ des bois graves'),
+    ('Cor anglais',   452, 'Violoncelle',      499, 47,  'Excellente',       '/o/', 'Unisson',       'Cluster /o/ bois-cordes'),
+    ('Cor',           457, 'Basson',           502, 45,  'Excellente',       '/o/', 'Unisson',       'Cluster /o/ — timbres frères'),
+    ('Trb. basse',    894, 'Cl. basse',        909, 15,  'Quasi-parfaite',   '/a/', 'Unisson',       'Zone /a/ — puissance grave'),
+    ('Cl. Sib',      1016, 'Cor anglais Fp',  1045, 29,  'Excellente',       '/a/', 'Unisson',       'Zone /a/ — Fp convergence'),
+    ('Trombone',      491, 'Cor anglais',      452, 39,  'Excellente',       '/o/', 'Unisson',       'Cluster /o/ bois-cuivres'),
+    ('Contrebasson',  226, 'Tuba basse',       249, 23,  'Excellente',       '/u/', 'Unisson',       'Fondation grave extrême'),
+    ('Contrebasson',  226, 'Contrebasse',      200, 26,  'Excellente',       '/u/', 'Unisson',       'Graves extrêmes bois-cordes'),
+    ('Ens. violons', 1556, 'Hautbois',        1460, 96,  'Excellente',       '/e/', 'Unisson',       'Zone /e/ — brillance'),
+    ('Violon Fp',     893, 'Cl. Sib Fp',      1412,519,  'Complémentaire',   '/a/', 'Unisson',       'Enrichissement spectral'),
+    ('Hautbois',      743, 'Violon Fp',        893, 150, 'Bonne',            '/å/', 'Unisson',       'Zone medium'),
+    ('Flûte Fp',     1535, 'Hautbois',        1460, 75,  'Bonne',            '/e/', 'Unisson',       'Zone /e/ partagée'),
+    ('Cor Fp',        738, 'Trompette Fp',    1046, 308, 'Complémentaire',   '/a/', 'Unisson',       'Homogénéité cuivres'),
 ]
 
 # ═══════════════════════════════════════════════════════════
@@ -397,11 +397,13 @@ Les cellules vertes correspondent aux doublures acoustiquement justifiées.</p>
     html += '<h2 id="doublures-verifiees">Tableau des Doublures Vérifiées</h2>\n'
     html += '<p>Classées par écart Δ croissant. Toutes les valeurs proviennent des CSV validés (pipeline v22).</p>\n'
     html += '<table class="ref-table">\n'
-    html += '<tr class="header"><th>#</th><th>Instrument A</th><th>F1 A (Hz)</th><th>Instrument B</th><th>F1 B (Hz)</th><th>Δ (Hz)</th><th>Qualité</th><th>Zone</th><th>Note</th></tr>\n'
-    for i, (a, f1a, b, f1b, delta, quality, zone, note) in enumerate(sorted(DOUBLURES_VERIFIEES, key=lambda x: x[4]), 1):
+    html += '<tr class="header"><th>#</th><th>Instrument A</th><th>F1 A (Hz)</th><th>Instrument B</th><th>F1 B (Hz)</th><th>Δ (Hz)</th><th>Qualité</th><th>Zone</th><th>Rapport tessiture</th><th>Note</th></tr>\n'
+    for i, (a, f1a, b, f1b, delta, quality, zone, rapport, note) in enumerate(sorted(DOUBLURES_VERIFIEES, key=lambda x: x[4]), 1):
         bg = ' style="background-color:#d5f5e3;"' if delta <= 30 else (
              ' style="background-color:#eafaf1;"' if delta <= 80 else '')
-        html += f'<tr{bg}><td>{i}</td><td><b>{a}</b></td><td>{f1a}</td><td><b>{b}</b></td><td>{f1b}</td><td><b>{delta}</b></td><td>{quality}</td><td>{zone}</td><td>{note}</td></tr>\n'
+        rapport_color = {'Unisson':'#1B5E20','Octave':'#1565C0','2 octaves':'#4A148C','Complémentaire':'#E65100'}.get(rapport,'#555')
+        rapport_html = f'<span style="color:{rapport_color};font-weight:bold;">{rapport}</span>'
+        html += f'<tr{bg}><td>{i}</td><td><b>{a}</b></td><td>{f1a}</td><td><b>{b}</b></td><td>{f1b}</td><td><b>{delta}</b></td><td>{quality}</td><td>{zone}</td><td>{rapport_html}</td><td>{note}</td></tr>\n'
     html += '</table>\n'
 
     # 5. Principes d'orchestration
@@ -502,20 +504,20 @@ def build_docx(output_path):
     # Doublures vérifiées
     doc.add_paragraph()
     add_heading(doc, "Tableau des Doublures Vérifiées (classées par Δ)", level=2, color=(46, 125, 50))
-    table2 = doc.add_table(rows=1, cols=7)
+    table2 = doc.add_table(rows=1, cols=8)
     table2.style = 'Table Grid'
-    for idx, h in enumerate(['Inst. A','F1 A','Inst. B','F1 B','Δ (Hz)','Qualité','Zone']):
+    for idx, h in enumerate(['Inst. A','F1 A','Inst. B','F1 B','Δ (Hz)','Qualité','Zone','Rapport']):
         set_cell_text(table2.rows[0].cells[idx], h, bold=True, size=8, color=(255,255,255))
         set_cell_shading(table2.rows[0].cells[idx], '1B5E20')
-    for a, f1a, b, f1b, delta, quality, zone, note in sorted(DOUBLURES_VERIFIEES, key=lambda x: x[4]):
+    for a, f1a, b, f1b, delta, quality, zone, rapport, note in sorted(DOUBLURES_VERIFIEES, key=lambda x: x[4]):
         row = table2.add_row().cells
         fill = 'D5F5E3' if delta <= 30 else ('EAFAF1' if delta <= 80 else None)
-        for idx, v in enumerate([a, str(f1a), b, str(f1b), str(delta), quality, zone]):
+        for idx, v in enumerate([a, str(f1a), b, str(f1b), str(delta), quality, zone, rapport]):
             set_cell_text(row[idx], v, bold=(idx in (0,2)), size=8)
             if fill:
                 set_cell_shading(row[idx], fill)
     for row_obj in table2.rows:
-        for cell, w in zip(row_obj.cells, [2.8,1.2,2.8,1.2,1.2,2.5,1.0]):
+        for cell, w in zip(row_obj.cells, [2.5,1.1,2.5,1.1,1.1,2.2,0.9,1.8]):
             cell.width = Cm(w)
 
     # Principes

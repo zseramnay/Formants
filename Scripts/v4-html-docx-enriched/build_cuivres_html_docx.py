@@ -135,40 +135,40 @@ ANALYSIS_SORDINES = {
 
 DOUBLURES = {
     'Cor en Fa': [
-        {'instr':'Basson',           'f1_a':'457','f1_b':'502','delta':45,'quality':'Excellente','note':'Cluster /o/ — doublure cor-basson classique'},
-        {'instr':'Violoncelle',      'f1_a':'457','f1_b':'499','delta':42,'quality':'Excellente','note':'Cluster /o/ — chant lyrique bois-cordes'},
-        {'instr':'Trombone',         'f1_a':'457','f1_b':'491','delta':34,'quality':'Excellente','note':'Homogénéité cuivres, cluster /o/'},
-        {'instr':'Cor anglais',      'f1_a':'457','f1_b':'452','delta':5, 'quality':'Quasi-parfaite','note':'Cluster /o/ — convergence maximale bois-cuivres'},
-        {'instr':'Tuba contrebasse', 'f1_a':'457','f1_b':'471','delta':14,'quality':'Quasi-parfaite','note':'Cluster /o/ — cuivres graves'},
+        {'instr':'Basson',           'f1_a':'457','f1_b':'502','delta':45,'quality':'Excellente','rapport':'Unisson','note':'Cluster /o/ — doublure cor-basson classique'},
+        {'instr':'Violoncelle',      'f1_a':'457','f1_b':'499','delta':42,'quality':'Excellente','rapport':'Unisson','note':'Cluster /o/ — chant lyrique bois-cordes'},
+        {'instr':'Trombone',         'f1_a':'457','f1_b':'491','delta':34,'quality':'Excellente','rapport':'Unisson','note':'Homogénéité cuivres, cluster /o/'},
+        {'instr':'Cor anglais',      'f1_a':'457','f1_b':'452','delta':5, 'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — convergence maximale bois-cuivres'},
+        {'instr':'Tuba contrebasse', 'f1_a':'457','f1_b':'471','delta':14,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — cuivres graves'},
     ],
     'Trompette en Ut': [
-        {'instr':'Basson',       'f1_a':'457 (Fp)','f1_b':'502','delta':45,'quality':'Excellente','note':'Transition classique bois-cuivres, zone /o/'},
-        {'instr':'Trombone',     'f1_a':'457 (Fp)','f1_b':'491','delta':34,'quality':'Excellente','note':'Homogénéité section cuivres'},
-        {'instr':'Violoncelle',  'f1_a':'457 (Fp)','f1_b':'499','delta':42,'quality':'Excellente','note':'Chant lyrique cuivres-cordes'},
-        {'instr':'Violon',       'f1_a':'1 046 (Fp)','f1_b':'893 (Fp)','delta':153,'quality':'Bonne','note':'Zone /a/–/e/ — brillance partagée'},
+        {'instr':'Basson',       'f1_a':'457 (Fp)','f1_b':'502','delta':45,'quality':'Excellente','rapport':'Octave','note':'Trompette sonne généralement une octave au-dessus du basson'},
+        {'instr':'Trombone',     'f1_a':'457 (Fp)','f1_b':'491','delta':34,'quality':'Excellente','rapport':'Unisson','note':'Homogénéité section cuivres'},
+        {'instr':'Violoncelle',  'f1_a':'457 (Fp)','f1_b':'499','delta':42,'quality':'Excellente','rapport':'Octave','note':'Trompette sonne une octave au-dessus du violoncelle'},
+        {'instr':'Violon',       'f1_a':'1 046 (Fp)','f1_b':'893 (Fp)','delta':153,'quality':'Bonne','rapport':'Unisson','note':'Zone /a/–/e/ — brillance partagée'},
     ],
     'Trombone ténor': [
-        {'instr':'Cor',         'f1_a':'491','f1_b':'457','delta':34,'quality':'Excellente','note':'Cluster /o/ — homogénéité cuivres'},
-        {'instr':'Basson',      'f1_a':'491','f1_b':'502','delta':11,'quality':'Quasi-parfaite','note':'Cluster /o/ — cuivres graves + bois'},
-        {'instr':'Violoncelle', 'f1_a':'491','f1_b':'499','delta':8, 'quality':'Quasi-parfaite','note':'Cluster /o/ — doublure trombone-violoncelle'},
-        {'instr':'Cor anglais', 'f1_a':'491','f1_b':'452','delta':39,'quality':'Excellente','note':'Cluster /o/ — bois-cuivres'},
-        {'instr':'Tuba contrebasse','f1_a':'491','f1_b':'471','delta':20,'quality':'Quasi-parfaite','note':'Cluster /o/ — fondation grave'},
+        {'instr':'Cor',         'f1_a':'491','f1_b':'457','delta':34,'quality':'Excellente','rapport':'Unisson','note':'Cluster /o/ — homogénéité cuivres'},
+        {'instr':'Basson',      'f1_a':'491','f1_b':'502','delta':11,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — cuivres graves + bois'},
+        {'instr':'Violoncelle', 'f1_a':'491','f1_b':'499','delta':8, 'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — doublure trombone-violoncelle'},
+        {'instr':'Cor anglais', 'f1_a':'491','f1_b':'452','delta':39,'quality':'Excellente','rapport':'Unisson','note':'Cluster /o/ — bois-cuivres'},
+        {'instr':'Tuba contrebasse','f1_a':'491','f1_b':'471','delta':20,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — fondation grave'},
     ],
     'Trombone basse': [
-        {'instr':'Clarinette basse', 'f1_a':'894','f1_b':'909','delta':15,'quality':'Quasi-parfaite','note':'Zone /a/ — convergence excellente'},
-        {'instr':'Clarinette Sib',   'f1_a':'894','f1_b':'1 016','delta':122,'quality':'Bonne','note':'Zone /a/ — bonne proximité'},
-        {'instr':'Alto',             'f1_a':'894','f1_b':'369','delta':525,'quality':'Complémentaire','note':'Complémentarité grave-medium'},
+        {'instr':'Clarinette basse', 'f1_a':'894','f1_b':'909','delta':15,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Zone /a/ — convergence excellente'},
+        {'instr':'Clarinette Sib',   'f1_a':'894','f1_b':'1 016','delta':122,'quality':'Bonne','rapport':'Octave','note':'Cl. Sib sonne environ une octave au-dessus'},
+        {'instr':'Alto',             'f1_a':'894','f1_b':'369','delta':525,'quality':'Complémentaire','rapport':'Unisson','note':'Complémentarité grave-medium'},
     ],
     'Tuba basse': [
-        {'instr':'Contrebasse',    'f1_a':'249','f1_b':'200','delta':49,'quality':'Bonne','note':'Fondation grave cuivres-cordes'},
-        {'instr':'Contrebasson',   'f1_a':'249','f1_b':'226','delta':23,'quality':'Excellente','note':'Fondation grave cuivres-bois'},
-        {'instr':'Cor anglais',    'f1_a':'249','f1_b':'452','delta':203,'quality':'Complémentaire','note':'Enrichissement medium'},
+        {'instr':'Contrebasse',    'f1_a':'249','f1_b':'200','delta':49,'quality':'Bonne','rapport':'Unisson','note':'Fondation grave cuivres-cordes'},
+        {'instr':'Contrebasson',   'f1_a':'249','f1_b':'226','delta':23,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave cuivres-bois'},
+        {'instr':'Cor anglais',    'f1_a':'249','f1_b':'452','delta':203,'quality':'Complémentaire','rapport':'2 octaves','note':'Cor anglais sonne environ deux octaves au-dessus'},
     ],
     'Tuba contrebasse': [
-        {'instr':'Cor',          'f1_a':'471','f1_b':'457','delta':14,'quality':'Quasi-parfaite','note':'Cluster /o/ — fondation grave cuivres'},
-        {'instr':'Trombone',     'f1_a':'471','f1_b':'491','delta':20,'quality':'Quasi-parfaite','note':'Cluster /o/ — section graves'},
-        {'instr':'Basson',       'f1_a':'471','f1_b':'502','delta':31,'quality':'Excellente','note':'Cluster /o/ — bois-cuivres'},
-        {'instr':'Violoncelle',  'f1_a':'471','f1_b':'499','delta':28,'quality':'Excellente','note':'Cluster /o/ — cordes'},
+        {'instr':'Cor',          'f1_a':'471','f1_b':'457','delta':14,'quality':'Quasi-parfaite','rapport':'Octave','note':'Cor sonne une octave au-dessus du tuba CB'},
+        {'instr':'Trombone',     'f1_a':'471','f1_b':'491','delta':20,'quality':'Quasi-parfaite','rapport':'Octave','note':'Trombone sonne une octave au-dessus'},
+        {'instr':'Basson',       'f1_a':'471','f1_b':'502','delta':31,'quality':'Excellente','rapport':'Octave','note':'Basson sonne une octave au-dessus'},
+        {'instr':'Violoncelle',  'f1_a':'471','f1_b':'499','delta':28,'quality':'Excellente','rapport':'Octave','note':'Violoncelle sonne une octave au-dessus'},
     ],
 }
 
@@ -309,21 +309,7 @@ def add_instrument_docx(doc, gfx, show_ref=True, show_all_tech=True):
     dbl_items = DOUBLURES.get(display, [])
     if dbl_items:
         add_heading(doc, "Doublures recommandées", level=3, color=(245, 127, 23))
-        table = doc.add_table(rows=1, cols=5)
-        table.style = 'Table Grid'
-        for idx, h in enumerate(['Instrument associé','F1','F1 associé','Écart','Qualité']):
-            set_cell_text(table.rows[0].cells[idx], h, bold=True, size=9, color=(255,255,255))
-            set_cell_shading(table.rows[0].cells[idx], 'F57F17')
-        for it in dbl_items:
-            row = table.add_row().cells
-            delta = it.get('delta','')
-            delta_str = f"Δ={delta} Hz" if isinstance(delta, (int,float)) else str(delta)
-            for idx, v in enumerate([it.get('instr',''), it.get('f1_a','—'),
-                                      it.get('f1_b','—'), delta_str, it.get('quality','')]):
-                set_cell_text(row[idx], v, bold=(idx==0), size=9)
-        for row_obj in table.rows:
-            for cell, w in zip(row_obj.cells, [3.5,1.8,1.8,2.0,3.0]):
-                cell.width = Cm(w)
+        doublures_table_docx(doc, dbl_items)
 
     doc.add_paragraph()
 

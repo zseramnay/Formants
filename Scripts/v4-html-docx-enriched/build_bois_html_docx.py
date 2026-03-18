@@ -160,61 +160,61 @@ ANALYSIS = {
 # ─── Sections doublures par instrument ───────────────────────
 DOUBLURES = {
     'Petite flûte': [
-        {'instr':'Flûte',       'f1_a':'2 336','f1_b':'1 354','delta':'982','quality':'Complémentaire','note':'Piccolo ajoute la brillance extrême, doublure à l\'octave'},
-        {'instr':'Violon',      'f1_a':'2 336','f1_b':'1 034','delta':'1 302','quality':'Complémentaire','note':'Renforcement zone aiguë 2 000–3 000 Hz'},
+        {'instr':'Flûte',       'f1_a':'2 336','f1_b':'1 354','delta':'982','quality':'Complémentaire','rapport':'Octave','note':'Piccolo sonne une octave au-dessus de la grande flûte'},
+        {'instr':'Violon',      'f1_a':'2 336','f1_b':'1 034','delta':'1 302','quality':'Complémentaire','rapport':'Complémentaire','note':'Renforcement zone aiguë 2 000–3 000 Hz'},
     ],
     'Flûte': [
-        {'instr':'Violon',       'f1_a':'1 354','f1_b':'1 034','delta':320,'quality':'Bonne','note':'Convergence zone 1 000–1 500 Hz, brillance partagée'},
-        {'instr':'Hautbois',     'f1_a':'1 354','f1_b':'1 460','delta':106,'quality':'Bonne','note':'Zone /e/ commune, légère différenciation de timbre'},
-        {'instr':'Clarinette Sib','f1_a':'1 354','f1_b':'1 016','delta':338,'quality':'Complémentaire','note':'Flûte + clarté de la clarinette dans le medium'},
+        {'instr':'Violon',       'f1_a':'1 354','f1_b':'1 034','delta':320,'quality':'Bonne','rapport':'Unisson','note':'Convergence zone 1 000–1 500 Hz, brillance partagée'},
+        {'instr':'Hautbois',     'f1_a':'1 354','f1_b':'1 460','delta':106,'quality':'Bonne','rapport':'Unisson','note':'Zone /e/ commune, légère différenciation de timbre'},
+        {'instr':'Clarinette Sib','f1_a':'1 354','f1_b':'1 016','delta':338,'quality':'Complémentaire','rapport':'Unisson','note':'Flûte + clarté de la clarinette dans le medium'},
     ],
     'Flûte basse': [
-        {'instr':'Cor anglais',  'f1_a':'301','f1_b':'452','delta':151,'quality':'Bonne','note':'Complémentarité grave-medium, couleur sombre'},
-        {'instr':'Clarinette basse','f1_a':'301','f1_b':'323','delta':22,'quality':'Excellente','note':'Convergence zone /u/, fusion timbrale profonde'},
+        {'instr':'Cor anglais',  'f1_a':'301','f1_b':'452','delta':151,'quality':'Bonne','rapport':'Unisson','note':'Complémentarité grave-medium, couleur sombre'},
+        {'instr':'Clarinette basse','f1_a':'301','f1_b':'323','delta':22,'quality':'Excellente','rapport':'Unisson','note':'Convergence zone /u/, fusion timbrale profonde'},
     ],
     'Flûte contrebasse': [
-        {'instr':'Contrebasse', 'f1_a':'334','f1_b':'200','delta':134,'quality':'Bonne','note':'Zone graves partagée /u/'},
-        {'instr':'Tuba basse',  'f1_a':'334','f1_b':'249','delta':85,'quality':'Bonne','note':'Renforcement des graves extrêmes'},
+        {'instr':'Contrebasse', 'f1_a':'334','f1_b':'200','delta':134,'quality':'Bonne','rapport':'Unisson','note':'Zone graves partagée /u/'},
+        {'instr':'Tuba basse',  'f1_a':'334','f1_b':'249','delta':85,'quality':'Bonne','rapport':'Unisson','note':'Renforcement des graves extrêmes'},
     ],
     'Hautbois': [
-        {'instr':'Cor anglais',  'f1_a':'743','f1_b':'452','delta':291,'quality':'Complémentaire','note':'Hautbois + chaleur du cor anglais au grave'},
-        {'instr':'Violon',       'f1_a':'743','f1_b':'1 034','delta':291,'quality':'Complémentaire','note':'Enrichissement spectral bidirectionnel'},
+        {'instr':'Cor anglais',  'f1_a':'743','f1_b':'452','delta':291,'quality':'Complémentaire','rapport':'Unisson','note':'Hautbois + chaleur du cor anglais au grave'},
+        {'instr':'Violon',       'f1_a':'743','f1_b':'1 034','delta':291,'quality':'Complémentaire','rapport':'Unisson','note':'Enrichissement spectral bidirectionnel'},
     ],
     'Cor anglais': [
-        {'instr':'Clarinette Sib','f1_a':'452','f1_b':'1 016','delta':564,'quality':'Complémentaire','note':'Complémentarité parfaite grave-aigu'},
-        {'instr':'Cor',          'f1_a':'452','f1_b':'457','delta':5,'quality':'Quasi-parfaite','note':'Cluster /o/ — convergence formantique maximale'},
-        {'instr':'Basson',       'f1_a':'452','f1_b':'502','delta':50,'quality':'Excellente','note':'Famille /o/ — bois graves homogènes'},
-        {'instr':'Violoncelle',  'f1_a':'452','f1_b':'499','delta':47,'quality':'Excellente','note':'Couleur /o/ commune — doublure bois-cordes classique'},
+        {'instr':'Clarinette Sib','f1_a':'452','f1_b':'1 016','delta':564,'quality':'Complémentaire','rapport':'Unisson','note':'Complémentarité parfaite grave-aigu'},
+        {'instr':'Cor',          'f1_a':'452','f1_b':'457','delta':5,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — convergence formantique maximale'},
+        {'instr':'Basson',       'f1_a':'452','f1_b':'502','delta':50,'quality':'Excellente','rapport':'Unisson','note':'Famille /o/ — bois graves homogènes'},
+        {'instr':'Violoncelle',  'f1_a':'452','f1_b':'499','delta':47,'quality':'Excellente','rapport':'Unisson','note':'Couleur /o/ commune — doublure bois-cordes classique'},
     ],
     'Clarinette en Mib': [
-        {'instr':'Petite flûte', 'f1_a':'678','f1_b':'2 336','delta':'1 658','quality':'Complémentaire','note':'Cl. Mib dans medium, Piccolo dans aigu'},
-        {'instr':'Violon',       'f1_a':'678','f1_b':'1 034','delta':356,'quality':'Bonne','note':'Enrichissement du medium aigu'},
+        {'instr':'Petite flûte', 'f1_a':'678','f1_b':'2 336','delta':'1 658','quality':'Complémentaire','rapport':'Complémentaire','note':'Cl. Mib dans medium, Piccolo dans aigu extrême'},
+        {'instr':'Violon',       'f1_a':'678','f1_b':'1 034','delta':356,'quality':'Bonne','rapport':'Unisson','note':'Enrichissement du medium aigu'},
     ],
     'Clarinette en Sib': [
-        {'instr':'Cor anglais',  'f1_a':'1 016','f1_b':'1 045','delta':29,'quality':'Excellente','note':'Convergence Fp quasi-parfaite'},
-        {'instr':'Hautbois',     'f1_a':'1 016','f1_b':'1 460','delta':444,'quality':'Complémentaire','note':'Complémentarité chalumeau-registre moyen'},
-        {'instr':'Alto',         'f1_a':'1 016','f1_b':'369','delta':647,'quality':'Complémentaire','note':'Enrichissement spectral large bande'},
+        {'instr':'Cor anglais',  'f1_a':'1 016','f1_b':'1 045','delta':29,'quality':'Excellente','rapport':'Unisson','note':'Convergence Fp quasi-parfaite'},
+        {'instr':'Hautbois',     'f1_a':'1 016','f1_b':'1 460','delta':444,'quality':'Complémentaire','rapport':'Unisson','note':'Complémentarité chalumeau-registre moyen'},
+        {'instr':'Alto',         'f1_a':'1 016','f1_b':'369','delta':647,'quality':'Complémentaire','rapport':'Unisson','note':'Enrichissement spectral large bande'},
     ],
     'Clarinette basse en Sib': [
-        {'instr':'Trombone basse', 'f1_a':'909','f1_b':'894','delta':15,'quality':'Quasi-parfaite','note':'Convergence dans la zone /a/'},
-        {'instr':'Clarinette Sib', 'f1_a':'909','f1_b':'1 016','delta':107,'quality':'Bonne','note':'Complémentarité grave-medium'},
-        {'instr':'Basson',         'f1_a':'909','f1_b':'502','delta':407,'quality':'Complémentaire','note':'Enrichissement spectral grave-medium'},
+        {'instr':'Trombone basse', 'f1_a':'909','f1_b':'894','delta':15,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Convergence dans la zone /a/'},
+        {'instr':'Clarinette Sib', 'f1_a':'909','f1_b':'1 016','delta':107,'quality':'Bonne','rapport':'Octave','note':'Clarinette Sib sonne une octave au-dessus'},
+        {'instr':'Basson',         'f1_a':'909','f1_b':'502','delta':407,'quality':'Complémentaire','rapport':'Unisson','note':'Enrichissement spectral grave-medium'},
     ],
     'Clarinette contrebasse en Sib': [
-        {'instr':'Contrebasson',  'f1_a':'323','f1_b':'226','delta':97,'quality':'Bonne','note':'Doublure contrebasse des bois'},
-        {'instr':'Tuba basse',    'f1_a':'323','f1_b':'249','delta':74,'quality':'Bonne','note':'Fondation grave commune'},
+        {'instr':'Contrebasson',  'f1_a':'323','f1_b':'226','delta':97,'quality':'Bonne','rapport':'Unisson','note':'Doublure contrebasse des bois'},
+        {'instr':'Tuba basse',    'f1_a':'323','f1_b':'249','delta':74,'quality':'Bonne','rapport':'Unisson','note':'Fondation grave commune'},
     ],
     'Basson': [
-        {'instr':'Violoncelle',  'f1_a':'502','f1_b':'499','delta':3,'quality':'Quasi-parfaite ★','note':'Doublure la plus parfaite du corpus — Δ=3 Hz'},
-        {'instr':'Cor',          'f1_a':'502','f1_b':'457','delta':45,'quality':'Excellente','note':'Cluster /o/ — timbres frères (Meyer)'},
-        {'instr':'Trombone',     'f1_a':'502','f1_b':'491','delta':11,'quality':'Quasi-parfaite','note':'Cluster /o/ — doublure classique'},
-        {'instr':'Cor anglais',  'f1_a':'502','f1_b':'452','delta':50,'quality':'Excellente','note':'Famille /o/ des bois graves'},
-        {'instr':'Trompette',    'f1_a':'502','f1_b':'457','delta':45,'quality':'Complémentaire','note':'Transition bois-cuivres classique'},
+        {'instr':'Violoncelle',  'f1_a':'502','f1_b':'499','delta':3,'quality':'Quasi-parfaite ★','rapport':'Unisson','note':'Doublure la plus parfaite du corpus — Δ=3 Hz'},
+        {'instr':'Cor',          'f1_a':'502','f1_b':'457','delta':45,'quality':'Excellente','rapport':'Unisson','note':'Cluster /o/ — timbres frères (Meyer)'},
+        {'instr':'Trombone',     'f1_a':'502','f1_b':'491','delta':11,'quality':'Quasi-parfaite','rapport':'Unisson','note':'Cluster /o/ — doublure classique'},
+        {'instr':'Cor anglais',  'f1_a':'502','f1_b':'452','delta':50,'quality':'Excellente','rapport':'Unisson','note':'Famille /o/ des bois graves'},
+        {'instr':'Trompette',    'f1_a':'502','f1_b':'457','delta':45,'quality':'Complémentaire','rapport':'Octave','note':'Trompette sonne généralement une octave au-dessus'},
     ],
     'Contrebasson': [
-        {'instr':'Tuba basse',        'f1_a':'226','f1_b':'249','delta':23,'quality':'Excellente','note':'Unisson des graves extrêmes'},
-        {'instr':'Contrebasse',       'f1_a':'226','f1_b':'200','delta':26,'quality':'Excellente','note':'Fondation grave bois-cordes'},
-        {'instr':'Tuba contrebasse',  'f1_a':'226','f1_b':'471','delta':245,'quality':'Complémentaire','note':'Extension harmonique vers le medium'},
+        {'instr':'Tuba basse',        'f1_a':'226','f1_b':'249','delta':23,'quality':'Excellente','rapport':'Unisson','note':'Unisson des graves extrêmes'},
+        {'instr':'Contrebasse',       'f1_a':'226','f1_b':'200','delta':26,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave bois-cordes'},
+        {'instr':'Tuba contrebasse',  'f1_a':'226','f1_b':'471','delta':245,'quality':'Complémentaire','rapport':'Complémentaire','note':'Extension harmonique vers le medium'},
     ],
 }
 
@@ -380,25 +380,7 @@ def add_instrument_docx(doc, gfx):
     dbl_items = DOUBLURES.get(display, [])
     if dbl_items:
         add_heading(doc, "Doublures recommandées", level=3, color=(245, 127, 23))
-        table = doc.add_table(rows=1, cols=5)
-        table.style = 'Table Grid'
-        for idx, h in enumerate(['Instrument associé', 'F1', 'F1 associé', 'Écart', 'Qualité']):
-            set_cell_text(table.rows[0].cells[idx], h, bold=True, size=9, color=(255,255,255))
-            set_cell_shading(table.rows[0].cells[idx], 'F57F17')
-        for it in dbl_items:
-            row = table.add_row().cells
-            delta = it.get('delta','')
-            if isinstance(delta, (int, float)):
-                delta_str = f"Δ={delta} Hz"
-            else:
-                delta_str = str(delta)
-            vals = [it.get('instr',''), it.get('f1_a','—'), it.get('f1_b','—'),
-                    delta_str, it.get('quality','')]
-            for idx, v in enumerate(vals):
-                set_cell_text(row[idx], v, bold=(idx==0), size=9)
-        for row_obj in table.rows:
-            for cell, w in zip(row_obj.cells, [3.5, 1.8, 1.8, 2.0, 3.0]):
-                cell.width = Cm(w)
+        doublures_table_docx(doc, dbl_items)
 
     doc.add_paragraph()
 
