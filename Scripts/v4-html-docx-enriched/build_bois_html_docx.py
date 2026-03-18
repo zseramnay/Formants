@@ -32,9 +32,9 @@ BOIS = [
 
 # Instruments Yan_Adds (badge orange)
 YAN_ADDS = {
-    'Petite flûte','Flûte basse','Flûte contrebasse',
-    'Cor anglais','Clarinette en Mib','Clarinette basse en Sib',
-    'Clarinette contrebasse en Sib','Contrebasson'
+    # 'Petite flûte','Flûte basse','Flûte contrebasse',
+    # 'Cor anglais','Clarinette en Mib','Clarinette basse en Sib',
+    # 'Clarinette contrebasse en Sib','Contrebasson'
 }
 
 # ─── Tableaux de référence (Backus, Giesler, Meyer + SOL) ───
