@@ -330,7 +330,22 @@ PRINCIPES_ORCHESTRATION = [
      "Les cordes en ensemble développent un F1 collectif significativement plus haut qu'en solo (Violon solo: 506 Hz → Ensemble: 1 556 Hz). Cet effet de section est un paramètre d'orchestration distinct du solo."),
 
     ("4. La sourdine comme transposition timbrale",
-     "Les sourdines déplacent le spectre formantique de manière prévisible : cup = abaissement et voilement, straight = compression médium, harmon = propulsion extrême vers le /i/ (2 358 Hz pour la trompette)."),
+     """L'effet de la sourdine sur le spectre formantique est <strong>prévisible par type, mais non uniforme entre familles</strong>. L'affirmation intuitive d'un « abaissement systématique du F1 » ne résiste pas aux données.
+
+<strong>Cordes :</strong> la sourdine abaisse systématiquement le F1 de 6 à 40 %, déplaçant le timbre d'une zone vocalique vers le grave. La sourdine piombo (lourde) produit un effet toujours plus marqué que la sourdine ordinaire. Exemples mesurés : Violon ordinario F1=506 Hz → sourdine −28 % (366 Hz) → piombo −32 % (344 Hz) ; Alto −9 % / −40 % ; Ens. violons −28 %.
+
+<strong>Cuivres — l'effet dépend entièrement du type de sourdine :</strong>
+<ul>
+<li><strong>Cor (sourdine ordinaire) :</strong> légère baisse −11 % (388 → 344 Hz) — seul cuivre qui suit le schéma des cordes.</li>
+<li><strong>Straight :</strong> variation faible (Trombone −5 %, Trompette +40 %) — effet neutre à modéré.</li>
+<li><strong>Wah ouvert :</strong> légère baisse (Trombone −5 %, Trompette −29 %).</li>
+<li><strong>Wah fermé :</strong> effet inverse — F1 <em>monte</em> (Trombone +68 %, Trompette −26 %).</li>
+<li><strong>Cup :</strong> F1 monte significativement — la sourdine filtre les graves et propulse l'énergie vers le medium (Trombone +54 %, Trompette +84 %).</li>
+<li><strong>Harmon :</strong> déplacement extrême et opposé selon l'instrument : Trompette +200 % (786 → 2 358 Hz, zone /i/) ; Trombone −32 % (237 → 162 Hz).</li>
+<li><strong>Tuba basse :</strong> aucun effet mesurable (Δ=0 Hz).</li>
+</ul>
+
+<strong>Conclusion :</strong> la transposition timbrale vers le grave est valide pour les <strong>cordes</strong> et le <strong>cor</strong>. Pour les cuivres, les sourdines cup et harmon produisent l'effet <em>opposé</em> — une transposition vers l'aigu, parfois extrême. La sourdine harmon trompette est le cas le plus spectaculaire du corpus : elle déplace le F1 de la zone /a/ à la zone /i/, soit un saut de deux voyelles vers l'aigu."""),
 
     ("5. Familles formantiques transversales",
      "Le cluster /o/ (450–502 Hz) réunit des instruments de trois familles différentes (Bois, Cuivres, Cordes), créant une famille acoustique transversale plus pertinente que les familles traditionnelles pour prédire les fusions timbrales."),
