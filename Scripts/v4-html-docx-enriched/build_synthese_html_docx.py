@@ -367,76 +367,156 @@ def make_fig2():
     except ImportError:
         _has_adjusttext = False
 
-    fig, ax = plt.subplots(figsize=(14, 11), dpi=150)
-    vz_x = [(100,420,'#DCEEFB','/u/'),(380,620,'#D5ECD5','/o/'),
-             (580,850,'#FDE8CE','/å/'),(780,1350,'#F8D5D5','/a/'),
-             (1200,2700,'#E8D5F0','/e/'),(2500,4500,'#FFF8D0','/i/')]
-    for x0,x1,col,label in vz_x:
-        ax.axvspan(x0,x1,alpha=0.22,color=col,zorder=0)
-        ax.text(np.sqrt(x0*x1), 260, label, ha='center', va='bottom',
-                fontsize=8.5, color='#888', fontweight='bold')
-    xref = np.logspace(np.log10(120), np.log10(3000), 100)
-    ax.plot(xref, 2.2*xref, color='#ccc', lw=1.2, ls='--', alpha=0.6, zorder=1, label='_')
-    ax.text(1400, 2.2*1400*1.05, 'F2 ≈ 2·F1', fontsize=7.5,
-            color='#bbb', fontstyle='italic', rotation=22)
-    FAM_MK = {'Bois':'D','Saxophones':'P','Cuivres':'s','Cordes sol.':'o','Cordes ens.':'^'}
-    seen_fam = set(); texts = []
+    # Axe brisé : F1 zone dense [100–700] à gauche (70% largeur),
+    #             F1 zone aiguë [700–1400] à droite (30% largeur)
+    # F2 : [200–2200] sur toute la hauteur
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 12), dpi=150,
+                                    gridspec_kw={'width_ratios': [7, 3],
+                                                 'wspace': 0.04})
+
+    FAM_MK = {'Bois':'D','Saxophones':'P','Cuivres':'s',
+               'Cordes sol.':'o','Cordes ens.':'^'}
+
+    # ── Zones vocaliques (F1) ────────────────────────────────
+    vz = [(100, 420, '#DCEEFB', '/u/'),
+          (380, 620, '#D5ECD5', '/o/'),
+          (580, 700, '#FDE8CE', '/å/')]   # ax1 : 100–700
+    for x0,x1,col,label in vz:
+        ax1.axvspan(x0, min(x1,700), alpha=0.22, color=col, zorder=0)
+        mid = min((x0+x1)/2, 690)
+        ax1.text(mid, 2120, label, ha='center', va='bottom',
+                 fontsize=10, color='#777', fontweight='bold')
+
+    vz2 = [(580, 850, '#FDE8CE', '/å/'),
+           (780, 1350,'#F8D5D5', '/a/'),
+           (1200,1400,'#E8D5F0', '/e/')]  # ax2 : 700–1400
+    for x0,x1,col,label in vz2:
+        x0c, x1c = max(x0,700), min(x1,1400)
+        if x0c < x1c:
+            ax2.axvspan(x0c, x1c, alpha=0.22, color=col, zorder=0)
+            ax2.text((x0c+x1c)/2, 2120, label, ha='center', va='bottom',
+                     fontsize=10, color='#777', fontweight='bold')
+
+    # Ligne F2 ≈ 2·F1
+    for ax, x0, x1 in [(ax1,100,700), (ax2,700,1400)]:
+        xr = np.linspace(x0, x1, 100)
+        ax.plot(xr, 2.2*xr, color='#ccc', lw=1.0, ls='--', alpha=0.5, zorder=1)
+
+    # ── Scatter + labels ─────────────────────────────────────
+    seen_fam = set()
+    texts1, texts2 = [], []
+
     for instr in instruments_fig:
-        f1,f2 = instr['F'][0], instr['F'][1]
+        f1, f2 = instr['F'][0], instr['F'][1]
         if not f1 or not f2: continue
-        fam = instr['famille']; col = FAM_COLORS_FIG.get(fam,'#555')
-        mk = FAM_MK.get(fam,'o')
-        lbl = fam if fam not in seen_fam else '_'; seen_fam.add(fam)
-        ax.scatter(f1, f2, s=100, color=col, marker=mk,
-                   edgecolors='white', linewidths=0.8, zorder=5, label=lbl, alpha=0.92)
-        if instr['fp']:
-            ax.scatter(instr['fp'], f2, s=40, color='#1B5E20', marker='D',
-                       edgecolors='black', lw=0.5, zorder=6, alpha=0.80, label='_')
-            ax.annotate('', xy=(instr['fp'],f2), xytext=(f1,f2),
-                        arrowprops=dict(arrowstyle='->', color='#1B5E20', lw=0.8, alpha=0.4))
-        t = ax.text(f1, f2, instr['display'], fontsize=7, color=col,
-                    fontweight='bold', zorder=7)
-        texts.append(t)
+        fam = instr['famille']
+        col = FAM_COLORS_FIG.get(fam,'#555')
+        mk  = FAM_MK.get(fam,'o')
+        lbl = fam if fam not in seen_fam else '_'
+        seen_fam.add(fam)
+
+        # Choisir le bon axe selon F1
+        ax = ax1 if f1 <= 700 else ax2
+
+        ax.scatter(f1, f2, s=120, color=col, marker=mk,
+                   edgecolors='white', linewidths=0.9,
+                   zorder=5, label=lbl, alpha=0.92)
+
+        if instr['fp'] and instr['fp'] <= 1400:
+            fp_ax = ax1 if instr['fp'] <= 700 else ax2
+            fp_ax.scatter(instr['fp'], f2, s=50, color='#1B5E20',
+                          marker='D', edgecolors='black', lw=0.5,
+                          zorder=6, alpha=0.80, label='_')
+            if fp_ax is ax:  # flèche seulement si même axe
+                ax.annotate('', xy=(instr['fp'], f2), xytext=(f1, f2),
+                            arrowprops=dict(arrowstyle='->', color='#1B5E20',
+                                            lw=0.8, alpha=0.4))
+
+        t = ax.text(f1, f2, instr['display'],
+                    fontsize=8, color=col, fontweight='bold', zorder=7)
+        (texts1 if ax is ax1 else texts2).append(t)
+
+    # ── adjustText par axe ───────────────────────────────────
     if _has_adjusttext:
-        adjust_text(texts, ax=ax, expand_points=(1.5,1.8), expand_text=(1.3,1.5),
-                    force_text=(0.4,0.6), force_points=(0.3,0.4),
-                    arrowprops=dict(arrowstyle='-', color='#aaa', lw=0.5), lim=300)
+        for ax, texts in [(ax1, texts1), (ax2, texts2)]:
+            if texts:
+                adjust_text(texts, ax=ax,
+                            expand_points=(2.5, 3.0),
+                            expand_text=(2.0, 2.5),
+                            force_text=(0.8, 1.0),
+                            force_points=(0.5, 0.7),
+                            arrowprops=dict(arrowstyle='-', color='#bbb', lw=0.6),
+                            lim=600)
+
+    # ── Ellipse convergence (ax1) ────────────────────────────
     from matplotlib.patches import Ellipse
-    ax.add_patch(Ellipse((443,780), width=200, height=700, angle=10,
-                          fill=True, facecolor='#ffebee', edgecolor='#e53935',
-                          lw=2, ls='--', zorder=2, alpha=0.5))
-    ax.text(443, 1230, 'Zone /o/–/å/\n377–510 Hz', ha='center', fontsize=8,
-            color='#c62828', fontweight='bold', zorder=9)
-    ax.set_xlim(100,3500); ax.set_ylim(250,4200)
-    ax.set_xscale('log'); ax.set_yscale('log')
-    xt=[100,150,200,300,400,600,800,1200,2000,3000]
-    yt=[300,400,500,700,1000,1500,2000,3000,4000]
-    ax.set_xticks(xt); ax.set_xticklabels([str(t) for t in xt], fontsize=8)
-    ax.set_yticks(yt); ax.set_yticklabels([str(t) for t in yt], fontsize=8)
-    ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    ax.set_xlabel("F1 — Premier formant (Hz)", fontsize=11, fontweight='bold')
-    ax.set_ylabel("F2 — Deuxième formant (Hz)", fontsize=11, fontweight='bold')
-    ax.grid(True, alpha=0.12, which='both')
-    for s in ['top','right']: ax.spines[s].set_visible(False)
-    hs,ls2 = ax.get_legend_handles_labels()
-    ch,cl,seen2 = [],[],set()
-    for h,l in zip(hs,ls2):
+    ax1.add_patch(Ellipse((443, 800), width=220, height=580, angle=8,
+                           fill=True, facecolor='#ffebee',
+                           edgecolor='#e53935', lw=2, ls='--',
+                           zorder=2, alpha=0.6))
+    ax1.text(443, 1160, 'Zone /o/–/å/\n377–510 Hz',
+             ha='center', fontsize=9, color='#c62828',
+             fontweight='bold', zorder=9)
+
+    # ── Axes ─────────────────────────────────────────────────
+    YMIN, YMAX = 150, 2250
+    for ax in (ax1, ax2):
+        ax.set_ylim(YMIN, YMAX)
+        ax.set_yticks([200,300,400,500,600,700,800,900,1000,
+                       1200,1400,1600,1800,2000,2200])
+        ax.tick_params(labelsize=8)
+        ax.grid(True, alpha=0.10, color='#aaa')
+        ax.spines['top'].set_visible(False)
+
+    ax1.set_xlim(80, 710)
+    ax1.set_xticks([100,200,300,400,500,600,700])
+    ax1.spines['right'].set_visible(False)
+    ax1.set_xlabel("F1 — Premier formant (Hz)", fontsize=11, fontweight='bold')
+    ax1.set_ylabel("F2 — Deuxième formant (Hz)", fontsize=11, fontweight='bold')
+
+    ax2.set_xlim(695, 1420)
+    ax2.set_xticks([800,900,1000,1100,1200,1300,1400])
+    ax2.spines['left'].set_visible(False)
+    ax2.set_yticklabels([])  # pas de labels Y à droite
+    ax2.set_xlabel("F1 (Hz)", fontsize=10, fontweight='bold')
+
+    # Marques de rupture d'axe
+    d = 0.015
+    kwargs = dict(transform=fig.transFigure, color='#555', lw=1.5, clip_on=False)
+    # Récupérer positions dans figure coords
+    ax1_right = ax1.get_position().x1
+    ax2_left  = ax2.get_position().x0
+    for y in [0.12, 0.88]:
+        fig.add_artist(plt.Line2D([ax1_right-d, ax1_right+d], [y-d, y+d], **kwargs))
+        fig.add_artist(plt.Line2D([ax2_left-d,  ax2_left+d],  [y-d, y+d], **kwargs))
+
+    # ── Légende (ax2) ────────────────────────────────────────
+    hs, ls2 = ax1.get_legend_handles_labels()
+    ch, cl, seen2 = [], [], set()
+    for h, l in zip(hs, ls2):
         if l not in seen2 and not l.startswith('_'):
             seen2.add(l); ch.append(h); cl.append(l)
-    ch.append(mlines.Line2D([],[],marker='D',color='w',markerfacecolor='#1B5E20',
-                              markeredgecolor='black',markersize=7,label='Fp centroïde'))
+    ch.append(mlines.Line2D([],[],marker='D',color='w',
+                              markerfacecolor='#1B5E20',
+                              markeredgecolor='black',
+                              markersize=7, label='Fp centroïde'))
     cl.append('Fp centroïde')
-    ax.legend(ch, cl, loc='lower right', fontsize=8.5, framealpha=0.95,
-              title='Familles', title_fontsize=9, borderpad=0.8)
-    ax.set_title("Figure 2 — Espace vocalique F1/F2 des 27 instruments de l'orchestre\n"
-                 "Convention phonétique : F1 (horizontal) × F2 (vertical) · "
-                 "zones Meyer (2009) · données CSV v22",
-                 fontsize=10, fontweight='bold', pad=12)
-    fig.subplots_adjust(left=0.09, right=0.97, top=0.93, bottom=0.08)
+    ax2.legend(ch, cl, loc='upper right', fontsize=8.5, framealpha=0.95,
+               title='Familles', title_fontsize=9, borderpad=0.8)
+
+    fig.suptitle(
+        "Figure 2 — Espace vocalique F1/F2 des 27 instruments de l'orchestre\n"
+        "Convention phonétique : F1 (horizontal) × F2 (vertical) · "
+        "zones Meyer (2009) · données CSV v22",
+        fontsize=10, fontweight='bold', y=0.98)
+
+    fig.subplots_adjust(left=0.07, right=0.97, top=0.93, bottom=0.08)
     out = os.path.join(OUT_IMG, 'synthese_fig2_espace_vocalique.png')
-    fig.savefig(out, dpi=150, facecolor='white'); plt.close(fig)
-    print(f"  ✓ Figure 2 : {out}"); return out
+    fig.savefig(out, dpi=150, facecolor='white')
+    plt.close(fig)
+    print(f"  ✓ Figure 2 : {out}")
+    return out
+
 
 
 def make_fig3():
