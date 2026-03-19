@@ -221,8 +221,7 @@ corpus SOL2020 + Yan_Adds.</p>
     html += '</table>\n'
 
     # SVG voyelles IPA — inline depuis le fichier média
-    svg_path = os.path.join(os.path.dirname(OUT_DIR), 'media', 'voyelles_IPA.svg')
-    svg_rel  = os.path.relpath(svg_path, OUT_DIR).replace(os.sep, '/')
+    svg_rel = 'media/voyelles_IPA.svg'
     html += f'''
 <div style="margin:24px 0;">
 <figure style="margin:0;">
