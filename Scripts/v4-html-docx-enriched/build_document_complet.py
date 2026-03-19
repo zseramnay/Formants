@@ -344,7 +344,7 @@ p  { margin: 6px 0; }
   padding: 20px; margin: 20px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.07);
   scroll-margin-top: 20px;
 }
-.formant-graph { max-width: 75%; border: 1px solid #eee; border-radius: 4px; display: block; }
+.formant-graph { max-width: 65%; border: 1px solid #eee; border-radius: 4px; display: block; }
 .description {
   font-style: italic; color: #555; background: #e8f5e9;
   padding: 10px 14px; border-left: 4px solid #4caf50;
