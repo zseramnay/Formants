@@ -96,8 +96,8 @@ SOURCES_ROWS = [
     ('Backus (1969)', 'The Acoustical Foundations of Music', 'Référence historique, mesures ciblées cuivres et bois', 'W.W. Norton & Co.'),
     ('Giesler (1985)', 'Instrumentation: Ein Hand- und Lehrbuch', 'Mesures détaillées, associations vocaliques explicites, 13 instruments', 'Breitkopf & Härtel'),
     ('Meyer (2009)', 'Acoustics and the Performance of Music (5e éd.)', 'Analyse acoustique avec couleurs vocales, zones vocaliques définies', 'Springer-Verlag'),
-    ('SOL2020 IRCAM', 'Studio On Line / Orchestre de Lyon', '12 instruments solistes, 2 391 échantillons sustained analysés', 'IRCAM / Orchestre de Lyon'),
-    ('Yan_Adds', 'Extension personnelle', '18 instruments supplémentaires, 1 646 échantillons (ensembles, bois auxiliaires, cuivres graves)', 'Analyse propre'),
+    ('SOL2020 IRCAM', 'Studio On Line', '12 instruments solistes, 2 391 échantillons sustained analysés', 'IRCAM / EIC'),
+    ('Yan_Adds', 'Extension personnelle', '18 instruments supplémentaires, 1 646 échantillons (ensembles, bois auxiliaires, cuivres graves)', 'VSL, Con Timbre, échantillons personnels'),
     ('McCarty/CCRMA (2003)', 'Vowel space chart for orchestral instruments', 'Référence directionnelle — limitations d\'exactitude reconnues par l\'auteur', 'CCRMA Stanford'),
 ]
 
