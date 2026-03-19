@@ -776,18 +776,17 @@ def build_docx_complet():
         ('build_synthese_html_docx.py', 'section_synthese_v4.docx'),
     ]
 
-    # Générer les DOCX de section si absents
+    # Régénérer toutes les sections (toujours, pour garantir la cohérence)
     section_docx_paths = []
     for script_name, out_filename in section_scripts:
         script_path = os.path.join(BASE, 'Scripts', 'v4-html-docx-enriched', script_name)
         out_path    = os.path.join(OUT_DIR, out_filename)
-        if not os.path.exists(out_path):
-            print(f"  → Génération {script_name} ...", flush=True)
-            result = subprocess.run(['python3', script_path], cwd=BASE,
-                                    capture_output=True, text=True)
-            if result.returncode != 0:
-                print(f"  ⚠ Erreur : {result.stderr[:400]}")
-                continue
+        print(f"  → Génération {script_name} ...", flush=True)
+        result = subprocess.run(['python3', script_path], cwd=BASE,
+                                capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"  ⚠ Erreur : {result.stderr[:400]}")
+            continue
         section_docx_paths.append(out_path)
         print(f"  ✓ {out_filename}")
 
