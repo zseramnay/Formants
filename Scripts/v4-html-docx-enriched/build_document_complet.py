@@ -114,14 +114,16 @@ TOC_STRUCTURE = [
     (2, "Ensemble de violoncelles + sourdine",  "cordes_vcl_ens_sord"),
     (2, "Ensemble de contrebasses",             "cordes_cb_ens"),
 
-    (0, "VI. Synthèse",                         "vi-synthese"),
-    (1, "Cluster de convergence 450–502 Hz",    "cluster"),
-    (1, "Positions F1/Fp",                      "positions-f1"),
-    (1, "Matrice de convergence — base",        "matrices"),
-    (1, "Matrice de convergence — complète",    "matrices"),
-    (1, "Doublures vérifiées",                  "doublures-verifiees"),
-    (1, "6 Principes d'orchestration",          "principes"),
-    (1, "Concordance multi-sources",            "concordance"),
+    (0, "VI. Synthèse",                                        "vi-synthese"),
+    (1, "Figure 1 — Positions formantiques des 27 instruments", "fig1-positions"),
+    (1, "Figure 2 — Espace vocalique F1/F2",                   "fig2-vocalique"),
+    (1, "Figure 3 — Enveloppes du cluster de convergence",     "fig3-cluster"),
+    (1, "Cluster de convergence — Zone /o/–/å/",               "cluster"),
+    (1, "Positions F1/Fp — 20 instruments de base",            "positions-f1"),
+    (1, "Matrices de convergence F1",                          "matrices"),
+    (1, "Doublures vérifiées",                                 "doublures-verifiees"),
+    (1, "6 Principes d'orchestration acoustique",              "principes"),
+    (1, "Concordance multi-sources",                           "concordance"),
 ]
 
 # ═══════════════════════════════════════════════════════════
