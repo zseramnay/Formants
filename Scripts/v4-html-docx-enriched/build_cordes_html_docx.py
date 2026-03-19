@@ -146,9 +146,9 @@ ANALYSIS = {
 # ─── Doublures ───────────────────────────────────────────────
 DOUBLURES = {
     'Violon': [
-        {'instr':'Hautbois',        'f1_a':'893 (Fp)','f1_b':'1 460','delta':567,'quality':'Complémentaire','rapport':'Unisson','note':'Zone /a/–/e/ — couleur brillante partagée'},
-        {'instr':'Flûte',           'f1_a':'893 (Fp)','f1_b':'1 354','delta':461,'quality':'Complémentaire','rapport':'Unisson','note':'Enrichissement vers l\'aigu'},
-        {'instr':'Clarinette Sib',  'f1_a':'893 (Fp)','f1_b':'1 016','delta':123,'quality':'Bonne','rapport':'Unisson','note':'Zone /a/ commune, timbre lisse'},
+        {'instr':'Hautbois',        'f1_a':'893 (Fp)','f1_b':'1 460 (Fp)','delta':567,'quality':'Complémentaire','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Hautbois Fp=1460 — zone /a/–/e/ partagée'},
+        {'instr':'Flûte',           'f1_a':'893 (Fp)','f1_b':'1 354 (Fp)','delta':461,'quality':'Complémentaire','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Flûte Fp=1354 — enrichissement aigu'},
+        {'instr':'Clarinette Sib',  'f1_a':'893 (Fp)','f1_b':'1 016 (Fp)','delta':123,'quality':'Bonne','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Cl.Sib Fp=1016 — zone /a/ commune'},
         {'instr':'Trompette',       'f1_a':'893 (Fp)','f1_b':'1 046 (Fp)','delta':153,'quality':'Bonne','rapport':'Octave','note':'Trompette sonne généralement une octave au-dessus'},
     ],
     'Ensemble de violons': [
@@ -168,11 +168,11 @@ DOUBLURES = {
         {'instr':'Cor',             'f1_a':'366','f1_b':'388','delta':22,'quality':'Excellente','rapport':'Unisson','note':'Convergence /o/–/å/ — couleur sombre commune'},
     ],
     'Violoncelle': [
-        {'instr':'Basson',          'f1_a':'205','f1_b':'495','delta':290,'quality':'Complémentaire','rapport':'Unisson','note':'Basson en /o/, violoncelle en /u/ — complémentarité classique'},
-        {'instr':'Cor',             'f1_a':'205','f1_b':'388','delta':183,'quality':'Bonne','rapport':'Octave','note':'Cor une octave au-dessus — complémentarité /u/–/o/'},
-        {'instr':'Trombone',        'f1_a':'205','f1_b':'491','delta':286,'quality':'Complémentaire','rapport':'Octave','note':'Trombone Fp dans /o/, violoncelle en /u/'},
+        {'instr':'Basson',          'f1_a':'205','f1_b':'495','delta':290,'quality':'Complémentaire','rapport':'Unisson','note':'Basson en /o/ (495 Hz), violoncelle en /u/ (205 Hz) — complémentarité classique'},
+        {'instr':'Cor',             'f1_a':'205','f1_b':'388','delta':183,'quality':'Bonne','rapport':'Octave','note':'Cor en /o/ (388 Hz), violoncelle en /u/ — complémentarité /u/–/o/'},
+        {'instr':'Trombone',        'f1_a':'205','f1_b':'237','delta':32,'quality':'Excellente','rapport':'Octave','note':'Trombone F1=237 Hz, violoncelle F1=205 Hz — deux instruments en /u/'},
         {'instr':'Cor anglais',     'f1_a':'205','f1_b':'452','delta':247,'quality':'Complémentaire','rapport':'Octave','note':'Complémentarité /u/–/o/'},
-        {'instr':'Tuba contrebasse','f1_a':'205','f1_b':'471','delta':266,'quality':'Complémentaire','rapport':'Octave','note':'Tuba CB en /o/, violoncelle en /u/'},
+        {'instr':'Tuba contrebasse','f1_a':'205','f1_b':'226','delta':21,'quality':'Quasi-parfaite','rapport':'Octave','note':'Tuba CB F1=226 Hz, violoncelle F1=205 Hz — convergence /u/'},
     ],
     'Ensemble de violoncelles': [
         {'instr':'Cor anglais',     'f1_a':'205','f1_b':'452','delta':247,'quality':'Complémentaire','rapport':'Unisson','note':'Complémentarité /u/–/o/ — couleur grave + chaud'},
@@ -180,14 +180,14 @@ DOUBLURES = {
         {'instr':'Cor',             'f1_a':'205','f1_b':'388','delta':183,'quality':'Bonne','rapport':'Octave','note':'Zone /u/–/o/ complémentaire'},
     ],
     'Contrebasse': [
-        {'instr':'Tuba basse',      'f1_a':'200','f1_b':'249','delta':49,'quality':'Bonne','rapport':'Unisson','note':'Fondation grave cordes-cuivres'},
-        {'instr':'Contrebasson',    'f1_a':'200','f1_b':'226','delta':26,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave cordes-bois'},
-        {'instr':'Clarinette contrebasse','f1_a':'200','f1_b':'323','delta':123,'quality':'Bonne','rapport':'Octave','note':'Cl. contrebasse sonne une octave au-dessus'},
+        {'instr':'Tuba basse',      'f1_a':'172','f1_b':'226','delta':54,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave cordes-cuivres — Δ=54 Hz'},
+        {'instr':'Contrebasson',    'f1_a':'172','f1_b':'226','delta':54,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave cordes-bois — Δ=54 Hz'},
+        {'instr':'Clarinette contrebasse','f1_a':'172','f1_b':'323','delta':151,'quality':'Bonne','rapport':'Octave','note':'Cl. contrebasse sonne une octave au-dessus'},
     ],
     'Ensemble de contrebasses': [
-        {'instr':'Tuba basse',      'f1_a':'350','f1_b':'249','delta':101,'quality':'Bonne','rapport':'Unisson','note':'Fondation grave sections'},
-        {'instr':'Contrebasson',    'f1_a':'350','f1_b':'226','delta':124,'quality':'Bonne','rapport':'Unisson','note':'Bois + cordes graves'},
-        {'instr':'Tuba contrebasse','f1_a':'350','f1_b':'471','delta':121,'quality':'Bonne','rapport':'Unisson','note':'Enrichissement harmonique grave'},
+        {'instr':'Tuba basse',      'f1_a':'172','f1_b':'226','delta':54,'quality':'Excellente','rapport':'Unisson','note':'Fondation grave sections — Δ=54 Hz'},
+        {'instr':'Contrebasson',    'f1_a':'172','f1_b':'226','delta':54,'quality':'Excellente','rapport':'Unisson','note':'Bois + cordes graves — Δ=54 Hz'},
+        {'instr':'Tuba contrebasse','f1_a':'172','f1_b':'226','delta':54,'quality':'Excellente','rapport':'Unisson','note':'Tuba CB F1=226 Hz — convergence /u/'},
     ],
 }
 
