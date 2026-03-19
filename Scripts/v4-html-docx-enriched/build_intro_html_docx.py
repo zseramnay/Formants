@@ -72,23 +72,35 @@ un spectre très variable), F1 ou F2 reste utilisé.</p>
 
 # Tableau des voyelles complet (incluant i/ee >2600 Hz)
 VOWEL_TABLE_ROWS = [
-    {'voyelle': 'u (oo)',  'freq': '200–400',   'perception': 'Profondeur, gravité',
-     'instruments': 'Tuba basse (249), Contrebasse (200), Contrebasson (226), Flûte basse (301)',
+    {'voyelle': 'u (oo)',  'freq': '200–400',
+     'perception': 'Profondeur, gravité',
+     'exemples_fr': 'b<u>ou</u>che, t<u>ou</u>r, l<u>u</u>ne',
+     'instruments': 'Contrebasse (172), Tuba basse (226), Tuba CB (226), Contrebasson (226), Trombone (237), Flûte basse (301)',
      'color': '#DCEEFB'},
-    {'voyelle': 'o (oh)',  'freq': '400–600',   'perception': 'Plénitude, rondeur',
-     'instruments': 'Cor (457), Tuba contrebasse (471), Contrebasson (478), Trombone (491), Violoncelle (499), Basson (502), Cor anglais (452), Vcl-Ens (587)',
+    {'voyelle': 'o (oh)',  'freq': '400–600',
+     'perception': 'Plénitude, rondeur',
+     'exemples_fr': 'b<u>eau</u>, s<u>o</u>l, voi<u>x</u>',
+     'instruments': 'Alto (377), Cor (388), Sax alto (398), Cor anglais (452), Cl. Sib (463), Basson (495), Ens. Violons (495), Violon (506)',
      'color': '#D5ECD5'},
-    {'voyelle': 'å (aw)',  'freq': '~600–800',  'perception': 'Transition, chaleur',
-     'instruments': 'Vcl-Ens sourdine (587), Alto sourdine (683), Flûte basse (737)',
+    {'voyelle': 'å (aw)',  'freq': '~600–800',
+     'perception': 'Transition, chaleur',
+     'exemples_fr': 'p<u>â</u>te, âm<u>e</u>, (entre o et a)',
+     'instruments': 'Cl. Mib (678), Flûte (743), Hautbois (743), Trompette (786)',
      'color': '#FDE8CE'},
-    {'voyelle': 'a (ah)',  'freq': '800–1 250', 'perception': 'Puissance, présence',
-     'instruments': 'Trb. basse (894), Cl. basse (909), Cl. Sib (1 016), Cor anglais Fp (1 135), Trompette (1 046, Fp), Alto-Ens (1 190), Basson Fp (1 079)',
+    {'voyelle': 'a (ah)',  'freq': '800–1 250',
+     'perception': 'Puissance, présence',
+     'exemples_fr': 'p<u>a</u>s, cl<u>a</u>sse, ch<u>a</u>nt',
+     'instruments': 'Cor Fp (738), Violon Fp (893), Basson Fp (1 079), Trompette Fp (1 046), Cor anglais Fp (1 135)',
      'color': '#F8D5D5'},
-    {'voyelle': 'e (eh)',  'freq': '1 250–2 600', 'perception': 'Clarté, brillance',
-     'instruments': 'Flûte (1 354), Hautbois (1 460), Vln-Ens (1 556), Cl. Mib (1 747), Piccolo (2 336), Violon Fp (893)',
+    {'voyelle': 'e (eh)',  'freq': '1 250–2 600',
+     'perception': 'Clarté, brillance',
+     'exemples_fr': 'f<u>é</u>e, <u>é</u>toile, r<u>e</u>gard',
+     'instruments': 'Cl. Sib Fp (1 412), Flûte Fp (1 535), Hautbois Fp (1 485), Cl. Mib Fp (1 266), Petite flûte (1 109)',
      'color': '#E8D5F0'},
-    {'voyelle': 'i (ee)',  'freq': '> 2 600',   'perception': 'Brillance extrême, stridence',
-     'instruments': 'Petite flûte (2 336 ≈ limite), Trompette+sourdine harmon (2 358)',
+    {'voyelle': 'i (ee)',  'freq': '> 2 600',
+     'perception': 'Brillance extrême, stridence',
+     'exemples_fr': 'v<u>i</u>e, s<u>i</u>ffl<u>e</u>r, <u>i</u>ci',
+     'instruments': 'Petite flûte (1 992 F2), Trompette+sourdine harmon (2 358)',
      'color': '#FFF8D0'},
 ]
 
@@ -196,10 +208,16 @@ langue allemande/française. Ce tableau étend cette correspondance à l'ensembl
 corpus SOL2020 + Yan_Adds.</p>
 """
     html += '<table class="vowel-table">\n'
-    html += '<tr class="header"><th>Voyelle</th><th>Fréquence (Hz)</th><th>Perception timbrale</th><th>Instruments représentatifs (F1 ou Fp)</th></tr>\n'
+    html += '<tr class="header"><th>Voyelle</th><th>Fréquence (Hz)</th><th>Exemples français</th><th>Perception timbrale</th><th>Instruments représentatifs (F1 ou Fp)</th></tr>\n'
     for row in VOWEL_TABLE_ROWS:
         bg = f' style="background-color:{row["color"]}40;"'
-        html += f'<tr{bg}><td><strong>{row["voyelle"]}</strong></td><td>{row["freq"]}</td><td>{row["perception"]}</td><td style="text-align:left;">{row["instruments"]}</td></tr>\n'
+        html += (f'<tr{bg}>'
+                 f'<td><strong>{row["voyelle"]}</strong></td>'
+                 f'<td>{row["freq"]}</td>'
+                 f'<td style="font-style:italic;color:#444;">{row["exemples_fr"]}</td>'
+                 f'<td>{row["perception"]}</td>'
+                 f'<td style="text-align:left;">{row["instruments"]}</td>'
+                 f'</tr>\n')
     html += '</table>\n'
     html += """
 <div class="note-v4">
@@ -317,19 +335,24 @@ def build_docx(output_path):
     # Tableau voyelles
     doc.add_paragraph()
     add_heading(doc, "Correspondance voyelles–fréquences (Meyer 2009)", level=2, color=(46, 125, 50))
-    table4 = doc.add_table(rows=1, cols=4)
+    table4 = doc.add_table(rows=1, cols=5)
     table4.style = 'Table Grid'
-    for idx, h in enumerate(['Voyelle', 'Fréquence (Hz)', 'Perception', 'Instruments représentatifs']):
+    for idx, h in enumerate(['Voyelle', 'Fréquence (Hz)', 'Exemples français', 'Perception', 'Instruments représentatifs']):
         set_cell_text(table4.rows[0].cells[idx], h, bold=True, size=9, color=(255,255,255))
         set_cell_shading(table4.rows[0].cells[idx], '4A148C')
     for v_row in VOWEL_TABLE_ROWS:
         row = table4.add_row().cells
-        vals = [v_row['voyelle'], v_row['freq'], v_row['perception'], v_row['instruments']]
+        # Nettoyer les balises HTML <u> pour le DOCX
+        import re as _re
+        exemples_clean = _re.sub(r'<[^>]+>', '', v_row['exemples_fr'])
+        vals = [v_row['voyelle'], v_row['freq'], exemples_clean,
+                v_row['perception'], v_row['instruments']]
         for idx, v in enumerate(vals):
             set_cell_text(row[idx], v, bold=(idx==0), size=9,
-                          align=WD_ALIGN_PARAGRAPH.LEFT if idx==3 else WD_ALIGN_PARAGRAPH.CENTER)
+                          align=WD_ALIGN_PARAGRAPH.LEFT if idx in (2,4) else WD_ALIGN_PARAGRAPH.CENTER)
     for row_obj in table4.rows:
-        for cell, w in zip(row_obj.cells, [1.8, 2.0, 2.5, 10.2]):
+        for cell, w in zip(row_obj.cells, [1.8, 2.0, 3.5, 2.5, 8.5]):
+            cell.width = Cm(w)
             cell.width = Cm(w)
 
     doc.save(output_path)
