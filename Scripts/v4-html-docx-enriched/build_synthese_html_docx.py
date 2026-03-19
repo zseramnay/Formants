@@ -550,43 +550,73 @@ def make_fig3():
         ('Cl. Sib',   463,'#558B2F','dashed', 2.0),('Basson',495,'#4E342E','solid',2.5),
         ('Violon',    506,'#0D47A1','solid',  2.5),
     ]
+    # Couleurs des voyelles : distinctes et lisibles (pas de gris)
+    VOWEL_COLORS = {
+        '/u/': '#1565C0', '/o/': '#2E7D32', '/å/': '#E65100',
+        '/a/': '#C62828', '/e/': '#6A1B9A', '/i/': '#F57F17',
+    }
     fig, ax = plt.subplots(figsize=(14, 6.5), dpi=150)
-    for lo,hi,col,label in VOWEL_ZONES_FIG:
+
+    # ── Zones vocaliques ─────────────────────────────────────
+    for lo, hi, col, label in VOWEL_ZONES_FIG:
         if lo < 3000:
-            ax.axvspan(lo,min(hi,3000),alpha=0.20,color=col,zorder=0)
-            ax.text(np.sqrt(lo*min(hi,3000)), 1.01, label, ha='center', va='bottom',
-                    fontsize=8, color='#777', fontweight='bold',
+            ax.axvspan(lo, min(hi,3000), alpha=0.20, color=col, zorder=0)
+            # Labels en BAS du graphe (transform axe X), pas en haut
+            mid = np.sqrt(lo * min(hi, 3000))
+            vcol = VOWEL_COLORS.get(label, '#444')
+            ax.text(mid, -0.09, label, ha='center', va='top',
+                    fontsize=9, color=vcol, fontweight='bold',
                     transform=ax.get_xaxis_transform())
-    ax.axvspan(377,510,alpha=0.14,color='#e53935',zorder=1)
-    ax.axvline(377,color='#e53935',lw=1.2,ls=':',alpha=0.8,zorder=2)
-    ax.axvline(510,color='#e53935',lw=1.2,ls=':',alpha=0.8,zorder=2)
-    ax.text(443, 0.97, "Zone convergence\n377–510 Hz", ha='center', va='top',
-            fontsize=7.5, color='#C62828', fontweight='bold',
+
+    # ── Zone convergence ─────────────────────────────────────
+    ax.axvspan(377, 510, alpha=0.14, color='#e53935', zorder=1)
+    ax.axvline(377, color='#e53935', lw=1.2, ls=':', alpha=0.8, zorder=2)
+    ax.axvline(510, color='#e53935', lw=1.2, ls=':', alpha=0.8, zorder=2)
+    ax.text(443, 0.97, "Zone convergence\n377–510 Hz",
+            ha='center', va='top', fontsize=7.5,
+            color='#C62828', fontweight='bold',
             transform=ax.get_xaxis_transform(),
-            bbox=dict(boxstyle='round,pad=0.3',fc='white',ec='#e53935',alpha=0.92))
+            bbox=dict(boxstyle='round,pad=0.3', fc='white',
+                      ec='#e53935', alpha=0.92))
+
+    # ── Enveloppes gaussiennes ────────────────────────────────
     x = np.linspace(100, 3000, 3000)
-    for name,f1,color,ls,lw in cluster:
-        sigma = max(55, f1*0.18)
-        y = np.exp(-0.5*((x-f1)/sigma)**2)
+    for name, f1, color, ls, lw in cluster:
+        sigma = max(55, f1 * 0.18)
+        y = np.exp(-0.5 * ((x - f1) / sigma) ** 2)
         ax.plot(x, y, color=color, lw=lw, ls=ls, alpha=0.9,
                 label=f"{name}  F1={f1} Hz", zorder=4)
         ax.plot(f1, 1.0, marker='|', ms=14, color=color, mew=2.5, zorder=5)
-    ax.set_xlim(100,3000); ax.set_ylim(0,1.22); ax.set_xscale('log')
-    ticks=[100,150,200,300,400,500,700,1000,1500,2000,3000]
-    ax.set_xticks(ticks); ax.set_xticklabels([str(t) for t in ticks], fontsize=8)
+
+    # ── Axes ─────────────────────────────────────────────────
+    ax.set_xlim(100, 3000)
+    ax.set_ylim(0, 1.22)
+    ax.set_xscale('log')
+    ticks = [100, 150, 200, 300, 400, 500, 700, 1000, 1500, 2000, 3000]
+    ax.set_xticks(ticks)
+    ax.set_xticklabels([str(t) for t in ticks], fontsize=8)
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     ax.set_yticks([])
-    ax.set_xlabel("Fréquence (Hz) — axe logarithmique", fontsize=10, fontweight='bold')
-    for s in ['top','right','left']: ax.spines[s].set_visible(False)
+    ax.set_xlabel("Fréquence (Hz) — axe logarithmique", fontsize=10,
+                  fontweight='bold', labelpad=22)  # labelpad pour laisser place aux voyelles
+    for s in ['top', 'right', 'left']:
+        ax.spines[s].set_visible(False)
+
     ax.legend(loc='upper right', fontsize=7.5, framealpha=0.95, ncol=2,
               title='Instruments (F1 strict CSV v22)', title_fontsize=8)
+
     ax.set_title("Figure 3 — Enveloppes spectrales schématiques : "
                  "11 instruments en zone /o/–/å/ · CSV v22",
                  fontsize=9, fontweight='bold', pad=10)
-    fig.subplots_adjust(left=0.04, right=0.97, top=0.88, bottom=0.10)
+
+    # Espace en bas suffisant pour les labels voyelles
+    fig.subplots_adjust(left=0.04, right=0.97, top=0.88, bottom=0.16)
     out = os.path.join(OUT_IMG, 'synthese_fig3_cluster.png')
-    fig.savefig(out, dpi=150, facecolor='white'); plt.close(fig)
-    print(f"  ✓ Figure 3 : {out}"); return out
+    fig.savefig(out, dpi=150, facecolor='white')
+    plt.close(fig)
+    print(f"  ✓ Figure 3 : {out}")
+    return out
+
 
 
 # ─── Données communes pour Fig 1/2/3 ─────────────────────────
