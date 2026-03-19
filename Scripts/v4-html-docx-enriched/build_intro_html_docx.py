@@ -99,7 +99,7 @@ VOWEL_TABLE_ROWS = [
      'color': '#E8D5F0'},
     {'voyelle': 'i (ee)',  'freq': '> 2 600',
      'perception': 'Brillance extrême, stridence',
-     'exemples_fr': 'v<u>i</u>e, s<u>i</u>ffl<u>e</u>r',
+     'exemples_fr': 'v<u>i</u>e, s<u>i</u>ffler',
      'instruments': 'Petite flûte (1 992 F2), Trompette+sourdine harmon (2 358)',
      'color': '#FFF8D0'},
 ]
