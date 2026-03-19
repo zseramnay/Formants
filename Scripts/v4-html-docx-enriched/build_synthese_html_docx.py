@@ -295,6 +295,21 @@ print(f"  ✓ Matrice complète")
 img_cluster = make_cluster_chart('synthese_cluster')
 print(f"  ✓ Cluster chart")
 
+# Figures 1–3 (via make_synthese_figures.py)
+_fig_script = os.path.join(os.path.dirname(__file__), 'make_synthese_figures.py')
+try:
+    import importlib.util
+    _spec = importlib.util.spec_from_file_location('make_synthese_figures', _fig_script)
+    _mod  = importlib.util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    import matplotlib.ticker
+    img_fig1 = _mod.make_fig1()
+    img_fig2 = _mod.make_fig2()
+    img_fig3 = _mod.make_fig3()
+except Exception as e:
+    print(f"  ⚠ Figures 1–3 non générées : {e}")
+    img_fig1 = img_fig2 = img_fig3 = None
+
 def rel(img):
     return os.path.relpath(img, OUT_DIR).replace(os.sep, '/') if img else None
 
@@ -428,31 +443,64 @@ def build_html(output_path):
     html += """
 <div class="section-intro general">
 <p>Cette section synthétise les découvertes principales de l'analyse formantique complète
-des 30 instruments du corpus. Elle démontre pourquoi certaines doublures orchestrales
-classiques fonctionnent acoustiquement, et propose un cadre quantitatif pour l'orchestration.</p>
-<p><strong>Résultat central :</strong> la zone vocalique /o/ (450–502 Hz) constitue un
-<em>cluster de convergence</em> multi-familial regroupant 6 instruments de 3 familles différentes,
-avec un écart maximal de 52 Hz — ce qui explique acoustiquement les doublures les plus admises
-de la littérature orchestrale.</p>
+des 27 instruments du corpus (pipeline v22). Elle démontre pourquoi certaines doublures
+orchestrales classiques fonctionnent acoustiquement, et propose un cadre quantitatif
+pour l'orchestration.</p>
+<p><strong>Résultat central :</strong> la zone vocalique /o/–/å/ (377–506 Hz) constitue une
+<em>zone de convergence</em> multi-familiale regroupant 11 instruments de 4 familles différentes —
+base acoustique des doublures les plus admises de la littérature orchestrale.</p>
 </div>
 """
 
-    # 1. Cluster de convergence
-    html += '<h2 id="cluster">Le Cluster de Convergence 450–502 Hz</h2>\n'
+    # ── Figure 1 ─────────────────────────────────────────────
+    html += '<h2 id="fig1-positions">Figure 1 — Positions formantiques des 27 instruments</h2>\n'
+    html += """<p>Ce diagramme représente les quatre premiers formants (F1–F4) de chaque instrument
+sur un axe fréquentiel logarithmique (100–5 000 Hz). Les instruments sont triés du plus grave
+spectralement (Ens. CB) au plus aigu (Petite flûte). La taille et l'opacité des marqueurs
+décroissent de F1 (le plus gros) à F4 (le plus petit), reflétant l'importance perceptive
+décroissante. Le losange vert (◆) indique le Fp centroïde spectral quand calculé.
+Les bandes colorées correspondent aux zones vocaliques de Meyer (2009).</p>\n"""
+    if img_fig1:
+        html += f'<img src="{rel(img_fig1)}" alt="Figure 1 — Positions formantiques" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>\n'
+
+    # ── Figure 2 ─────────────────────────────────────────────
+    html += '<h2 id="fig2-vocalique">Figure 2 — Espace vocalique F1/F2</h2>\n'
+    html += """<p>Ce diagramme place chaque instrument dans un espace bidimensionnel F1 (horizontal) × F2
+(vertical), selon la convention des diagrammes vocaliques en phonétique. La forme des marqueurs
+distingue les familles : <strong>◆ Bois, ■ Cuivres, ● Cordes sol., ▲ Cordes ens., ✚ Saxophones</strong>.
+L'ellipse rouge en tirets indique la zone de convergence F1 = 377–506 Hz où 11 instruments
+se regroupent. Ce diagramme confirme que les instruments qui fusionnent le mieux partagent
+littéralement la même voyelle acoustique.</p>\n"""
+    if img_fig2:
+        html += f'<img src="{rel(img_fig2)}" alt="Figure 2 — Espace vocalique" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>\n'
+
+    # ── Figure 3 ─────────────────────────────────────────────
+    html += '<h2 id="fig3-cluster">Figure 3 — Enveloppes schématiques du cluster de convergence</h2>\n'
+    html += """<p>Ce diagramme superpose les enveloppes spectrales schématiques (courbes gaussiennes
+centrées sur F1) des 11 instruments dont le premier formant converge dans la zone 377–506 Hz.
+La bande rouge verticale surligne la zone de convergence. Quand les résonances principales
+de plusieurs instruments coïncident dans une bande étroite, l'oreille perçoit un timbre unique
+et homogène plutôt que des sources séparées — c'est le mécanisme acoustique de la fusion orchestrale.</p>\n"""
+    if img_fig3:
+        html += f'<img src="{rel(img_fig3)}" alt="Figure 3 — Cluster" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>\n'
+
+    # 1. Cluster de convergence (tableau + graphique original)
+    html += '<h2 id="cluster">Le Cluster de Convergence — Zone /o/–/å/</h2>\n'
     html += f"""
 <img src="{rel(img_cluster)}" alt="Cluster de convergence" class="formant-graph" style="max-width:800px;display:block;margin:16px auto;"/>
-<p>Le cluster 450–502 Hz (zone vocalique /o/ — Plénitude) rassemble six instruments
-de trois familles différentes dans un espace de <strong>52 Hz seulement</strong> :</p>
+<p>La zone de convergence 377–506 Hz (voyelles /o/–/å/) rassemble 11 instruments
+de 4 familles différentes. Les 6 instruments les plus proches (dans un espace de
+<strong>129 Hz</strong>) :</p>
 <table class="ref-table">
-<tr class="header"><th>Instrument</th><th>Famille</th><th>F1 (Hz)</th><th>Voyelle</th><th>Δ avec Violoncelle</th></tr>
-<tr><td><b>Cor anglais</b></td><td>Bois</td><td>452</td><td>/o/</td><td>47 Hz</td></tr>
-<tr><td><b>Cor</b></td><td>Cuivres</td><td>457</td><td>/o/</td><td>42 Hz</td></tr>
-<tr><td><b>Tuba contrebasse</b></td><td>Cuivres</td><td>471</td><td>/o/</td><td>28 Hz</td></tr>
-<tr><td><b>Trombone</b></td><td>Cuivres</td><td>491</td><td>/o/</td><td>8 Hz</td></tr>
-<tr style="background:#d5f5e3;"><td><b>Violoncelle</b></td><td>Cordes</td><td>499</td><td>/o/</td><td>—</td></tr>
-<tr style="background:#d5f5e3;"><td><b>Basson</b></td><td>Bois</td><td>502</td><td>/o/</td><td>3 Hz ★</td></tr>
+<tr class="header"><th>Instrument</th><th>Famille</th><th>F1 (Hz)</th><th>Voyelle</th><th>Δ avec Violon</th></tr>
+<tr><td><b>Cor</b></td><td>Cuivres</td><td>388</td><td>/o/</td><td>118 Hz</td></tr>
+<tr><td><b>Sax alto</b></td><td>Saxophones</td><td>398</td><td>/o/</td><td>108 Hz</td></tr>
+<tr><td><b>Cor anglais</b></td><td>Bois</td><td>452</td><td>/o/</td><td>54 Hz</td></tr>
+<tr><td><b>Cl. Sib</b></td><td>Bois</td><td>463</td><td>/o/</td><td>43 Hz</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Basson</b></td><td>Bois</td><td>495</td><td>/o/</td><td>11 Hz</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Violon</b></td><td>Cordes</td><td>506</td><td>/o/</td><td>— (réf.)</td></tr>
 </table>
-<p>★ Basson–Violoncelle : Δ=3 Hz — la doublure formantiquement la plus parfaite du corpus.</p>
+<p>★ Basson + Violon : Δ=11 Hz — convergence quasi-parfaite. Cor + Alto : Δ=11 Hz.</p>
 """
 
     # 2. Carte positions F1
@@ -530,10 +578,51 @@ def build_docx(output_path):
 
     add_heading(doc, "VI. Synthèse — Convergences Formantiques", level=1, color=(26, 35, 126))
     add_paragraph(doc,
-        "Synthèse des découvertes principales de l'analyse formantique. "
-        "93 % de concordance multi-sources (27/29 instruments).", size=10)
+        "Synthèse des découvertes principales de l'analyse formantique complète des 27 instruments "
+        "du corpus (pipeline v22). 93 % de concordance multi-sources.", size=10)
 
-    # Cluster
+    # ── Figure 1 ──────────────────────────────────────────────
+    add_heading(doc, "Figure 1 — Positions formantiques des 27 instruments", level=2,
+                color=(46, 125, 50))
+    add_paragraph(doc,
+        "F1–F4 de chaque instrument sur axe logarithmique. Marqueurs : taille décroissante de F1 "
+        "à F4, losange vert = Fp centroïde. Instruments triés du plus grave au plus aigu. "
+        "Bandes colorées = zones vocaliques Meyer (2009).", italic=True, size=9)
+    if img_fig1 and os.path.exists(img_fig1):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run().add_picture(img_fig1, width=Inches(6.5))
+
+    doc.add_paragraph()
+
+    # ── Figure 2 ──────────────────────────────────────────────
+    add_heading(doc, "Figure 2 — Espace vocalique F1/F2", level=2, color=(46, 125, 50))
+    add_paragraph(doc,
+        "Chaque instrument positionné dans l'espace F1 × F2, convention phonétique. "
+        "Forme des marqueurs selon la famille instrumentale. "
+        "Ellipse rouge = zone de convergence F1 = 377–506 Hz.", italic=True, size=9)
+    if img_fig2 and os.path.exists(img_fig2):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run().add_picture(img_fig2, width=Inches(6.5))
+
+    doc.add_paragraph()
+
+    # ── Figure 3 ──────────────────────────────────────────────
+    add_heading(doc, "Figure 3 — Enveloppes schématiques du cluster de convergence", level=2,
+                color=(183, 28, 28))
+    add_paragraph(doc,
+        "Enveloppes gaussiennes centrées sur le F1 strict de 11 instruments dont le F1 converge "
+        "dans la zone 377–506 Hz. Bande rouge = zone de convergence. "
+        "Quand les résonances coïncident, l'oreille perçoit un timbre unique.", italic=True, size=9)
+    if img_fig3 and os.path.exists(img_fig3):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p.add_run().add_picture(img_fig3, width=Inches(6.5))
+
+    doc.add_paragraph()
+
+    # Cluster (tableau + graphique original)
     add_heading(doc, "Le Cluster de Convergence 450–502 Hz", level=2, color=(183, 28, 28))
     if os.path.exists(img_cluster):
         p = doc.add_paragraph()
