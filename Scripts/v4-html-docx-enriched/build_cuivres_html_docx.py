@@ -257,8 +257,8 @@ def build_html(output_path):
 <div class="section-intro cuivres">
 <p><strong>Plage formantique :</strong> 162–2 358 Hz (voyelles /u/ → /i/ avec sourdines).
 Formants bien définis, grande stabilité spectrale inter-dynamiques (sauf trompette).</p>
-<p><strong>Le cluster de convergence 450–502 Hz (zone /o/)</strong> rassemble
-cor (457), trombone (491), tuba contrebasse (471) — fondement acoustique des doublures
+<p><strong>La zone de convergence /o/–/å/ (377–506 Hz)</strong> rassemble
+cor (388), cor anglais (452), clarinette Sib (463) — fondement acoustique des doublures
 classiques de la section cuivres avec le basson et le violoncelle.</p>
 <p><strong>Ordre des instruments :</strong> Cor · Trompette · Trombone ténor ·
 <strong>Trombone basse</strong> · Tuba basse · Tuba contrebasse (puis sourdines).</p>
@@ -350,11 +350,11 @@ def build_docx(output_path):
               "Formants bien définis, grande stabilité spectrale inter-dynamiques (sauf trompette).")
 
     p2 = doc.add_paragraph()
-    r2 = p2.add_run("Cluster de convergence 450–502 Hz (zone /o/) : ")
+    r2 = p2.add_run("Zone de convergence /o/–/å/ (377–506 Hz) : ")
     r2.bold = True
     r2.font.color.rgb = RGBColor(198, 40, 40)
-    p2.add_run("Cor (457), Trombone (491), Tuba contrebasse (471) — fondement acoustique des doublures "
-               "classiques de la section cuivres avec le basson et le violoncelle.")
+    p2.add_run("Cor (388), Cor anglais (452), Cl. Sib (463), Basson (495), Violon (506) — "
+               "fondement acoustique des doublures classiques de la section cuivres avec les bois et cordes.")
 
     p3 = doc.add_paragraph()
     r3 = p3.add_run("Ordre des instruments : ")

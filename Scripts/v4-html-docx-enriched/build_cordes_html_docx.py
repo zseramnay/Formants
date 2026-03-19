@@ -54,11 +54,13 @@ REF_TABLES = {
         {'source':'Backus (1969)',  'f1':'600–900','f2':'—','f3':'—','f4':'—','voyelle':'—','n':'—','accord':'approx'},
         {'source':'Giesler (1985)', 'f1':'300–500','f2':'—','f3':'—','f4':'—','voyelle':'o-ähnlich','n':'—','accord':'oui'},
         {'source':'Meyer (2009)',   'f1':'~500 (Hauptformant)','f2':'—','f3':'—','f4':'—','voyelle':'o (oh)','n':'—','accord':'oui'},
-        {'source':'Yan_Adds',       'f1':'499 ±155','f2':'1 304 ±576','f3':'2 317','f4':'—','voyelle':'o (oh)','n':'158','accord':'oui'},
+        {'source':'Yan_Adds (autre pipeline)', 'f1':'499 ±155','f2':'1 304 ±576','f3':'2 317','f4':'—','voyelle':'o (oh)','n':'158','accord':'note'},
+        {'source':'Pipeline v22',  'f1':'205',    'f2':'506','f3':'—','f4':'—','voyelle':'u (oo)','n':'309','accord':'réf.'},
     ],
     'Contrebasse': [
         {'source':'Giesler (1985)', 'f1':'70–250','f2':'400 (secondaire)','f3':'—','f4':'—','voyelle':'u/o','n':'—','accord':'approx'},
-        {'source':'SOL2020',        'f1':'200 ±169','f2':'593 ±312','f3':'1 200','f4':'—','voyelle':'u (oo)','n':'41','accord':'approx'},
+        {'source':'SOL2020 (autre pipeline)', 'f1':'200 ±169','f2':'593 ±312','f3':'1 200','f4':'—','voyelle':'u (oo)','n':'41','accord':'note'},
+        {'source':'Pipeline v22',  'f1':'172',   'f2':'474','f3':'—','f4':'—','voyelle':'u (oo)','n':'297','accord':'réf.'},
     ],
     'Ensemble de violons': [
         {'source':'SOL2020 (N=166)',  'f1':'495 ±89','f2':'1 163 ±312','f3':'1 970 ±389','f4':'—','voyelle':'o (oh)','n':'166','accord':'—'},
@@ -98,11 +100,11 @@ ANALYSIS = {
     'Alto+sourd. piombo': "Sourdine lourde. Amortissement maximal, utilisée pour les effets timbraux extrêmes.",
 
     'Violoncelle': """Son chaud et expressif, grande profondeur harmonique.
-        <strong>F1=499 Hz dans le cluster de convergence 450–502 Hz (zone /o/).</strong>
-        Accord remarquable entre toutes les sources : Giesler (300–500), Meyer (~500),
-        Yan_Adds (499 Hz). Le violoncelle est le <em>centre harmonique de l'orchestre</em> selon
-        Meyer — sa convergence avec le basson (Δ=3 Hz) est la plus parfaite du corpus.
-        Convergence avec le cor (Δ=42 Hz) et le trombone (Δ=8 Hz).""",
+        <strong>F1=205 Hz (zone /u/) — profondeur grave.</strong>
+        Accord entre sources : Giesler (300–500), Meyer (~500), Yan_Adds (499 Hz)
+        mesurent une zone spectrale différente (F2 ou registre aigu).
+        Convergences clés via F1 : Trombone (237 Hz, Δ=32 Hz), Tuba basse (226 Hz, Δ=21 Hz).
+        Via Fp (600 Hz) : rapprochement avec la zone /o/ du basson et du cor.""",
 
     'Violoncelle+sourdine': "F1 légèrement modifié. Son plus mat, projection réduite. Atténuation des harmoniques aigus.",
     'Violoncelle+sourd. piombo': "Sourdine lourde. Amortissement maximal des partiels aigus.",
@@ -130,8 +132,8 @@ ANALYSIS = {
 
     'Ensemble de violoncelles': """F1 ensemble = 205 Hz — identique au solo.
         F2 passe de 506 Hz (solo) à 474 Hz (ensemble, −6 %). La section violoncelle maintient
-        intégralement la couleur /o/ du soliste, avec un léger lissage des harmoniques supérieurs.
-        Elle reste dans la zone de convergence du cluster /o/ (450–502 Hz).""",
+        intégralement la couleur /u/ du soliste, avec un léger lissage des harmoniques supérieurs.
+        Elle partage la zone /u/ avec le tuba basse (226 Hz) et la contrebasse (172 Hz).""",
 
     'Ensemble de contrebasses': """Technique non-vibrato (seule disponible dans la base).
         F1=172 Hz — identique au solo. F2 passe de 474 Hz (solo) à 441 Hz (ensemble, −7 %).
@@ -256,14 +258,13 @@ def build_html(output_path):
     html += '<h1 id="v-cordes">V. Les Cordes</h1>\n'
     html += """
 <div class="section-intro cordes">
-<p><strong>Plage formantique :</strong> 200–1 556 Hz (voyelles /u/ → /e/).
+<p><strong>Plage formantique :</strong> 172–1 518 Hz (voyelles /u/ → /e/).
 La famille des cordes présente la plus grande variabilité spectrale de l'orchestre,
 compensée par la mesure Fp (centroïde).</p>
-<p><strong>Découverte clé :</strong> le <strong>violoncelle (F1=499 Hz)</strong>
-est au cœur du cluster de convergence 450–502 Hz, avec Δ=3 Hz avec le basson —
-la doublure la plus parfaite du corpus. L'ensemble de violons (F1=1 556 Hz)
-développe une zone /e/ de brillance très différente du soliste (506 Hz / 893 Hz Fp) :
-<em>effet de section spectral</em> clairement quantifié.</p>
+<p><strong>Découverte clé :</strong> le <strong>violon (F1=506 Hz) et le basson (F1=495 Hz)</strong>
+convergent à Δ=11 Hz dans la zone /o/. Le violoncelle (F1=205 Hz, zone /u/) rejoint
+cette zone via son Fp (~600 Hz). L'effet de section : F1 quasi-stable (violon solo=506,
+ensemble=495, Δ=−2 %), mais F2 s'aplatit de −23 % — <em>effet de section spectral clairement quantifié.</em></p>
 </div>
 """
 
@@ -371,9 +372,9 @@ def build_docx(output_path):
     r2 = p2.add_run("Découverte clé : ")
     r2.bold = True
     r2.font.color.rgb = RGBColor(198, 40, 40)
-    p2.add_run("Violoncelle (499 Hz) + Basson (502 Hz) = Δ=3 Hz — la doublure la plus parfaite du corpus. "
-               "L'ensemble de violons (F1=1 556 Hz) développe une zone /e/ très différente "
-               "du soliste (893 Hz Fp) : effet de section spectral clairement quantifié.")
+    p2.add_run("Violon (506 Hz) + Basson (495 Hz) = Δ=11 Hz — convergence /o/ quasi-parfaite. "
+               "Violoncelle (F1=205 Hz, /u/) : rejoint la zone /o/ via son Fp (~600 Hz). "
+               "Effet de section : F1 violon quasi-stable (−2 %), F2 −23 % — homogénéisation spectrale.")
 
     # Cordes solistes
     add_heading(doc, "Cordes solistes", level=2, color=(21, 101, 192))

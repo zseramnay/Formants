@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 build_synthese_html_docx.py — Section Synthèse v4
-Convergences formantiques, cluster 450-502 Hz, espace vocalique,
+Convergences formantiques, zone de convergence 377-510 Hz, espace vocalique,
 deux matrices de convergence (instruments de base + tous instruments avec sourdines),
 doublures archétypales, principes d'orchestration acoustique.
 """
@@ -1002,7 +1002,7 @@ def build_docx(output_path):
     doc.add_paragraph()
 
     # Cluster (tableau + graphique original)
-    add_heading(doc, "Le Cluster de Convergence 450–502 Hz", level=2, color=(183, 28, 28))
+    add_heading(doc, "Le Cluster de Convergence — Zone /o/–/å/ (377–510 Hz)", level=2, color=(183, 28, 28))
     if os.path.exists(img_cluster):
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER

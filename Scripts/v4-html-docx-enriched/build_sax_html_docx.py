@@ -36,23 +36,23 @@ Giesler (1985) écrit explicitement à propos du saxophone ténor :
 (vergl. z.B. Fagott, Horn, Posaune)&nbsp;»</em> — Giesler cite EXPLICITEMENT
 Basson, Cor et Trombone comme partageant le même formant que le saxophone ténor.
 <br/>
-Le saxophone ténor est donc un membre potentiel du cluster de convergence
-450–502 Hz, mais <strong>absent du corpus SOL2020/Yan_Adds</strong>.
+Le saxophone ténor est donc un membre potentiel de la zone de convergence
+/o/–/å/ (377–510 Hz), mais <strong>absent du corpus SOL2020/Yan_Adds</strong>.
 Données Giesler : F1 ≈ 400–600 Hz → correspondance directe avec la zone /o/.
 </div>
 """
 
 ANALYSIS = {
     'Saxophone alto': """Son chaud et expressif, grande flexibilité timbrale et dynamique.
-        <strong>F1=398 Hz (zone /o/)</strong> — le saxophone alto est au bord du cluster de
-        convergence 450–502 Hz, avec un F1 légèrement inférieur. Tuyau conique (comme le hautbois
-        et le basson) produisant un spectre riche en harmoniques pairs et impairs.
-        Fp centroïde à 1 440 Hz (zone /e/). Le saxophone alto est le seul saxophone présent
-        dans la base SOL2020 IRCAM. Les saxophones soprano, ténor et baryton sont absents du corpus.
+        <strong>F1=398 Hz (zone /o/)</strong> — le saxophone alto s'inscrit dans la zone de
+        convergence /o/–/å/ (377–510 Hz), aux côtés du cor (388 Hz) et du cor anglais (452 Hz).
+        Tuyau conique (comme le hautbois et le basson) produisant un spectre riche en harmoniques
+        pairs et impairs. Fp centroïde à 1 440 Hz (zone /e/).
+        Le saxophone alto est le seul saxophone présent dans la base SOL2020 IRCAM.
+        Les saxophones soprano, ténor et baryton sont absents du corpus.
         <br/>
-        <strong>Découverte :</strong> malgré F1=398 Hz légèrement en-deçà du cluster /o/ (452–502 Hz),
-        le saxophone alto est acoustiquement plus proche de la zone /o/ que de /u/,
-        et sa fusion avec le basson (Δ=104 Hz) reste exploitable orchestralement.""",
+        <strong>Convergences clés :</strong> Sax alto (398) + Cor (388) Δ=10 Hz,
+        Sax alto (398) + Cor anglais (452) Δ=54 Hz, Sax alto (398) + Alto (377) Δ=21 Hz.""",
 }
 
 DOUBLURES = {
@@ -129,9 +129,10 @@ Les saxophones soprano, ténor et baryton ne disposent pas de données specenv d
 <p><strong>Intérêt acoustique :</strong> le saxophone est le seul instrument de l'orchestre à
 combiner un tuyau conique (comme le basson et le hautbois) avec une anche simple (comme la clarinette).
 Cette dualité acoustique lui confère un spectre riche et une grande versatilité timbrale.</p>
-<p><strong>Position dans le cluster :</strong> F1=398 Hz — légèrement en-deçà du cluster /o/ (452–502 Hz)
-mais très proche. Giesler (1985) place explicitement le saxophone <em>ténor</em> dans le cluster avec
-Basson, Cor et Trombone. Le saxophone alto est acoustiquement à la frontière de ce groupe.</p>
+<p><strong>Position dans la zone de convergence :</strong> F1=398 Hz — dans la zone /o/–/å/ (377–510 Hz),
+aux côtés du cor (388 Hz, Δ=10 Hz) et de l'alto (377 Hz, Δ=21 Hz). Giesler (1985) place explicitement
+le saxophone <em>ténor</em> dans le groupe /o/ avec basson, cor et trombone.
+Le saxophone alto s'inscrit pleinement dans cette zone de convergence.</p>
 </div>
 """
 
@@ -183,12 +184,11 @@ def build_docx(output_path):
                "Cette dualité acoustique lui confère un spectre riche et une grande versatilité timbrale.")
 
     p3 = doc.add_paragraph()
-    r3 = p3.add_run("Position dans le cluster : ")
+    r3 = p3.add_run("Position dans la zone de convergence : ")
     r3.bold = True
     r3.font.color.rgb = RGBColor(198, 40, 40)
-    p3.add_run("F1=398 Hz — légèrement en-deçà du cluster /o/ (452–502 Hz) mais très proche. "
-               "Giesler (1985) place explicitement le saxophone ténor dans le cluster avec "
-               "Basson, Cor et Trombone.")
+    p3.add_run("F1=398 Hz — dans la zone /o/–/å/ (377–510 Hz), aux côtés du cor (388 Hz, Δ=10 Hz) "
+               "et de l'alto (377 Hz, Δ=21 Hz). Giesler (1985) place le saxophone ténor dans ce groupe.")
 
     info = all_info.get('sax_alto')
     if info:
