@@ -466,7 +466,7 @@ h4 { color: #555; margin-top: 16px; font-size: 1.05em; }
   background: white; border: 1px solid #ddd; border-radius: 8px;
   padding: 22px; margin: 24px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
-.formant-graph { max-width: 50%; border: 1px solid #eee; border-radius: 4px; display: block; }
+.formant-graph { max-width: 75%; border: 1px solid #eee; border-radius: 4px; display: block; }
 .description {
   font-style: italic; color: #555; background: #e8f5e9;
   padding: 12px 16px; border-left: 4px solid #4caf50; margin: 12px 0; border-radius: 0 4px 4px 0;
