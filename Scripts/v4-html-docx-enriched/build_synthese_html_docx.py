@@ -409,42 +409,72 @@ def make_fig2():
         xr = np.linspace(xa, xb, 100)
         ax.plot(xr, 2.2*xr, color='#ddd', lw=0.8, ls='--', alpha=0.5, zorder=1)
 
-    # ── Scatter + labels (sans Fp) ────────────────────────────
+    # ── Offsets manuels par instrument (dx, dy en points d'écran, ha, va) ──
+    # Calibrés pour éviter toute collision point/label
+    OFFSETS = {
+        # Panneau gauche — zone grave dense (F1=150–280)
+        'Ens. CB':       (-8, -7,  'right', 'top'),
+        'Contrebasse':   (-8,  6,  'right', 'bottom'),
+        'Ens. Vcl.':     ( 7, -7,  'left',  'top'),
+        'Violoncelle':   ( 7,  6,  'left',  'bottom'),
+        'Tuba CB':       (-8,  6,  'right', 'bottom'),
+        'Tuba basse':    (-8, -7,  'right', 'top'),
+        'Trombone':      ( 7, -7,  'left',  'top'),
+        'Trb. basse':    ( 7,  6,  'left',  'bottom'),
+        'Contrebasson':  (-8,  6,  'right', 'bottom'),
+        # Zone médiane gauche (F1=300–420)
+        'Cl. CB':        (-8,  6,  'right', 'bottom'),
+        'Cl. basse':     (-8, -7,  'right', 'top'),
+        'Fl. CB':        ( 7, -7,  'left',  'top'),
+        'Flûte basse':   ( 7,  6,  'left',  'bottom'),
+        'Cor':           ( 7, -7,  'left',  'top'),
+        # Zone convergence (F1=380–510)
+        'Ens. Altos':    (-8, -7,  'right', 'top'),
+        'Alto':          (-8,  6,  'right', 'bottom'),
+        'Sax alto':      ( 7, -7,  'left',  'top'),
+        'Cor anglais':   (-8, -7,  'right', 'top'),
+        'Cl. Sib':       ( 7,  6,  'left',  'bottom'),
+        'Basson':        ( 7, -7,  'left',  'top'),
+        'Ens. Violons':  ( 7,  6,  'left',  'bottom'),
+        'Violon':        ( 7,  6,  'left',  'bottom'),
+        # Aigu gauche
+        'Cl. Mib':       ( 7,  6,  'left',  'bottom'),
+        # Panneau droit
+        'Trompette':     ( 7,  6,  'left',  'bottom'),
+        'Hautbois':      (-8,  6,  'right', 'bottom'),
+        'Flûte':         (-8, -7,  'right', 'top'),
+        'Petite flûte':  ( 7,  6,  'left',  'bottom'),
+    }
+
+    # ── Scatter + labels ─────────────────────────────────────
     seen_fam = set()
-    texts1, texts2 = [], []
 
     for instr in instruments_fig:
         f1, f2 = instr['F'][0], instr['F'][1]
         if not f1 or not f2: continue
-        fam = instr['famille']
+        fam = instr['favourite'] if False else instr['famille']
         col = FAM_COLORS_FIG.get(fam,'#555')
         mk  = FAM_MK.get(fam,'o')
         lbl = fam if fam not in seen_fam else '_'
         seen_fam.add(fam)
         ax = ax1 if f1 <= 700 else ax2
 
-        ax.scatter(f1, f2, s=55, color=col, marker=mk,          # points plus petits
+        ax.scatter(f1, f2, s=50, color=col, marker=mk,
                    edgecolors='white', linewidths=0.6,
                    zorder=5, label=lbl, alpha=0.90)
 
-        t = ax.text(f1, f2, instr['display'],
-                    fontsize=6.5, color=col, fontweight='normal', # non-bold, plus petit
-                    zorder=7)
-        (texts1 if ax is ax1 else texts2).append(t)
+        name = instr['display']
+        dx, dy, ha, va = OFFSETS.get(name, (8, 6, 'left', 'bottom'))
 
-    # ── adjustText ───────────────────────────────────────────
-    if _has_adjusttext:
-        for ax, texts in [(ax1, texts1), (ax2, texts2)]:
-            if texts:
-                adjust_text(
-                    texts, ax=ax,
-                    expand_points=(2.8, 3.2),
-                    expand_text=(2.2, 2.6),
-                    force_text=(1.0, 1.2),
-                    force_points=(0.6, 0.8),
-                    arrowprops=dict(arrowstyle='-', color='#ccc', lw=0.5),
-                    lim=800,
-                )
+        ax.annotate(
+            name,
+            xy=(f1, f2), xytext=(dx, dy),
+            textcoords='offset points',
+            fontsize=6.5, color=col, fontweight='normal',
+            ha=ha, va=va, zorder=7,
+            arrowprops=dict(arrowstyle='-', color='#ccc', lw=0.4,
+                            shrinkA=4, shrinkB=1),
+        )
 
     # ── Ellipse convergence ──────────────────────────────────
     from matplotlib.patches import Ellipse
