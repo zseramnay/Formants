@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-make_synthese_figures.py — Fig 1/2/3 synthèse, données CSV v22
+make_synthese_figures.py — Fig 1/2/3 synthèse, données CSV v3
 """
 import os, sys, csv
 import numpy as np
@@ -153,10 +153,24 @@ def make_fig1():
               ncol=2, title='Marqueurs / Familles', title_fontsize=7.5)
 
     ax.set_title("Figure 1 — Positions formantiques des 27 instruments · "
-                 "F1–F4 + Fp centroïde · zones Meyer (2009) · CSV v22",
-                 fontsize=9, fontweight='bold', pad=8)
+                 "F1–F4 + Fp centroïde · zones Meyer (2009) · CSV v3",
+                 fontsize=9, fontweight='bold', pad=18)
 
-    fig.subplots_adjust(left=0.14, right=0.97, top=0.95, bottom=0.07)
+    # ── Point E (v5) : Axe Bark secondaire (haut) ──
+    ax2 = ax.twiny()
+    ax2.set_xscale('log')
+    ax2.set_xlim(ax.get_xlim())
+    bark_hz = [100, 200, 300, 500, 700, 1000, 1500, 2000, 3000, 4000]
+    bark_hz = [h for h in bark_hz if h <= ax.get_xlim()[1]]
+    ax2.set_xticks(bark_hz)
+    def hz_to_bark(f):
+        return 26.81 / (1 + 1960.0 / f) - 0.53 if f > 0 else 0
+    ax2.set_xticklabels([f"{hz_to_bark(h):.1f}" for h in bark_hz], fontsize=7, color='#888')
+    ax2.set_xlabel("Bark", fontsize=8, color='#888', labelpad=4)
+    ax2.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+    ax2.tick_params(axis='x', which='minor', top=False)
+
+    fig.subplots_adjust(left=0.14, right=0.97, top=0.91, bottom=0.07)
     out = os.path.join(OUT_IMG, 'synthese_fig1_positions.png')
     fig.savefig(out, dpi=150, facecolor='white')
     plt.close(fig)
@@ -275,7 +289,7 @@ def make_fig2():
     ax.set_title(
         "Figure 2 — Espace vocalique F1/F2 des 27 instruments de l'orchestre\n"
         "Convention phonétique : F1 (horizontal) × F2 (vertical) · "
-        "zones Meyer (2009) · données CSV v22",
+        "zones Meyer (2009) · données CSV v3",
         fontsize=10, fontweight='bold', pad=12)
 
     fig.subplots_adjust(left=0.09, right=0.97, top=0.93, bottom=0.08)
@@ -336,12 +350,27 @@ def make_fig3():
     ax.set_xlabel("Fréquence (Hz) — axe logarithmique", fontsize=10, fontweight='bold')
     for s in ['top','right','left']: ax.spines[s].set_visible(False)
     ax.legend(loc='upper right', fontsize=7.5, framealpha=0.95,
-              ncol=2, title='Instruments (F1 strict CSV v22)', title_fontsize=8)
+              ncol=2, title='Instruments (F1 strict CSV v3)', title_fontsize=8)
     ax.set_title("Figure 3 — Enveloppes spectrales schématiques : "
-                 "11 instruments en zone /o/–/å/ · CSV v22",
-                 fontsize=9, fontweight='bold', pad=10)
+                 "11 instruments en zone /o/–/å/ · CSV v3",
+                 fontsize=9, fontweight='bold', pad=18)
 
-    fig.subplots_adjust(left=0.04, right=0.97, top=0.88, bottom=0.10)
+    # ── Point E (v5) : Axe Bark secondaire (haut) ──
+    ax2 = ax.twiny()
+    ax2.set_xscale('log')
+    ax2.set_xlim(ax.get_xlim())
+    bark_hz = [100, 200, 300, 500, 700, 1000, 1500, 2000, 3000]
+    ax2.set_xticks(bark_hz)
+    def hz_to_bark(f):
+        return 26.81 / (1 + 1960.0 / f) - 0.53 if f > 0 else 0
+    ax2.set_xticklabels([f"{hz_to_bark(h):.1f}" for h in bark_hz], fontsize=7, color='#888')
+    ax2.set_xlabel("Bark", fontsize=8, color='#888', labelpad=4)
+    ax2.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+    ax2.tick_params(axis='x', which='minor', top=False)
+    ax2.spines['top'].set_visible(True)
+    ax2.spines['top'].set_color('#ccc')
+
+    fig.subplots_adjust(left=0.04, right=0.97, top=0.84, bottom=0.10)
     out = os.path.join(OUT_IMG, 'synthese_fig3_cluster.png')
     fig.savefig(out, dpi=150, facecolor='white')
     plt.close(fig)

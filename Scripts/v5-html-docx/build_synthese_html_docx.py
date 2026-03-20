@@ -16,7 +16,7 @@ import matplotlib.ticker
 load_all_csvs()
 
 # ═══════════════════════════════════════════════════════════
-# DONNÉES F1 ORDINARIO (VALIDÉES CSV v22)
+# DONNÉES F1 ORDINARIO (VALIDÉES CSV v3)
 # ═══════════════════════════════════════════════════════════
 
 # Instruments de base (pour la matrice principale)
@@ -229,8 +229,8 @@ def make_convergence_matrix(instruments_dict, filename, title, threshold=80):
 
 
 def make_cluster_chart(filename):
-    """Graphique du cluster de convergence — valeurs CSV v22."""
-    # Valeurs F1 strictes CSV v22 — zone /o/–/å/ (377–510 Hz)
+    """Graphique du cluster de convergence — valeurs CSV v3."""
+    # Valeurs F1 strictes CSV v3 — zone /o/–/å/ (377–510 Hz)
     cluster_instruments = {
         'Alto':        377,  # Viola ordinario
         'Cor':         388,  # Horn ordinario
@@ -265,7 +265,7 @@ def make_cluster_chart(filename):
     ax.set_xlabel("Fréquence F1 (Hz)", fontsize=10, fontweight='bold')
     ax.set_yticks([])
     ax.set_title("Cluster de convergence — Zone vocalique /o/–/å/ (377–510 Hz)\n"
-                 "8 instruments de 4 familles · données CSV v22",
+                 "8 instruments de 4 familles · données CSV v3",
                  fontsize=10, fontweight='bold', pad=10, color='#C62828')
     for s in ['top','right','left']:
         ax.spines[s].set_visible(False)
@@ -368,7 +368,7 @@ def make_fig1():
     ax.legend(handles=leg, loc='lower right', fontsize=7, framealpha=0.95,
               ncol=2, title='Marqueurs / Familles', title_fontsize=7.5)
     ax.set_title("Figure 1 — Positions formantiques des 27 instruments · "
-                 "F1–F4 + Fp centroïde · zones Meyer (2009) · CSV v22",
+                 "F1–F4 + Fp centroïde · zones Meyer (2009) · CSV v3",
                  fontsize=9, fontweight='bold', pad=8)
     fig.subplots_adjust(left=0.14, right=0.97, top=0.95, bottom=0.07)
     out = os.path.join(OUT_IMG, 'synthese_fig1_positions.png')
@@ -528,7 +528,7 @@ def make_fig2():
     fig.suptitle(
         "Figure 2 — Espace vocalique F1/F2 des 27 instruments de l'orchestre\n"
         "Convention phonétique : F1 (horizontal) × F2 (vertical) · "
-        "zones Meyer (2009) · données CSV v22",
+        "zones Meyer (2009) · données CSV v3",
         fontsize=10, fontweight='bold', y=0.98)
 
     fig.subplots_adjust(left=0.07, right=0.97, top=0.93, bottom=0.08)
@@ -603,10 +603,10 @@ def make_fig3():
         ax.spines[s].set_visible(False)
 
     ax.legend(loc='upper right', fontsize=7.5, framealpha=0.95, ncol=2,
-              title='Instruments (F1 strict CSV v22)', title_fontsize=8)
+              title='Instruments (F1 strict CSV v3)', title_fontsize=8)
 
     ax.set_title("Figure 3 — Enveloppes spectrales schématiques : "
-                 "11 instruments en zone /o/–/å/ · CSV v22",
+                 "11 instruments en zone /o/–/å/ · CSV v3",
                  fontsize=9, fontweight='bold', pad=10)
 
     # Espace en bas suffisant pour les labels voyelles

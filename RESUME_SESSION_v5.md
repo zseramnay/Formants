@@ -52,19 +52,29 @@ Deux audits externes (Gemini + Copilot) ont été analysés. Tri effectué entre
 - « Données d'entrée : Enveloppes spectrales pré-calculées (specenv, 1024 bins) — fenêtrage Hann + lissage appliqués en amont par le pipeline IRCAM »
 - Seuils de détection corrigés pour refléter le code réel (−30 dB, 70 Hz)
 
+### Étape 5 — Point E (axes Bark secondaires)
+
+Axe Bark ajouté en haut des figures 1 et 3 de la synthèse (formule de Traunmüller : `Bark = 26.81 / (1 + 1960/f) − 0.53`). Pas de changement de données, annotation visuelle uniquement. Permet une lecture timbrale plus directe pour les acousticiens.
+
+### Étape 6 — Intégration CSV v3 dans les scripts v5
+
+**`common.py`** : `load_all_csvs()` charge maintenant les CSV v3 par défaut (fallback sur v2 si v3 absent).
+
+**`tech_table_html` et `tech_table_docx`** : pour chaque ligne ordinario/non-vibrato, une sous-ligne affiche :
+- F1–F3 : σ, [Q25–Q75], IQR
+- F4–F6 : σ seul
+
+Toutes les références « CSV v22 » remplacées par « CSV v3 » dans les 11 scripts.
+
+Toutes les sections régénérées + document complet (HTML + DOCX).
+
 ## Ce qui reste à faire
 
-### Point E — Axes Bark en annotation secondaire (Priorité 3)
-Ajouter un axe secondaire en échelles Bark sur les figures principales (1 et 3 de la synthèse). Pas de changement de données, juste visuel.
+Tous les points A–F du plan v5 sont complétés. Reste éventuellement :
 
-### Intégration CSV v3 dans les scripts v5
-Les scripts de build HTML/DOCX (common.py) lisent actuellement les CSV v2. Il faut :
-1. Mettre à jour `common.py` pour lire les CSV v3
-2. Afficher médiane ± IQR (en plus de ± σ) dans les tableaux de référence de chaque instrument
-3. Régénérer toutes les sections
-
-### Document complet à vérifier en ligne
-URL : https://zseramnay.github.io/Formants/Versions-html-and-docx/REFERENCE_FORMANTIQUE_COMPLETE.html
+- Vérification visuelle du document HTML complet en ligne
+- Extension future : répertoire spectral contemporain (Grisey, Murail, Saariaho, Haas, Radulescu)
+- Validation Fp pour les 8 instruments restants (22/30 validés)
 
 ## État du repo
 

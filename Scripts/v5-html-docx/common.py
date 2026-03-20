@@ -105,12 +105,12 @@ def load_data(path):
                 DATA[(V2_TO_LEGACY[inst], tech)] = row
 
 def load_all_csvs():
-    csv_all = os.path.join(BASE, 'Resultats/formants_all_techniques_v2.csv')
-    csv_yan = os.path.join(BASE, 'Resultats/formants_yan_adds_v2.csv')
+    csv_all = os.path.join(BASE, 'Resultats/formants_all_techniques_v3.csv')
+    csv_yan = os.path.join(BASE, 'Resultats/formants_yan_adds_v3.csv')
     if not os.path.exists(csv_all):
-        csv_all = os.path.join(BASE, 'Resultats/formants_all_techniques.csv')
+        csv_all = os.path.join(BASE, 'Resultats/formants_all_techniques_v2.csv')
     if not os.path.exists(csv_yan):
-        csv_yan = os.path.join(BASE, 'Resultats/formants_yan_adds.csv')
+        csv_yan = os.path.join(BASE, 'Resultats/formants_yan_adds_v2.csv')
     load_data(csv_all)
     load_data(csv_yan)
 
@@ -205,7 +205,7 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
                          markersize=10, label=f'Fp centroïde = {fp} Hz'))
     ax.legend(handles=le, loc='upper right', fontsize=7, framealpha=0.9, edgecolor='#CCC')
     ax.text(0.01, -0.08,
-            f"Famille : {family_label or 'Orchestre'}\nSource : CSV v22 (SOL2020 + Yan_Adds)",
+            f"Famille : {family_label or 'Orchestre'}\nSource : CSV v3 (SOL2020 + Yan_Adds)",
             transform=ax.transAxes, fontsize=7, color='#888')
     plt.tight_layout()
 
@@ -353,6 +353,33 @@ def tech_table_html(inst_csv, filter_sustained=False):
         bg = ' style="background-color:#dff0d8;"' if is_ord else ''
         fvals = ''.join(f'<td{bg}>{fmt_hz(f)}</td>' for f in fs)
         rows.append(f'<tr><td{bg}><b>{tech}</b></td><td{bg}>{n}</td>{fvals}</tr>')
+        # ── v5 : ligne stats σ / IQR pour les techniques ordinario ──
+        if is_ord and r.get('F1_std') and sf(r.get('F1_std', '')) > 0:
+            stats_cells = []
+            for i in range(1, 4):  # F1–F3 only
+                std_v = sf(r.get(f'F{i}_std', ''))
+                q25_v = sf(r.get(f'F{i}_q25', ''))
+                q75_v = sf(r.get(f'F{i}_q75', ''))
+                if std_v > 0:
+                    iqr = round(q75_v - q25_v)
+                    stats_cells.append(
+                        f'<td{bg} style="font-size:0.78em;color:#555;">'
+                        f'σ={round(std_v)}<br>[{round(q25_v)}–{round(q75_v)}]<br>'
+                        f'IQR={iqr}</td>')
+                else:
+                    stats_cells.append(f'<td{bg}>—</td>')
+            # F4–F6 just σ
+            for i in range(4, 7):
+                std_v = sf(r.get(f'F{i}_std', ''))
+                if std_v > 0:
+                    stats_cells.append(
+                        f'<td{bg} style="font-size:0.78em;color:#555;">σ={round(std_v)}</td>')
+                else:
+                    stats_cells.append(f'<td{bg}>—</td>')
+            rows.append(
+                f'<tr><td{bg} style="font-size:0.78em;color:#555;font-style:italic;">'
+                f'↳ σ / [Q25–Q75]</td><td{bg}></td>'
+                + ''.join(stats_cells) + '</tr>')
     if not rows:
         return ""
     return (f'<table class="tech-table">'
@@ -583,6 +610,29 @@ def tech_table_docx(doc, inst_csv):
             set_cell_text(row[idx], v, bold=(idx == 0), size=9)
             if fill:
                 set_cell_shading(row[idx], fill)
+        # ── v5 : ligne stats σ / IQR pour ordinario ──
+        if is_ord and r.get('F1_std') and sf(r.get('F1_std', '')) > 0:
+            srow = table.add_row().cells
+            set_cell_text(srow[0], '↳ σ / [Q25–Q75]', size=7, color=(120, 120, 120))
+            set_cell_text(srow[1], '', size=7)
+            if fill:
+                set_cell_shading(srow[0], fill)
+                set_cell_shading(srow[1], fill)
+            for i in range(1, 7):
+                ci = i + 1  # column index
+                std_v = sf(r.get(f'F{i}_std', ''))
+                q25_v = sf(r.get(f'F{i}_q25', ''))
+                q75_v = sf(r.get(f'F{i}_q75', ''))
+                if std_v > 0 and i <= 3:
+                    iqr = round(q75_v - q25_v)
+                    txt = f"σ={round(std_v)} [{round(q25_v)}–{round(q75_v)}]"
+                elif std_v > 0:
+                    txt = f"σ={round(std_v)}"
+                else:
+                    txt = '—'
+                set_cell_text(srow[ci], txt, size=7, color=(120, 120, 120))
+                if fill:
+                    set_cell_shading(srow[ci], fill)
     widths_cm = [4.8, 1.1, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3]
     for row_obj in table.rows:
         for cell, width in zip(row_obj.cells, widths_cm):
