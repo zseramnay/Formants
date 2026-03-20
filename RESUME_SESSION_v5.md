@@ -85,6 +85,22 @@ Toutes les sections régénérées + document complet (HTML + DOCX).
 
 **40 images régénérées** : 12 bois + 9 cuivres + 1 sax + 18 cordes — toutes avec amplitudes réelles.
 
+### Étape 8 — Courbes en cloche avec BW -3dB réels
+
+**Problème identifié** : les graphiques en barres rectangulaires ne montrent aucune largeur de bande — un formant n'est pas une ligne mais une résonance avec une largeur. De plus, le σ statistique (variabilité de position du pic sur la tessiture) ≠ bandwidth réel du formant. Utiliser σ comme largeur gonfle artificiellement les formants hauts.
+
+**Script de calcul** : mesure la largeur à −3 dB de chaque pic dans les enveloppes spectrales (specenv) pour tous les échantillons, puis médiane par instrument×technique.
+
+**`Resultats/bandwidths_3db.csv`** : 533 profils instrument×technique, 8 colonnes (instrument, technique, F1_bw–F6_bw).
+
+Exemple Cor en Fa ordinario : F1=205 Hz, F2=162 Hz, F3=118 Hz, F4=118 Hz — vs les anciens σ de 117, 252, 297, 382 Hz.
+
+**`make_graph` réécrit** : gaussiennes colorées au lieu de barres. Hauteur = amplitude dB normalisée, largeur = BW_3dB / 2.355 (conversion en σ gaussien). Titre changé : « Profil formantique » au lieu de « Formants spectraux F1–F6 ». Légende affiche BW en Hz.
+
+**`common.py`** : `load_bandwidths()` charge le CSV BW au démarrage. `get_f()` retourne `bw: [F1_bw, ..., F6_bw]`. Fallback si pas de BW : σ = 8% de la fréquence centrale.
+
+**49 images régénérées** en courbes de cloche avec bandwidths réels.
+
 ## Ce qui reste à faire
 
 Tous les points A–F du plan v5 sont complétés. Reste éventuellement :
