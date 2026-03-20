@@ -122,6 +122,9 @@ def get_f(inst, tech):
         'n': int(r['n_samples']),
         'F': [round(sf(r[f'F{i}_hz'])) for i in range(1, 7)],
         'dB': [sf(r.get(f'F{i}_db', '')) for i in range(1, 7)],
+        'q25': [sf(r.get(f'F{i}_q25', '')) for i in range(1, 4)] + [0, 0, 0],
+        'q75': [sf(r.get(f'F{i}_q75', '')) for i in range(1, 4)] + [0, 0, 0],
+        'std': [sf(r.get(f'F{i}_std', '')) for i in range(1, 7)],
     }
 
 def fmt_hz(v):
@@ -141,10 +144,10 @@ FA = [1.0, 0.85, 0.7, 0.55, 0.4, 0.3]
 
 # ─── Génération graphiques ───────────────────────────────────
 def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', family_label='',
-               amplitudes=None):
+               amplitudes=None, iqr_ranges=None):
     """
     amplitudes: list of 6 dB values (median amplitude per formant), or None for legacy.
-    If provided, bar heights reflect real spectral amplitude (normalized to F1=0dB).
+    iqr_ranges: list of 6 tuples (q25, q75) in Hz — bandwidth bands for F1–F3.
     """
     valid = [(i, f) for i, f in enumerate(formants) if f > 0]
     if not valid:
@@ -168,22 +171,33 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
     use_real_amp = (amplitudes is not None and
                     any(amplitudes[i] != 0 for i, _ in valid))
     if use_real_amp:
-        # Normalize: F1 (max) → 1.0, others relative in linear scale
         valid_amps = [amplitudes[i] for i, _ in valid]
         max_db = max(valid_amps)
         heights = {}
         for i, f in valid:
-            rel_db = amplitudes[i] - max_db  # ≤ 0
-            heights[i] = max(0.05, 10 ** (rel_db / 20.0))  # amplitude ratio, floor at 0.05
+            rel_db = amplitudes[i] - max_db
+            heights[i] = max(0.05, 10 ** (rel_db / 20.0))
     else:
         heights = {i: 1.0 * (1.0 - i * 0.12) for i, _ in valid}
+
+    # ── IQR bandwidth bands (F1–F3) — drawn behind bars ──
+    has_iqr = False
+    if iqr_ranges:
+        for i, freq in valid:
+            if i < 3:
+                q25, q75 = iqr_ranges[i]
+                if q25 > 0 and q75 > 0 and q75 > q25:
+                    has_iqr = True
+                    bh = heights[i]
+                    ax.barh(bh * 0.5, q75 - q25, left=q25, height=bh * 0.85,
+                            color=FC[i], alpha=0.12, edgecolor=FC[i],
+                            linewidth=0.8, linestyle='--', zorder=2)
 
     bw = mf * 0.012
     for i, freq in valid:
         bh = heights[i]
         ax.bar(freq, bh, width=bw * (1.2 - i * 0.05),
                color=FC[i], alpha=FA[i], edgecolor='#333', linewidth=0.8, zorder=3)
-        # Label: show amplitude in dB if available
         if use_real_amp:
             amp_str = f"F{i+1}\n{freq} Hz\n({amplitudes[i]:.0f} dB)"
         else:
@@ -194,9 +208,10 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
 
     f1 = formants[0]
     if fp and abs(fp - f1) > 30:
-        ax.plot(fp, 0.5, marker='D', markersize=14, color='#1B5E20',
+        fp_h = heights.get(0, 0.5) * 0.55 if use_real_amp else 0.5
+        ax.plot(fp, fp_h, marker='D', markersize=14, color='#1B5E20',
                 markeredgecolor='black', markeredgewidth=1.5, zorder=6)
-        ax.annotate(f"Fp = {fp} Hz\n(centroïde)", xy=(fp, 0.5), xytext=(fp, 0.65),
+        ax.annotate(f"Fp = {fp} Hz\n(centroïde)", xy=(fp, fp_h), xytext=(fp, fp_h + 0.15),
                     ha='center', fontsize=8, fontweight='bold', color='#1B5E20',
                     arrowprops=dict(arrowstyle='->', color='#1B5E20', lw=1.5), zorder=7)
 
@@ -223,6 +238,7 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
     for s in ['top', 'right', 'left']:
         ax.spines[s].set_visible(False)
 
+    # Legend — lower left (zone /u/, always empty)
     if use_real_amp:
         le = [mpatches.Patch(facecolor=FC[i], alpha=FA[i], edgecolor='#333',
                              label=f'F{i+1} = {formants[i]} Hz ({amplitudes[i]:.0f} dB)') for i, _ in valid]
@@ -233,10 +249,13 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
         le.append(Line2D([0], [0], marker='D', color='w',
                          markerfacecolor='#1B5E20', markeredgecolor='black',
                          markersize=10, label=f'Fp centroïde = {fp} Hz'))
-    ax.legend(handles=le, loc='upper right', fontsize=7, framealpha=0.9, edgecolor='#CCC')
-    ax.text(0.01, -0.08,
-            f"Famille : {family_label or 'Orchestre'}\nSource : CSV v3 (SOL2020 + Yan_Adds)",
-            transform=ax.transAxes, fontsize=7, color='#888')
+    if has_iqr:
+        le.append(mpatches.Patch(facecolor='#999', alpha=0.15, edgecolor='#999',
+                                 linestyle='--', label='IQR [Q25–Q75]'))
+    ax.legend(handles=le, loc='lower left', fontsize=7, framealpha=0.92, edgecolor='#CCC')
+    ax.text(0.99, -0.08,
+            f"Famille : {family_label or 'Orchestre'} · Source : CSV v3 (SOL2020 + Yan_Adds)",
+            transform=ax.transAxes, fontsize=7, color='#888', ha='right')
     plt.tight_layout()
 
     out = os.path.join(OUT_IMG, f"{filename}.png")
