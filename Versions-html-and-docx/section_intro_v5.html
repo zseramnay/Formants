@@ -171,10 +171,10 @@ et ne représentent pas le timbre fondamental.</p>
 <tr><td><b>Sample Rate</b></td><td>44 100 Hz</td></tr>
 <tr><td><b>Résolution fréquentielle</b></td><td>~10,8 Hz/bin</td></tr>
 <tr><td><b>Plage analysée</b></td><td>100–3 000 Hz</td></tr>
-<tr><td><b>Algorithme</b></td><td>scipy.signal.find_peaks — pic le plus proéminent (pas premier pic)</td></tr>
-<tr><td><b>Hauteur minimale</b></td><td>10 % de l'amplitude maximale</td></tr>
-<tr><td><b>Distance minimale</b></td><td>10 bins (~50 Hz)</td></tr>
-<tr><td><b>Proéminence minimale</b></td><td>5 % de l'amplitude maximale</td></tr>
+<tr><td><b>Données d'entrée</b></td><td>Enveloppes spectrales pré-calculées (specenv, 1 024 bins) — fenêtrage Hann + lissage appliqués en amont par le pipeline IRCAM (SuperVP/AudioSculpt)</td></tr>
+<tr><td><b>Algorithme</b></td><td>Détection de pics sur enveloppe spectrale — pic le plus proéminent (pas premier pic)</td></tr>
+<tr><td><b>Seuil d'amplitude</b></td><td>−30 dB sous le pic maximum de la région</td></tr>
+<tr><td><b>Distance minimale</b></td><td>70 Hz entre pics (~6.5 bins)</td></tr>
 </table>
 <p><em>Choix méthodologique critique : la détection du pic le plus proéminent (et non du premier pic) capture le formant perceptuel principal, évite les résonances basses secondaires, et est cohérente avec la perception auditive.</em></p>
 

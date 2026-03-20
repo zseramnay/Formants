@@ -129,10 +129,10 @@ PARAMS_ROWS = [
     ('Sample Rate', '44 100 Hz'),
     ('Résolution fréquentielle', '~10,8 Hz/bin'),
     ('Plage analysée', '100–3 000 Hz'),
-    ('Algorithme', 'scipy.signal.find_peaks — pic le plus proéminent (pas premier pic)'),
-    ('Hauteur minimale', '10 % de l\'amplitude maximale'),
-    ('Distance minimale', '10 bins (~50 Hz)'),
-    ('Proéminence minimale', '5 % de l\'amplitude maximale'),
+    ('Données d\'entrée', 'Enveloppes spectrales pré-calculées (specenv, 1 024 bins) — fenêtrage Hann + lissage appliqués en amont par le pipeline IRCAM (SuperVP/AudioSculpt)'),
+    ('Algorithme', 'Détection de pics sur enveloppe spectrale — pic le plus proéminent (pas premier pic)'),
+    ('Seuil d\'amplitude', '−30 dB sous le pic maximum de la région'),
+    ('Distance minimale', '70 Hz entre pics (~6.5 bins)'),
 ]
 
 # ═══════════════════════════════════════════════════════════
