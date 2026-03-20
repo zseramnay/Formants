@@ -214,21 +214,28 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
 
     # ── Anti-collision label placement ──
     log_range = np.log10(mf) - np.log10(100)
-    LABEL_W = 0.06 * log_range   # approx label width in log-x
-    LABEL_H = 0.07               # approx height per line in y-data
+    LABEL_W = 0.065 * log_range  # approx label width in log-x
+    LABEL_H = 0.065              # approx height per line in y-data
     MAX_Y   = 0.88               # ceiling to avoid vowel zone labels
 
     labels = []
     for i, freq in valid:
         h = heights[i]
         if use_real_amp:
-            txt = f"F{i+1}\n{freq} Hz\n({amplitudes[i]:.0f} dB)"
-            nlines = 3
+            if i >= 3:  # F4-F6: compact 2-line format
+                txt = f"F{i+1} {freq} Hz\n({amplitudes[i]:.0f} dB)"
+                nlines = 2
+                fs = 6.5
+            else:
+                txt = f"F{i+1}\n{freq} Hz\n({amplitudes[i]:.0f} dB)"
+                nlines = 3
+                fs = 7
         else:
             txt = f"F{i+1}\n{freq} Hz"
             nlines = 2
+            fs = 7
         labels.append({'x': freq, 'y': h, 'text': txt, 'color': '#333',
-                       'fs': 7, 'priority': 6-i, 'type': 'formant', 'nlines': nlines})
+                       'fs': fs, 'priority': 6-i, 'type': 'formant', 'nlines': nlines})
 
     f1 = formants[0]
     if fp and abs(fp - f1) > 30:
@@ -241,52 +248,72 @@ def make_graph(display, filename, n, formants, fp=None, family_color='#2E7D32', 
     labels.sort(key=lambda l: -l['priority'])
     placed = []  # (log_x, y_bot, y_top, log_w)
 
+    def _collides(lx, ty, lh, lw):
+        for px, py_bot, py_top, pw in placed:
+            if abs(lx - px) < (lw + pw) * 0.55:
+                if ty < py_top + 0.005 and (ty + lh) > py_bot - 0.005:
+                    return True
+        return False
+
     for lab in labels:
         lx = np.log10(lab['x'])
-        base_y = lab['y'] + 0.04
         lh = lab['nlines'] * LABEL_H
+        base_y = lab['y'] + 0.04
 
-        # Cap at ceiling
-        if base_y + lh > MAX_Y:
-            base_y = MAX_Y - lh
+        # Generate candidate positions: (text_x_log, text_y, cost)
+        candidates = []
+        x_offsets = [0, -LABEL_W*0.8, LABEL_W*0.8,
+                     -LABEL_W*1.5, LABEL_W*1.5,
+                     -LABEL_W*2.2, LABEL_W*2.2]
+        y_pushes = [0, 0.07, 0.14, 0.21, 0.28, 0.35]
 
-        target_y = base_y
-        for _ in range(10):
-            collision = False
-            for px, py_bot, py_top, pw in placed:
-                if abs(lx - px) < (LABEL_W + pw) * 0.5:
-                    if target_y < py_top + 0.01 and (target_y + lh) > py_bot - 0.01:
-                        collision = True
-                        target_y = py_top + 0.02
-                        break
-            if not collision:
-                break
+        for ox in x_offsets:
+            tx = lx + ox
+            # Skip if out of plot range
+            if tx < np.log10(100) or tx > np.log10(mf):
+                continue
+            for yp in y_pushes:
+                ty = base_y + yp
+                if ty + lh > MAX_Y:
+                    ty = MAX_Y - lh
+                if ty < 0.04:
+                    continue
+                if not _collides(tx, ty, lh, LABEL_W):
+                    cost = abs(ox) * 4 + yp * 2
+                    candidates.append((tx, ty, cost))
+                    break  # Found a slot for this x offset, no need to push higher
 
-        # Re-cap after push
-        if target_y + lh > MAX_Y:
-            target_y = MAX_Y - lh
-        if target_y < 0.04:
-            target_y = 0.04
+        if not candidates:
+            # Fallback: place at base position even with overlap
+            ty = min(base_y, MAX_Y - lh)
+            candidates.append((lx, max(ty, 0.04), 99))
 
-        placed.append((lx, target_y, target_y + lh, LABEL_W))
+        candidates.sort(key=lambda c: c[2])
+        best_lx, best_y, _ = candidates[0]
+        best_x = 10 ** best_lx
 
-        displacement = abs(target_y - (lab['y'] + 0.04))
+        placed.append((best_lx, best_y, best_y + lh, LABEL_W))
+
+        # Draw label with arrow if displaced
+        dx = abs(best_lx - lx)
+        dy = abs(best_y - base_y)
         if lab['type'] == 'fp':
             ax.annotate(lab['text'], xy=(lab['x'], lab['y']),
-                        xytext=(lab['x'], target_y),
+                        xytext=(best_x, best_y),
                         ha='center', fontsize=lab['fs'], fontweight='bold',
                         color=lab['color'],
-                        arrowprops=dict(arrowstyle='->', color=lab['color'], lw=1.5),
+                        arrowprops=dict(arrowstyle='->', color=lab['color'], lw=1.2),
                         zorder=8)
-        elif displacement > 0.03:
+        elif dx > 0.01 or dy > 0.03:
             ax.annotate(lab['text'], xy=(lab['x'], lab['y']),
-                        xytext=(lab['x'], target_y),
+                        xytext=(best_x, best_y),
                         ha='center', va='bottom', fontsize=lab['fs'],
                         fontweight='bold', color=lab['color'],
-                        arrowprops=dict(arrowstyle='->', color='#999', lw=0.8, ls='--'),
+                        arrowprops=dict(arrowstyle='->', color='#999',
+                                      lw=0.8, ls='--'),
                         zorder=6)
         else:
-            ax.text(lab['x'], target_y, lab['text'],
+            ax.text(best_x, best_y, lab['text'],
                     ha='center', va='bottom', fontsize=lab['fs'],
                     fontweight='bold', color=lab['color'], zorder=6)
 
