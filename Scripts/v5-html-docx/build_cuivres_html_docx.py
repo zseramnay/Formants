@@ -131,7 +131,11 @@ ANALYSIS_SORDINES = {
     'Trombone + sourd. wah (fermé)': "F1 remonte à 398 Hz (+68 %). Son étouffé et nasal.",
     'Trompette + sourd. cup': "F1 monte à 1 443 Hz (+84 %). Son doux et arrondi, perd la brillance caractéristique.",
     'Trompette + sourd. sèche': "F1=1 098 Hz (+40 %). Son piquant et nasal, le plus utilisé en orchestre.",
-    'Trompette + sourd. harmon': "F1=2 358 Hz (+200 %) — tout le spectre propulsé dans la zone /i/. Son miles-davisien.",
+    'Trompette + sourd. harmon': "F1=2 358 Hz — la résonance de la sourdine harmon projette le pic spectral dominant dans la zone /i/. "
+        "Attention : sur les notes graves (A♯3–C4), l'énergie spectrale reste centrée ~200–400 Hz (Δ=0 dB avec le pic global), "
+        "mais sur la majorité de la tessiture (D♯4+), la résonance harmon à 3 000–5 000 Hz domine de 10 à 40 dB. "
+        "La médiane F1 reflète cette dominance aiguë. Le Fp (centroïde = 1 443 Hz) capture mieux la perception d'un son "
+        "\"large mais nasillard\" en intégrant l'énergie grave résiduelle et le pic harmon aigu.",
     'Trompette + sourd. wah (ouvert)': "F1 descend à 560 Hz (−29 %). Son nasal et brillant.",
     'Trompette + sourd. wah (fermé)': "F1=581 Hz (−26 %). Son étouffé, spectre fortement filtré.",
     'Tuba basse + sourdine': "F1 reste à 226 Hz (Δ=0 Hz). Projection réduite, son assourdi.",
@@ -272,6 +276,15 @@ classiques de la section cuivres avec le basson et le violoncelle.</p>
 
     html += '<h2>Cuivres avec sourdine</h2>\n'
     html += '<div class="section-intro cuivres"><p>Les sourdines modifient profondément le profil formantique. Résultats analysés uniquement en technique ordinario (ou ordinario_open/closed pour les wah).</p></div>\n'
+    html += ('<div class="callout-box" style="background:#FFF8E1;border-left:4px solid #F9A825;padding:12px 16px;margin:12px 0;font-size:0.92em;">'
+             '<strong>⚠ Note méthodologique — sourdines et F1</strong><br/>'
+             'Les sourdines créent des <strong>résonances propres</strong> (cavité de la sourdine) qui peuvent dominer '
+             'le spectre, particulièrement dans le registre aigu. Notre F1 (pic spectral le plus proéminent en médiane '
+             'sur toute la tessiture) reflète cette résonance dominante, pas nécessairement la fondamentale de '
+             'l\'instrument. Exemple : la trompette harmon montre F1=2 358 Hz (résonance harmon), alors que les notes '
+             'graves conservent de l\'énergie à ~200–400 Hz. Le <strong>Fp (centroïde spectral)</strong> est dans ces '
+             'cas un indicateur perceptif plus fiable, intégrant l\'énergie sur l\'ensemble du spectre.'
+             '</div>\n')
 
     # Grouper par instrument
     html += '<h3>Cor avec sourdine</h3>\n'
@@ -374,6 +387,15 @@ def build_docx(output_path):
         "ordinario (ou ordinario_open/closed pour les wah). Seuls les graphiques et descriptions "
         "sont fournis (sans tableau de techniques complet).",
         size=10)
+    add_paragraph(doc,
+        "⚠ Note méthodologique — sourdines et F1 : les sourdines créent des résonances propres "
+        "(cavité de la sourdine) qui peuvent dominer le spectre, particulièrement dans le registre aigu. "
+        "Notre F1 (pic spectral le plus proéminent en médiane sur toute la tessiture) reflète cette "
+        "résonance dominante, pas nécessairement la fondamentale de l'instrument. Exemple : la trompette "
+        "harmon montre F1=2 358 Hz (résonance harmon), alors que les notes graves conservent de l'énergie "
+        "à ~200–400 Hz. Le Fp (centroïde spectral) est dans ces cas un indicateur perceptif plus fiable, "
+        "intégrant l'énergie sur l'ensemble du spectre.",
+        size=9)
 
     add_heading(doc, "Cor avec sourdine", level=3)
     add_instrument_docx(doc, 'cuivres_cor_sord', show_ref=False, show_all_tech=False)
