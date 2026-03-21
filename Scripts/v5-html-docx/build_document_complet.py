@@ -124,6 +124,11 @@ TOC_STRUCTURE = [
     (1, "Doublures vérifiées",                                 "doublures-verifiees"),
     (1, "6 Principes d'orchestration acoustique",              "principes"),
     (1, "Concordance multi-sources",                           "concordance"),
+
+    (0, "VII. Enveloppes spectrales par famille",               "vii-enveloppes"),
+    (1, "Bois",                                                 "env-bois"),
+    (1, "Cuivres",                                              "env-cuivres"),
+    (1, "Cordes",                                               "env-cordes"),
 ]
 
 # ═══════════════════════════════════════════════════════════
@@ -233,6 +238,7 @@ def get_section_body(script_name, tmp_dir):
         'build_sax_html_docx.py':      'section_sax_v5.html',
         'build_cordes_html_docx.py':   'section_cordes_v5.html',
         'build_synthese_html_docx.py': 'section_synthese_v5.html',
+        'build_envelopes_by_family_html_docx.py': 'section_enveloppes_v5.html',
     }
     out_filename = out_file_map[script_name]
     out_path = os.path.join(OUT_DIR, out_filename)
@@ -477,6 +483,7 @@ def build_html_complet():
         'build_sax_html_docx.py',
         'build_cordes_html_docx.py',
         'build_synthese_html_docx.py',
+        'build_envelopes_by_family_html_docx.py',
     ]
 
     # Générer chaque section
@@ -773,6 +780,7 @@ def build_docx_complet():
         ('build_sax_html_docx.py',      'section_sax_v5.docx'),
         ('build_cordes_html_docx.py',   'section_cordes_v5.docx'),
         ('build_synthese_html_docx.py', 'section_synthese_v5.docx'),
+        ('build_envelopes_by_family_html_docx.py', 'section_enveloppes_v5.docx'),
     ]
 
     # Régénérer toutes les sections (toujours, pour garantir la cohérence)

@@ -244,6 +244,10 @@ tr:nth-child(even) { background: #fafafa; }
     <a href="#doublures-verifiees" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">Doublures vérifiées</a>
     <a href="#principes" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">6 Principes d'orchestration acoustique</a>
     <a href="#concordance" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">Concordance multi-sources</a>
+    <a href="#vii-enveloppes" style="display:block; padding:3px 14px 3px 14px; color:#f6c90e; text-decoration:none; border-left:3px solid #f6c90e; line-height:1.4; font-weight:bold;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">VII. Enveloppes spectrales par famille</a>
+    <a href="#env-bois" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">Bois</a>
+    <a href="#env-cuivres" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">Cuivres</a>
+    <a href="#env-cordes" style="display:block; padding:3px 14px 3px 28px; color:#a8d8ea; text-decoration:none; border-left:0; line-height:1.4; font-weight:normal;" onmouseover="this.style.background='#2a2a4e'" onmouseout="this.style.background=''">Cordes</a>
   </div>
 </div>
 <button id="toc-toggle-btn" onclick="toggleToc()">☰ Sommaire</button>
@@ -1293,6 +1297,22 @@ Les valeurs académiques (Backus, Giesler, Meyer) correspondent souvent au Fp ou
 </table>
 <p><strong>Taux de concordance global : 93 % (27/29 instruments)</strong></p>
 <p class="source-note"><strong>Sources :</strong> Backus (1969) · Giesler (1985) · Meyer (2009) · McCarty/CCRMA (2003, référence directionnelle) · SOL2020 IRCAM · Yan_Adds · pipeline v22 validé.</p>
+<hr class="section-sep"/>
+<h1>VII. Enveloppes spectrales par famille</h1>
+<div class="section-intro">
+<p>Ces planches regroupent les enveloppes spectrales moyennes calculées directement à partir des données specenv brutes. Les marqueurs rouges indiquent F1–F4, la ligne verte indique Fp et la bande colorée représente ±1σ.</p>
+</div>
+<h2>Bois</h2>
+<p>Les bois montrent la plus grande diversité de profils d'enveloppe, du piccolo à la flûte contrebasse.</p>
+<p><strong>Instruments chargés :</strong> 13 / 13 — <strong>Échantillons :</strong> 1265</p>
+<img src="media/enveloppes_bois.png" alt="Enveloppes Bois"/><h2>Cuivres</h2>
+<p>Les cuivres présentent des enveloppes plus concentrées, avec des zones d'énergie très lisibles dans le medium.</p>
+<p><strong>Instruments chargés :</strong> 6 / 6 — <strong>Échantillons :</strong> 754</p>
+<img src="media/enveloppes_cuivres.png" alt="Enveloppes Cuivres"/><h2>Cordes</h2>
+<p>Les cordes se distinguent par des plateaux spectraux et des résonances larges ; le repère Fp y est particulièrement utile.</p>
+<p><strong>Instruments chargés :</strong> 8 / 8 — <strong>Échantillons :</strong> 1730</p>
+<img src="media/enveloppes_cordes.png" alt="Enveloppes Cordes"/>
+<p class="source-note">Sources : exports specenv bruts SOL2020 + Yan_Adds-Divers.</p>
 
 <script>
 var tocVisible = true;
