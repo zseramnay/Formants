@@ -398,6 +398,7 @@ tr:nth-child(even) { background: #fafafa; }
 
 /* ─── Images ─── */
 img { max-width: 100%; height: auto; }
+img[src*="specenv_"] { max-width: 50%; }
 
 /* ─── Doublures ─── */
 .doublures-box {
