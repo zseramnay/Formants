@@ -1,19 +1,13 @@
 name: Build Reference Document
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'Scripts/v5-html-docx/**'
-      - 'Resultats/*.csv'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    # Skip if commit was made by the bot (avoid infinite loop)
-    if: "!contains(github.event.head_commit.message, '[auto-build]')"
 
     steps:
       - name: Checkout repository
