@@ -79,41 +79,51 @@ REF_TABLES = {
 # ─── Analyses ────────────────────────────────────────────────
 ANALYSIS = {
     'Violon': """Son brillant et expressif, extrêmement large tessiture spectrale.
-        <strong>F1 spectral strict = 506 Hz (zone /o/) mais très variable (σ=235 Hz).</strong>
-        F2 extrêmement instable (σ=651 Hz). Le Fp centroïde à <strong>893 Hz (σ=92 Hz)</strong>
-        est 7.1× plus stable et correspond au Hauptformant de Meyer (800–1 200 Hz, zone /a/).
-        Sources divergentes : Backus (2 000–3 000) capturait une zone de brillance haute ; Giesler
-        et Meyer convergent sur 1 000–1 200 Hz. SOL2020 Fp=893 Hz confirme la zone /a/ comme
-        signature timbrale perceptive du violon.""",
+        <strong>F1=506 Hz (/o/) — résonance grave de la caisse</strong> (σ=376 Hz, très variable selon le registre).
+        F2=1 518 Hz extrêmement instable (σ=651 Hz). Le Fp centroïde à <strong>1 253 Hz (zone /a/)</strong>
+        est 3.3× plus stable.
+        Le « bridge hill » — résonance mécanique du chevalet — amplifie sélectivement la zone
+        F3–F5 (2 347–3 908 Hz), caractéristique spectrale la plus stable du violon.
+        Giesler et Meyer convergent sur 1 000–1 200 Hz ; Backus (2 000–3 000) capturait la zone bridge hill.
+        <strong>Convergence clé : F1 violon (506) ≈ F1 basson (495), Δ=11 Hz — même zone /o/.</strong>""",
 
     'Violon+sourdine': "Son plus doux, atténuation des harmoniques aigus. F1 peut descendre ou rester stable selon la sourdine. Timbre plus mat et intimiste.",
     'Violon+sourd. piombo': "Sourdine lourde en plomb. Amortissement maximum, son extrêmement étouffé. Utilisée en musique contemporaine pour effets timbraux extrêmes.",
 
     'Alto': """Son plus sombre et mélancolique que le violon.
-        <strong>F1=369 Hz (zone /å/).</strong> Giesler note une grande dépendance au registre
-        (220–600 Hz). Meyer situe le formant principal dans la zone /o/–/a/ (400–1 200 Hz).
-        F1 SOL2020 (369 Hz) est plus stable que le violon. L'alto est acoustiquement dans la zone
-        de transition /å/–/o/, ce qui lui confère sa couleur caractéristique — ni la brillance du
-        violon ni la plénitude du violoncelle.""",
+        <strong>F1=377 Hz (/å/) — résonance de la caisse</strong> (σ=202 Hz).
+        Giesler (220–600 Hz), Meyer (/o/–/a/, 400–1 200 Hz).
+        Le « bridge hill » de l'alto (zone F3 ~1 540 Hz) est plus bas que celui du violon (~2 347 Hz),
+        ce qui explique sa couleur plus sombre.
+        Fp=1 300 Hz (zone /a/), proche du violon Fp=1 253 Hz (Δ=47 Hz) — les deux instruments
+        partagent un centroïde spectral commun.
+        L'alto est dans la zone de transition /å/–/o/, ni la brillance du violon ni la plénitude
+        du violoncelle.""",
 
     'Alto+sourdine': "Son voilé, atténuation des partiels médiums. Timbre plus intimiste et introspectif.",
     'Alto+sourd. piombo': "Sourdine lourde. Amortissement maximal, utilisée pour les effets timbraux extrêmes.",
 
     'Violoncelle': """Son chaud et expressif, grande profondeur harmonique.
-        <strong>F1=205 Hz (zone /u/) — profondeur grave.</strong>
-        Accord entre sources : Giesler (300–500), Meyer (~500), Yan_Adds (499 Hz)
-        mesurent une zone spectrale différente (F2 ou registre aigu).
-        Convergences clés via F1 : Trombone (237 Hz, Δ=32 Hz), Tuba basse (226 Hz, Δ=21 Hz).
-        Via Fp (600 Hz) : rapprochement avec la zone /o/ du basson et du cor.""",
+        <strong>F1=205 Hz (/u/) — résonance de la table d'harmonie</strong> (σ=287 Hz).
+        F2=506 Hz (/o/) — second mode mais nettement dominant dans le rayonnement perceptuel.
+        <strong>La fusion légendaire violoncelle–basson s'explique par la quasi-identité
+        F2 violoncelle (506 Hz) ≈ F1 basson (495 Hz), Δ=11 Hz</strong> — deux instruments
+        atteignant la même zone /o/ par des mécanismes acoustiques différents
+        (table d'harmonie vs colonne d'air).
+        Convergences F1 : Trombone (237 Hz, Δ=32 Hz), Tuba basse (226 Hz, Δ=21 Hz).
+        Fp=1 242 Hz converge avec Trombone Fp=1 218 Hz (Δ=24 Hz) et Tuba Fp=1 206 Hz (Δ=36 Hz).""",
 
     'Violoncelle+sourdine': "F1 légèrement modifié. Son plus mat, projection réduite. Atténuation des harmoniques aigus.",
     'Violoncelle+sourd. piombo': "Sourdine lourde. Amortissement maximal des partiels aigus.",
 
-    'Contrebasse': """Son très grave, rôle de fondation harmonique de l'orchestre.
-        <strong>F1=200 Hz (zone /u/)</strong> — la résonance fondamentale de la caisse.
-        Giesler note une zone basse 70–250 Hz avec un formant secondaire à 400 Hz.
-        Grande variabilité : la contrebasse est l'instrument à cordes le moins formulable
-        par un F1 unique.""",
+    'Contrebasse': """Son très grave, fondation harmonique de l'orchestre.
+        <strong>F1=172 Hz (/u/) — résonance fondamentale de la caisse</strong>
+        (σ=36 Hz — le F1 le plus stable de toutes les cordes).
+        Giesler : Hauptformant 70–250 Hz (/u/), Nebenformant 400 Hz (/o/).
+        F2=474 Hz confirme ce Nebenformant.
+        Fp=1 235 Hz, quasi-identique au violoncelle (1 242, Δ=7 Hz) — les deux partagent
+        le même centroïde spectral.
+        Convergence F1 : Tuba contrebasse (226 Hz, Δ=54 Hz).""",
 
     'Contrebasse+sourdine': "Son très étouffé. La sourdine affecte principalement les harmoniques médiums.",
 
@@ -148,10 +158,10 @@ ANALYSIS = {
 # ─── Doublures ───────────────────────────────────────────────
 DOUBLURES = {
     'Violon': [
-        {'instr':'Hautbois',        'f1_a':'893 (Fp)','f1_b':'1 460 (Fp)','delta':567,'quality':'Complémentaire','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Hautbois Fp=1460 — zone /a/–/e/ partagée'},
-        {'instr':'Flûte',           'f1_a':'893 (Fp)','f1_b':'1 354 (Fp)','delta':461,'quality':'Complémentaire','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Flûte Fp=1354 — enrichissement aigu'},
-        {'instr':'Clarinette Sib',  'f1_a':'893 (Fp)','f1_b':'1 016 (Fp)','delta':123,'quality':'Bonne','rapport':'Unisson','note':'Doublure Fp : Violon Fp=893, Cl.Sib Fp=1016 — zone /a/ commune'},
-        {'instr':'Trompette',       'f1_a':'893 (Fp)','f1_b':'1 046 (Fp)','delta':153,'quality':'Bonne','rapport':'Octave','note':'Trompette sonne généralement une octave au-dessus'},
+        {'instr':'Hautbois',        'f1_a':'1 253 (Fp)','f1_b':'1 393 (Fp)','delta':140,'quality':'Bonne','rapport':'Unisson','note':'Doublure Fp : Violon Fp=1 253, Hautbois Fp=1 393 — zone /a/ partagée'},
+        {'instr':'Flûte',           'f1_a':'1 253 (Fp)','f1_b':'1 352 (Fp)','delta':99,'quality':'Bonne','rapport':'Unisson','note':'Doublure Fp : Violon Fp=1 253, Flûte Fp=1 352 — enrichissement aigu'},
+        {'instr':'Clarinette Sib',  'f1_a':'1 253 (Fp)','f1_b':'1 296 (Fp)','delta':43,'quality':'Excellente','rapport':'Unisson','note':'Doublure Fp : Violon Fp=1 253, Cl.Sib Fp=1 296 — zone /a/ commune'},
+        {'instr':'Trompette',       'f1_a':'1 253 (Fp)','f1_b':'1 048 (Fp)','delta':205,'quality':'Complémentaire','rapport':'Octave','note':'Trompette sonne généralement une octave au-dessus'},
     ],
     'Ensemble de violons': [
         {'instr':'Hautbois',        'f1_a':'495','f1_b':'743 (F1)','delta':248,'quality':'Complémentaire','rapport':'Unisson','note':'F1 ens. violons proche de /o/, hautbois en /å/ — complémentarité'},
@@ -263,10 +273,11 @@ def build_html(output_path):
 <div class="section-intro cordes">
 <p><strong>Plage formantique :</strong> 172–1 518 Hz (voyelles /u/ → /e/).
 La famille des cordes présente la plus grande variabilité spectrale de l'orchestre,
-compensée par la mesure Fp (centroïde).</p>
+compensée par la mesure Fp (centroïde). Le « bridge hill » (résonance mécanique du chevalet,
+~1 500–4 000 Hz) est la caractéristique spectrale la plus stable pour violon et alto.</p>
 <p><strong>Découverte clé :</strong> le <strong>violon (F1=506 Hz) et le basson (F1=495 Hz)</strong>
-convergent à Δ=11 Hz dans la zone /o/. Le violoncelle (F1=205 Hz, zone /u/) rejoint
-cette zone via son Fp (~600 Hz). L'effet de section : F1 quasi-stable (violon solo=506,
+convergent à Δ=11 Hz dans la zone /o/. Le violoncelle rejoint cette convergence via son
+F2=506 Hz (≈ F1 basson, Δ=11 Hz). L'effet de section : F1 quasi-stable (violon solo=506,
 ensemble=495, Δ=−2 %), mais F2 s'aplatit de −23 % — <em>effet de section spectral clairement quantifié.</em></p>
 </div>
 <p style="background:#fff8e1;border-left:4px solid #f9a825;padding:8px 14px;margin:12px 0;font-size:0.88em;color:#795548;border-radius:0 4px 4px 0;"><strong>Rappel :</strong> Toutes les valeurs ci-dessous sont mesurées sur des <strong>tenues soutenues (sustained ordinario)</strong>. Les transitoires d'attaque et modes de jeu étendus ne sont pas inclus. Voir <a href="#methodo">méthodologie</a>.</p>
@@ -299,7 +310,8 @@ ensemble=495, Δ=−2 %), mais F2 s'aplatit de −23 % — <em>effet de section 
 <div class="section-intro cordes">
 <p>Les données d'ensemble montrent un <strong>effet de section (compression formantique)</strong>
 systématique : le F1 collectif est significativement plus haut que le F1 du soliste.
-Exemple le plus marqué : Violon solo F1=506 Hz (Fp=893) → Ensemble de violons F1=1 556 Hz (+50%).</p>
+Exemple le plus marqué : Violon solo F1=506 Hz → Ensemble de violons F1=495 Hz (Δ=−2 %),
+mais F2 passe de 1 518 à 1 163 Hz (−23 %) — l'effet de section lisse F2–F3, pas F1.</p>
 </div>
 """
     for gfx in ['cordes_vln_ens', 'cordes_vln_ens_sord', 'cordes_alt_ens', 'cordes_alt_ens_sord',
@@ -377,7 +389,7 @@ def build_docx(output_path):
     r2.bold = True
     r2.font.color.rgb = RGBColor(198, 40, 40)
     p2.add_run("Violon (506 Hz) + Basson (495 Hz) = Δ=11 Hz — convergence /o/ quasi-parfaite. "
-               "Violoncelle (F1=205 Hz, /u/) : rejoint la zone /o/ via son Fp (~600 Hz). "
+               "Violoncelle F2=506 Hz ≈ Basson F1=495 Hz (Δ=11 Hz) — fusion par même zone /o/. "
                "Effet de section : F1 violon quasi-stable (−2 %), F2 −23 % — homogénéisation spectrale.")
 
     # Cordes solistes
@@ -410,9 +422,9 @@ def build_docx(output_path):
     # Cordes d'ensemble
     add_heading(doc, "Cordes d'ensemble", level=2, color=(21, 101, 192))
     add_paragraph(doc,
-        "Les données d'ensemble montrent un effet de section (compression formantique) systématique : "
-        "le F1 collectif est significativement plus haut qu'en solo. "
-        "Exemple le plus marqué : Violon solo F1=506 Hz (Fp=893) → Ensemble de violons F1=1 556 Hz.",
+        "Les données d'ensemble montrent un effet de section (compression formantique) systématique. "
+        "Violon solo F1=506 Hz → Ensemble F1=495 Hz (Δ=−2 %), "
+        "mais F2 passe de 1 518 à 1 163 Hz (−23 %) — l'effet de section lisse F2–F3, pas F1.",
         size=10)
 
     for gfx in ['cordes_vln_ens','cordes_vln_ens_sord',
