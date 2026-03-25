@@ -1419,8 +1419,7 @@ def generate_per_octave_html(instrument_key, display, techs=("ordinario",),
         if label == "GLOBAL":
             fname = f"carte_{slug}_global"
         else:
-            # fname = f"carte_{slug}_{label.lower().replace(".","")}"
-            fname = f"carte_{slug}_{label.lower().replace('.', '')}"
+            fname = f"carte_{slug}_{label.lower().replace(".","")}"
 
         img_path = make_carte_spectrale(
             display, fname, od["mean_env"], od["n"],
