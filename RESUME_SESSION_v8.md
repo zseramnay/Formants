@@ -126,3 +126,66 @@ git remote set-url origin https://github.com/zseramnay/Formants.git
 
 - LPC nécessiterait accès aux .wav originaux SOL2020
 - Extension répertoire spectral contemporain (Grisey, Murail, Saariaho, Haas, Radulescu)
+
+## Ajouts v8b (25 mars 2026 — fin de session)
+
+### Principes d'orchestration : 6 → 9
+- **Principe 7** : Les convergences sont spécifiques au registre (ex: cor global F1=431 vs alto global F1=355 = Δ76, mais médium commun F1=323 Δ=0)
+- **Principe 8** : Le « super-cluster » de registre médium (flûte grave 334 + cor médium 323 + trompette médium 323 + alto médium 323 = 4 instruments × 3 familles dans 11 Hz)
+- **Principe 9** : Stabilité du Fp par registre confirme les centroïdes comme signatures timbrales (cor Fp variation <4%, trombone 6%, violoncelle 6%)
+
+### Doublures par registre ajoutées dans la synthèse
+Convergences exactes (Δ=0) et proches (Δ=11) révélées par l'analyse par registre :
+- Clarinette chalumeau + Trombone grave = 215 Hz (Δ=0)
+- Clarinette gorge + Violon médium/aigu = 355 Hz (Δ=0)
+- Cor médium + Alto médium + Trompette médium = 323 Hz (Δ=0)
+- Flûte grave + Cor/Trompette/Alto médium = 323–334 Hz (Δ=11)
+- Flûte médium + Basson bas-médium = 517–528 Hz (Δ=11)
+- Basson haut-médium + Alto grave = 366–377 Hz (Δ=11)
+- Cor aigu + Trompette grave = 484–495 Hz (Δ=11)
+- Hautbois grave + Trombone médium = 301–312 Hz (Δ=11)
+
+### Commentaires par registre pour tous les 16 instruments
+Chaque ANALYSIS enrichi avec un paragraphe "Analyse par registre" :
+- 4 bois : Flûte, Hautbois, Clarinette Sib, Basson
+- 4 cuivres : Cor, Trompette, Trombone, Tuba basse
+- 4 cordes solo : Violon, Alto, Violoncelle, Contrebasse
+- 4 ensembles : Violons, Altos, Violoncelles, Contrebasses
+
+### Encadré méthodologique
+Ajouté dans intro (HTML encadré orange + DOCX paragraphes) : explique la différence entre profil formantique (médianes CSV) et carte spectrale vocalique (pics sur enveloppe moyenne).
+
+## Ajouts v8b — Principes 7-9, doublures par registre, commentaires
+
+### 9 principes d'orchestration acoustique (était 6)
+
+- **Principe 7** : Les convergences sont spécifiques au registre (cor+alto Δ=0 Hz en médium mais Δ=76 Hz globalement)
+- **Principe 8** : « Super-cluster » de registre médium — flûte grave (334) + cor médium (323) + trompette médium (323) + alto médium (323) = 4 instruments × 3 familles dans 11 Hz
+- **Principe 9** : Stabilité du Fp par registre confirme les centroïdes comme signatures timbrales (cor <4%, trombone 6%, violoncelle 6%)
+
+### Doublures par registre (nouveau tableau dans la synthèse)
+
+Convergences exactes (Δ=0 Hz) :
+- Clarinette chalumeau + Trombone grave = 215 Hz
+- Clarinette gorge + Violon médium/aigu = 355 Hz
+- Cor médium + Alto médium + Trompette médium = 323 Hz
+- Tuba basse grave/médium + Violoncelle suraigu = 205 Hz
+- Violon suraigu + Alto aigu = 398 Hz
+
+Convergences proches (Δ=11 Hz) :
+- Flûte grave + Cor/Trompette/Alto médium = 323–334 Hz (super-cluster)
+- Flûte médium + Basson bas-médium = 517–528 Hz
+- Basson haut-médium + Alto grave = 366–377 Hz
+- Cor aigu + Trompette grave = 484–495 Hz
+- Hautbois grave + Trombone médium = 301–312 Hz
+
+### Commentaires par registre — 16 instruments enrichis
+
+Tous les ANALYSIS des 16 instruments clés contiennent maintenant un paragraphe « Analyse par registre » avec :
+- Évolution de F1 à travers les registres
+- Convergences inter-instruments spécifiques à chaque registre
+- Stabilité du Fp par registre
+
+### Encadré méthodologique
+
+Ajout dans build_intro : « Deux représentations complémentaires : Profil formantique vs Carte spectrale vocalique » — tableau côte à côte expliquant la différence entre les données CSV (profil) et les données specenv (carte).

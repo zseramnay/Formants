@@ -90,20 +90,37 @@ ANALYSIS = {
         Le Fp centroïde à 738 Hz est 6.5× plus stable que F2 (σ=734 Hz). Grande homogénéité
         spectrale inter-dynamiques. Convergences clés : cor + alto Δ=11 Hz (388 vs 377 Hz),
         cor + cor anglais Δ=64 Hz (388 vs 452 Hz). Le cor est l'instrument cuivre le plus
-        versatile en termes de doublures orchestrales.""",
+        versatile en termes de doublures orchestrales.
+        <br/><br/><strong>Analyse par registre :</strong> F1 monte progressivement de 237 Hz (pédale, /u/)
+        à 484 Hz (aigu, /o/). Le registre médium (C3–E4, F1=323 Hz) converge <em>exactement</em>
+        avec l'alto médium et la trompette médium (Δ=0 Hz) — fondement acoustique de la fusion
+        cor-cordes et de l'homogénéité de la section cuivres. Le registre aigu (F1=484 Hz) converge
+        avec la trompette grave (F1=495 Hz, Δ=11 Hz). Le Fp est remarquablement stable à travers
+        tous les registres (698–724 Hz, variation < 4 %).""",
 
     'Trompette en Ut': """Son brillant et incisif, grande projection.
         <strong>F1 extrêmement variable</strong> (σ=642 Hz) selon le registre et la dynamique :
         pp=523 Hz, mf=786 Hz, ff=1 134 Hz. Le Fp centroïde à 1 046 Hz est remarquablement stable
         (σ=98 Hz), 10.4× plus stable que F2 (σ=1 018 Hz). F1 strict = 786 Hz (zone /å/).
         Les sources divergent fortement (Backus 1 000–1 500, SOL 786–1 324) car chaque source
-        capture un registre différent. Fp=1 046 Hz est la mesure la plus représentative.""",
+        capture un registre différent. Fp=1 046 Hz est la mesure la plus représentative.
+        <br/><br/><strong>Analyse par registre :</strong> F1 varie de 323 Hz (médium C4–G4, zone /o/)
+        à 1 130 Hz (suraigu, zone /e/). Le registre médium (F1=323 Hz) converge exactement
+        avec le cor médium et l'alto médium (Δ=0 Hz) — « super-cluster » à 323 Hz. Le registre grave
+        (F1=495 Hz) converge avec le basson grave (F1=506 Hz, Δ=11 Hz) et le cor aigu (F1=484 Hz, Δ=11 Hz).
+        Le Fp est stable (1 043–1 135 Hz, variation 9 %).""",
 
     'Trombone ténor': """Son plein et puissant, grande projection, très grande homogénéité spectrale.
         <strong>F1=237 Hz (zone /u/)</strong>. Accord excellent entre toutes les sources pour le
         Fp (Backus 500, Giesler 520–600, Meyer 480–600 correspondent au Fp=1 218 Hz, pas au F1 strict).
         Le F1 spectral strict à 237 Hz place le trombone en /u/ — sa fusion avec les instruments
-        de la zone /o/ opère via le Fp centroïde à 1 218 Hz.""",
+        de la zone /o/ opère via le Fp centroïde à 1 218 Hz.
+        <br/><br/><strong>Analyse par registre :</strong> F1 monte de 215 Hz (grave A#1–E3, zone /u/)
+        à 431 Hz (aigu F4–C5, zone /o/). Le registre grave (F1=215 Hz) converge exactement avec
+        la clarinette Sib chalumeau (Δ=0 Hz) — doublure bois-cuivres grave remarquable.
+        Le registre médium (F1=301 Hz) converge avec le hautbois grave (F1=312 Hz, Δ=11 Hz).
+        Le Fp est stable (1 217–1 290 Hz, variation 6 %) et converge avec la contrebasse
+        (Fp ≈ 1 283–1 297 Hz) dans tous les registres.""",
 
     'Trombone basse': """Son profond et puissant, plus sombre que le ténor.
         <strong>F1=258 Hz (zone /u/)</strong> — proche du trombone ténor (237 Hz, Δ=21 Hz).
@@ -114,7 +131,12 @@ ANALYSIS = {
         <strong>F1=226 Hz (zone /u/)</strong> — unisson formantique parfait avec le tuba contrebasse
         et le contrebasson (tous à 226 Hz). Accord entre sources approximatif car chaque source
         mesure un registre différent (Backus 200–400, Meyer 210–250). Fp=1 239 Hz capture la zone
-        d'énergie principale du pavillon.""",
+        d'énergie principale du pavillon.
+        <br/><br/><strong>Analyse par registre :</strong> F1 remarquablement stable dans le grave et le médium
+        (205 Hz les deux, zone /u/), montant légèrement à 280 Hz (aigu) et 334 Hz (suraigu, zone /o/).
+        Les registres grave et médium (F1=205 Hz) convergent exactement avec le violoncelle suraigu (Δ=0 Hz)
+        et avec la clarinette chalumeau (Δ=11 Hz). Le registre suraigu (F1=334 Hz) converge avec la flûte grave
+        (Δ=0 Hz). Le Fp est stable (1 156–1 263 Hz, variation 9 %).""",
 
     'Tuba contrebasse': """Son extrêmement grave et massif.
         <strong>F1=226 Hz (zone /u/)</strong> — identique au tuba basse et au contrebasson.

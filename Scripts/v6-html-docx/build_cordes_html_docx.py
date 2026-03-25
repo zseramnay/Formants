@@ -85,7 +85,14 @@ ANALYSIS = {
         Le « bridge hill » — résonance mécanique du chevalet — amplifie sélectivement la zone
         F3–F5 (2 347–3 908 Hz), caractéristique spectrale la plus stable du violon.
         Giesler et Meyer convergent sur 1 000–1 200 Hz ; Backus (2 000–3 000) capturait la zone bridge hill.
-        <strong>Convergence clé : F1 violon (506) ≈ F1 basson (495), Δ=11 Hz — même zone /o/.</strong>""",
+        <strong>Convergence clé : F1 violon (506) ≈ F1 basson (495), Δ=11 Hz — même zone /o/.</strong>
+        <br/><br/><strong>Analyse par registre :</strong> contrairement à la plupart des vents, le F1 du violon est
+        relativement stable à travers les registres : grave (452 Hz), médium (355 Hz), aigu (355 Hz), suraigu (398 Hz) —
+        tous dans la zone /o/–/å/. Cela reflète la résonance de la caisse, qui domine le spectre indépendamment
+        de la corde jouée. Les registres médium et aigu (F1=355 Hz) convergent exactement avec la clarinette Sib
+        en registre de gorge (Δ=0 Hz) — base acoustique de la doublure clarinette-violon (Mozart, Brahms).
+        Le registre suraigu (F1=398 Hz) converge avec l'alto aigu (Δ=0 Hz) — continuité spectrale cordes aiguës.
+        Le Fp est stable (785–915 Hz, variation 16 %).""",
 
     'Violon+sourdine': "Son plus doux, atténuation des harmoniques aigus. F1 peut descendre ou rester stable selon la sourdine. Timbre plus mat et intimiste.",
     'Violon+sourd. piombo': "Sourdine lourde en plomb. Amortissement maximum, son extrêmement étouffé. Utilisée en musique contemporaine pour effets timbraux extrêmes.",
@@ -98,7 +105,13 @@ ANALYSIS = {
         Fp=1 300 Hz (zone /a/), proche du violon Fp=1 253 Hz (Δ=47 Hz) — les deux instruments
         partagent un centroïde spectral commun.
         L'alto est dans la zone de transition /å/–/o/, ni la brillance du violon ni la plénitude
-        du violoncelle.""",
+        du violoncelle.
+        <br/><br/><strong>Analyse par registre :</strong> F1 très stable : grave (366 Hz), médium (323 Hz),
+        aigu (398 Hz), suraigu (366 Hz) — tous dans la zone /å/–/o/. Le registre médium (F1=323 Hz)
+        converge exactement avec le cor médium et la trompette médium (Δ=0 Hz) — le « super-cluster »
+        à 323 Hz. Le registre grave (F1=366 Hz) converge avec le basson haut-médium (F1=377 Hz, Δ=11 Hz).
+        Le Fp décroît de 1 238 Hz (grave) à 1 032 Hz (suraigu), reflétant l'évolution du bridge hill
+        avec le registre.""",
 
     'Alto+sourdine': "Son voilé, atténuation des partiels médiums. Timbre plus intimiste et introspectif.",
     'Alto+sourd. piombo': "Sourdine lourde. Amortissement maximal, utilisée pour les effets timbraux extrêmes.",
@@ -111,7 +124,13 @@ ANALYSIS = {
         atteignant la même zone /o/ par des mécanismes acoustiques différents
         (table d'harmonie vs colonne d'air).
         Convergences F1 : Trombone (237 Hz, Δ=32 Hz), Tuba basse (226 Hz, Δ=21 Hz).
-        Fp=1 242 Hz converge avec Trombone Fp=1 218 Hz (Δ=24 Hz) et Tuba Fp=1 206 Hz (Δ=36 Hz).""",
+        Fp=1 242 Hz converge avec Trombone Fp=1 218 Hz (Δ=24 Hz) et Tuba Fp=1 206 Hz (Δ=36 Hz).
+        <br/><br/><strong>Analyse par registre :</strong> F1 très stable dans les 4 registres :
+        grave (194 Hz), médium (194 Hz), aigu (237 Hz), suraigu (205 Hz) — tous dans la zone /u/.
+        La résonance de la table d'harmonie domine le spectre quel que soit le registre, contrairement
+        aux vents où F1 monte avec la tessiture. Le registre aigu (F1=237 Hz) converge exactement avec
+        le cor pédale et la contrebasse suraigu (Δ=0 Hz). Le registre suraigu (F1=205 Hz) converge avec
+        le tuba basse grave et médium (Δ=0 Hz). Le Fp est stable (965–1 020 Hz, variation 6 %).""",
 
     'Violoncelle+sourdine': "F1 légèrement modifié. Son plus mat, projection réduite. Atténuation des harmoniques aigus.",
     'Violoncelle+sourd. piombo': "Sourdine lourde. Amortissement maximal des partiels aigus.",
@@ -123,7 +142,12 @@ ANALYSIS = {
         F2=474 Hz confirme ce Nebenformant.
         Fp=1 235 Hz, quasi-identique au violoncelle (1 242, Δ=7 Hz) — les deux partagent
         le même centroïde spectral.
-        Convergence F1 : Tuba contrebasse (226 Hz, Δ=54 Hz).""",
+        Convergence F1 : Tuba contrebasse (226 Hz, Δ=54 Hz).
+        <br/><br/><strong>Analyse par registre :</strong> F1 extrêmement stable : grave (161 Hz),
+        médium (161 Hz), aigu (172 Hz), suraigu (237 Hz) — ancré dans la zone /u/.
+        Le registre suraigu (F1=237 Hz) converge exactement avec le violoncelle aigu et le cor
+        pédale (Δ=0 Hz). Le Fp croît légèrement de 1 283 Hz (grave) à 1 385 Hz (suraigu),
+        convergeant avec le trombone (Fp ≈ 1 217–1 290 Hz, Δ ≤ 20 Hz) dans tous les registres.""",
 
     'Contrebasse+sourdine': "Son très étouffé. La sourdine affecte principalement les harmoniques médiums.",
 
@@ -133,22 +157,39 @@ ANALYSIS = {
         F2 passe de 1 518 Hz (solo) à 1 163 Hz (ensemble, −23 %) ; F3 de 2 347 à 1 970 Hz (−16 %).
         Le résultat perceptif est un timbre plus <em>fondu</em> et homogène — moins de relief spectral
         individuel, plus de continuité collective. C'est cet aplatissement de F2–F3 qui donne
-        aux sections de violons leur texture caractéristique, distincte du soliste.""",
+        aux sections de violons leur texture caractéristique, distincte du soliste.
+        <br/><br/><strong>Par registre :</strong> F1 stable (345–474 Hz) comme le soliste, tous registres
+        dans la zone /o/–/å/. Le registre médium (F1=345 Hz) et aigu (F1=355 Hz) sont quasi-identiques
+        au violon solo — les convergences de registre du soliste (clarinette gorge, cor médium) restent
+        valides pour la section. Le Fp ensemble (889–1 041 Hz) est légèrement plus élevé que le solo
+        (785–915 Hz), reflétant le lissage collectif du bridge hill.""",
 
     "Ensemble d'altos": """F1 ensemble = 366 Hz (zone /å/–/o/) — proche du solo (377 Hz, Δ=−3 %).
         F2 passe de 829 Hz (solo) à 764 Hz (ensemble, −8 %). L'effet de section est plus modeste
         pour l'alto que pour le violon, mais suit le même schéma d'homogénéisation des harmoniques
-        supérieurs. La couleur sombre et mélancolique de l'instrument est préservée en section.""",
+        supérieurs. La couleur sombre et mélancolique de l'instrument est préservée en section.
+        <br/><br/><strong>Par registre :</strong> F1 stable (312–366 Hz), zone /o/. Le registre médium
+        (F1=312 Hz) et aigu (F1=366 Hz) suivent le même profil que le soliste. Le Fp décroît de
+        994 Hz (grave) à 876 Hz (suraigu), légèrement plus bas que le soliste (1 032–1 238 Hz) —
+        l'effet de section abaisse le centroïde spectral.""",
 
     'Ensemble de violoncelles': """F1 ensemble = 205 Hz — identique au solo.
         F2 passe de 506 Hz (solo) à 474 Hz (ensemble, −6 %). La section violoncelle maintient
         intégralement la couleur /u/ du soliste, avec un léger lissage des harmoniques supérieurs.
-        Elle partage la zone /u/ avec le tuba basse (226 Hz) et la contrebasse (172 Hz).""",
+        Elle partage la zone /u/ avec le tuba basse (226 Hz) et la contrebasse (172 Hz).
+        <br/><br/><strong>Par registre :</strong> F1 stable (194–237 Hz), ancré en /u/ comme le soliste.
+        Le Fp ensemble (1 411–1 521 Hz) est nettement plus élevé que le solo (965–1 020 Hz) —
+        l'effet de section déplace le centroïde vers l'aigu, augmentant la brillance collective.
+        Le registre aigu (Fp=1 521 Hz) converge avec le hautbois Fp global (1 482 Hz, Δ=39 Hz).""",
 
     'Ensemble de contrebasses': """Technique non-vibrato (seule disponible dans la base).
         F1=172 Hz — identique au solo. F2 passe de 474 Hz (solo) à 441 Hz (ensemble, −7 %).
         La fondation grave de l'orchestre reste strictement dans la zone /u/, avec
-        une homogénéisation légère des harmoniques médiums en section.""",
+        une homogénéisation légère des harmoniques médiums en section.
+        <br/><br/><strong>Par registre :</strong> F1 stable (161–194 Hz), le plus stable de
+        toutes les sections. Le Fp croît légèrement de 1 110 Hz (grave) à 1 191 Hz (suraigu),
+        nettement plus bas que le soliste (1 283–1 385 Hz) — l'effet de section abaisse le centroïde
+        de ~150 Hz, renforçant la fondation grave collective.""",
 
     'Ensemble de violons+sourdine': "Section avec sourdines. Atténuation collective, timbre soyeux et unifié.",
     "Ensemble d'altos+sourdine": "Section avec sourdines. Son plus intimiste et homogène.",

@@ -105,7 +105,11 @@ ANALYSIS = {
         varie fortement avec le registre et le souffle. F1 spectral strict = 743 Hz (zone /å/).
         Écart entre sources : Backus (~1 700 Hz) vs SOL2020 (743 Hz strict, Fp=1 535 Hz).
         Le Fp centroïde à 1 535 Hz est plus stable que F1 (σ F1=480 Hz vs σ Fp≈150 Hz).
-        La flûte est l'instrument harmoniquement le plus plastique de l'orchestre.""",
+        La flûte est l'instrument harmoniquement le plus plastique de l'orchestre.
+        <br/><br/><strong>Analyse par registre :</strong> F1 passe de 334 Hz (grave, B3–A4, zone /o/) à 560 Hz (suraigu, zone /o/–/å/).
+        Le registre grave (F1=334 Hz) converge avec le cor médium, la trompette médium et l'alto médium (F1=323 Hz, Δ=11 Hz) —
+        quatre instruments de trois familles dans une bande de 11 Hz. Le registre médium (F1=528 Hz) converge avec le basson
+        bas-médium (F1=517 Hz, Δ=11 Hz), fondement de la doublure flûte-basson à l'octave. Le Fp reste stable (1 473–1 617 Hz, variation 10 %).""",
 
     'Flûte basse': """Son chaud et soufflé, plus riche en harmoniques que la grande flûte.
         F1=301 Hz dans la zone /u/ (profondeur). Timbre velouté avec une composante d'air caractéristique.
@@ -119,7 +123,11 @@ ANALYSIS = {
         Backus (1 300), Meyer/Giesler (~1 100), SOL2020 (1 460) — écart maximal 360 Hz. Cette divergence
         s'explique par la dissociation entre F1 spectral strict (743 Hz, zone /å/) et le Fp (1 460 Hz,
         zone de nasalité et d'intensité caractéristique du hautbois).
-        L'anche double produit un spectre riche avec une coloration vocale /a/ médium.""",
+        L'anche double produit un spectre riche avec une coloration vocale /a/ médium.
+        <br/><br/><strong>Analyse par registre :</strong> F1 monte de 312 Hz (grave, zone /o/) à 1 324 Hz (suraigu, zone /e/).
+        Le registre grave (F1=312 Hz) converge avec le cor médium et la trompette médium (F1=323 Hz, Δ=11 Hz)
+        et avec le trombone médium (F1=301 Hz, Δ=11 Hz) — convergences inter-familles inattendues.
+        Le Fp reste remarquablement stable (1 421–1 514 Hz, variation 6 %), confirmant la résonance d'anche double comme signature structurelle.""",
 
     'Cor anglais': """Son plus sombre et mélancolique que le hautbois. <strong>F1=452 Hz tombe dans la
         zone /o/</strong> — ce qui explique sa convergence naturelle avec le cor (F1=388 Hz, Δ=64 Hz),
@@ -136,7 +144,14 @@ ANALYSIS = {
         des harmoniques impairs (tuyau cylindrique fermé). Backus (1 500 Hz) et Meyer (1 500 Hz)
         capturent le registre clairon, Giesler (3 000–4 000 Hz) l'extrême aigu.
         F1 spectral strict = 463 Hz (1er mode du tuyau cylindrique). Le Fp centroïde à 1 412 Hz
-        est 4.7× plus stable que F2. F2 varie de 549 Hz (chalumeau) à 2 638 Hz (registre aigu).""",
+        est 4.7× plus stable que F2. F2 varie de 549 Hz (chalumeau) à 2 638 Hz (registre aigu).
+        <br/><br/><strong>Analyse par registre :</strong> F1 passe de 215 Hz (chalumeau D3–D4, zone /u/)
+        à 1 152 Hz (suraigu B5–G6, zone /e/). Les quatre registres traditionnels sont clairement
+        différenciés spectralement :
+        <em>Chalumeau</em> (F1=215 Hz) converge exactement avec le trombone grave (Δ=0 Hz) et le tuba basse (Δ=11 Hz).
+        <em>Gorge</em> (F1=355 Hz) converge exactement avec le violon médium et aigu (Δ=0 Hz) — base de la doublure clarinette-violon.
+        <em>Clairon</em> (F1=581 Hz) converge avec le basson aigu (F1=571 Hz, Δ=10 Hz).
+        Le Fp reste stable (1 388–1 559 Hz, variation 12 %).""",
 
     'Clarinette basse en Sib': """Son profond et velouté, riche dans le grave.
         F1=323 Hz (zone /u/). Le registre chalumeau possède une couleur très distinctive.
@@ -149,7 +164,12 @@ ANALYSIS = {
     'Basson': """<strong>Pivot timbral de l'orchestre</strong> (Meyer). F1=495 Hz au cœur de la zone /o/.
         Accord unanime des 4 sources : Giesler (500) = Backus (440–500) = Meyer (~500) = SOL2020 (495 Hz).
         Convergences clés : Δ=11 Hz avec le violon (F1=506 Hz), Δ=43 Hz avec le cor anglais (F1=452 Hz),
-        Δ=107 Hz avec le cor (F1=388 Hz). Fp=1 079 Hz.""",
+        Δ=107 Hz avec le cor (F1=388 Hz). Fp=1 079 Hz.
+        <br/><br/><strong>Analyse par registre :</strong> F1 remarquablement stable à travers les registres :
+        grave (506 Hz), bas-médium (517 Hz), haut-médium (377 Hz), aigu (571 Hz) — tous dans la zone /o/–/å/.
+        Le registre grave (F1=506 Hz) converge avec la trompette grave (F1=495 Hz, Δ=11 Hz) — doublure classique Beethoven.
+        Le registre haut-médium (F1=377 Hz) converge avec l'alto grave (F1=366 Hz, Δ=11 Hz) — parenté timbrale basson-alto.
+        Le Fp est très stable (1 063–1 109 Hz, variation 4 %), confirmant la zone de résonance du tuyau conique.""",
 
     'Contrebasson': """Son très grave et bourdonnant, fondation des bois graves.
         F1=226 Hz (zone /u/), identique au tuba basse et tuba contrebasse — unisson formantique

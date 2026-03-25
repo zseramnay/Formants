@@ -912,6 +912,35 @@ PRINCIPES_ORCHESTRATION = [
 <li><strong>Différenciation dynamique ou de registre :</strong> deux instruments en zone /o/ placés à des dynamiques distinctes (<em>p</em> / <em>f</em>) ou dans des registres éloignés réduisent le chevauchement spectral effectif.</li>
 </ul>
 <strong>Note :</strong> le masquage n'est pas toujours à éviter — utilisé intentionnellement, il peut créer un épaississement timbral recherché (tutti à cordes en doublures serrées). C'est un outil d'orchestration, pas seulement un risque."""),
+
+    ("7. Les convergences sont spécifiques au registre",
+     """La moyenne globale masque des convergences formantiques qui n'existent que dans un registre particulier. Deux instruments peuvent diverger globalement mais fusionner parfaitement quand ils jouent dans un registre spécifique.
+
+<strong>Exemple démonstratif :</strong> le cor (F1 global = 431 Hz) et l'alto (F1 global = 355 Hz) divergent de 76 Hz — mais dans leur registre médium commun, F1 = 323 Hz des deux côtés (Δ = 0 Hz). De même, la clarinette en registre de gorge (F1 = 355 Hz) converge exactement avec le violon médium et aigu (F1 = 355 Hz) — fondement acoustique de la doublure clarinette-violon classique de Mozart et Brahms.
+
+<strong>Conséquence pratique :</strong> les doublures classiques fonctionnent parce que les compositeurs écrivent les instruments dans les registres où ils convergent. Une doublure cor-alto est efficace dans le médium mais pas nécessairement dans l'aigu. L'analyse par registre est donc plus pertinente que la moyenne globale pour prédire la qualité d'une doublure."""),
+
+    ("8. Le « super-cluster » de registre médium",
+     """Quatre instruments de trois familles — flûte grave (F1=334 Hz), cor médium (F1=323 Hz), trompette médium (F1=323 Hz), alto médium (F1=323 Hz) — convergent dans une bande de 11 Hz autour de 323–334 Hz (zone /o/).
+
+Ce « super-cluster » transcende les familles instrumentales et explique pourquoi les <em>tutti</em> médium de l'orchestre romantique (Brahms, Tchaïkovsky) produisent une homogénéité timbrale remarquable malgré la diversité des sources.
+
+<strong>Autres convergences de registre remarquables :</strong>
+<ul>
+<li><strong>Clarinette chalumeau (215 Hz) + Trombone grave (215 Hz) :</strong> Δ=0 Hz — même zone /u/, une doublure à l'octave qui produit une fusion remarquable.</li>
+<li><strong>Flûte médium (528 Hz) + Basson bas-médium (517 Hz) :</strong> Δ=11 Hz — fondement de la doublure flûte-basson à l'octave (Beethoven, <em>Pastorale</em>).</li>
+<li><strong>Basson haut-médium (377 Hz) + Alto grave (366 Hz) :</strong> Δ=11 Hz — parenté timbrale basson-alto dans la zone /å/.</li>
+<li><strong>Cor aigu (484 Hz) + Trompette grave (495 Hz) :</strong> Δ=11 Hz — convergence cuivres dans la zone /o/.</li>
+</ul>"""),
+
+    ("9. Stabilité du Fp par registre — le centroïde comme signature timbrale",
+     """Le Fp varie peu d'un registre à l'autre pour un même instrument. Exemples : cor Fp = 698–724 Hz sur 4 registres (variation &lt; 4 %), trombone Fp = 1 217–1 290 Hz (variation 6 %), violoncelle Fp = 965–1 020 Hz (variation 6 %).
+
+Cela confirme que le Fp capture une caractéristique <strong>structurelle</strong> de l'instrument — résonance du corps, du pavillon ou de la caisse — indépendante de la note jouée.
+
+<strong>Conséquence :</strong> les convergences Fp inter-instruments sont robustes quel que soit le registre. Le trombone (Fp ≈ 1 217–1 260 Hz) converge avec la contrebasse (Fp ≈ 1 283–1 297 Hz) dans tous les registres. Le basson (Fp ≈ 1 063–1 109 Hz) converge avec la trompette (Fp ≈ 1 043–1 088 Hz) de manière stable.
+
+Le Fp est donc la mesure la plus fiable pour prédire la fusion timbrale entre instruments à grande tessiture — là où F1 et F2 sont trop instables pour servir de référence."""),
 ]
 
 
@@ -1027,8 +1056,36 @@ Les cellules vertes correspondent aux doublures acoustiquement justifiées.</p>
         html += f'<tr{bg}><td>{i}</td><td><b>{a}</b></td><td>{f1a_str}</td><td><b>{b}</b></td><td>{f1b_str}</td><td>{delta_str}</td><td>{quality}</td><td>{zone}</td><td>{rapport_html}</td><td>{note}</td></tr>\n'
     html += '</table>\n'
 
+    # Register-based doublings
+    html += '<h3>Doublures par registre — convergences que la moyenne globale ne révèle pas</h3>\n'
+    html += """<p>L'analyse par registre met en lumière des convergences formantiques invisibles dans les données globales,
+car elles n'existent que lorsque les deux instruments jouent dans un registre spécifique.</p>
+
+<h4>Convergences exactes (Δ = 0 Hz)</h4>
+<table class="ref-table">
+<tr class="header"><th>Instrument A</th><th>Registre A</th><th>Instrument B</th><th>Registre B</th><th>F1 (Hz)</th><th>Zone</th><th>Signification orchestrale</th></tr>
+<tr style="background:#d5f5e3;"><td><b>Clarinette Sib</b></td><td>Chalumeau (D3–D4)</td><td><b>Trombone</b></td><td>Grave (A#1–E3)</td><td>215</td><td>/u/</td><td>Fusion remarquable bois-cuivres dans le grave</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Clarinette Sib</b></td><td>Gorge (D#4–G#4)</td><td><b>Violon</b></td><td>Médium+Aigu (C4–B5)</td><td>355</td><td>/o/</td><td>Doublure clarinette-violon (Mozart, Brahms)</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Cor</b></td><td>Médium (C3–E4)</td><td><b>Alto</b></td><td>Médium (G3–F#4)</td><td>323</td><td>/o/</td><td>Fusion cor-alto (Brahms, Symphonie n°1)</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Cor</b></td><td>Médium (C3–E4)</td><td><b>Trompette</b></td><td>Médium (C4–G4)</td><td>323</td><td>/o/</td><td>Homogénéité section cuivres médium</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Tuba basse</b></td><td>Grave/Médium</td><td><b>Violoncelle</b></td><td>Suraigu (G4–C6)</td><td>205</td><td>/u/</td><td>Convergence inattendue basses-aigu violoncelle</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Violon</b></td><td>Suraigu (C6–E7)</td><td><b>Alto</b></td><td>Aigu (G4–F#5)</td><td>398</td><td>/o/</td><td>Continuité spectrale cordes aiguës</td></tr>
+</table>
+
+<h4>Convergences proches (Δ = 11 Hz)</h4>
+<table class="ref-table">
+<tr class="header"><th>Instrument A</th><th>Registre</th><th>F1</th><th>Instrument B</th><th>Registre</th><th>F1</th><th>Δ</th><th>Signification</th></tr>
+<tr style="background:#eafaf1;"><td><b>Flûte</b></td><td>Grave</td><td>334</td><td><b>Cor, Trompette, Alto</b></td><td>Médium</td><td>323</td><td>11</td><td>« Super-cluster » médium, 4 instruments × 3 familles</td></tr>
+<tr style="background:#eafaf1;"><td><b>Flûte</b></td><td>Médium</td><td>528</td><td><b>Basson</b></td><td>Bas médium</td><td>517</td><td>11</td><td>Doublure flûte-basson à l'octave (Beethoven, <em>Pastorale</em>)</td></tr>
+<tr style="background:#eafaf1;"><td><b>Basson</b></td><td>Haut médium</td><td>377</td><td><b>Alto</b></td><td>Grave</td><td>366</td><td>11</td><td>Parenté timbrale basson-alto, zone /å/</td></tr>
+<tr style="background:#eafaf1;"><td><b>Clarinette Sib</b></td><td>Clairon</td><td>581</td><td><b>Basson</b></td><td>Aigu</td><td>571</td><td>10</td><td>Convergence bois dans le registre expressif</td></tr>
+<tr style="background:#eafaf1;"><td><b>Cor</b></td><td>Aigu</td><td>484</td><td><b>Trompette</b></td><td>Grave</td><td>495</td><td>11</td><td>Convergence cuivres dans la zone /o/</td></tr>
+<tr style="background:#eafaf1;"><td><b>Hautbois</b></td><td>Grave</td><td>312</td><td><b>Trombone</b></td><td>Médium</td><td>301</td><td>11</td><td>Convergence inter-familles inattendue</td></tr>
+</table>
+"""
+
     # 5. Principes d'orchestration
-    html += '<h2 id="principes">6 Principes d\'Orchestration Acoustique</h2>\n'
+    html += '<h2 id="principes">9 Principes d\'Orchestration Acoustique</h2>\n'
     for titre, texte in PRINCIPES_ORCHESTRATION:
         html += f'<div class="instrument-card"><h3>{titre}</h3><p>{texte}</p></div>\n'
 
@@ -1205,7 +1262,7 @@ def build_docx(output_path):
 
     # Principes
     doc.add_paragraph()
-    add_heading(doc, "6 Principes d'Orchestration Acoustique", level=2, color=(26, 35, 126))
+    add_heading(doc, "9 Principes d'Orchestration Acoustique", level=2, color=(26, 35, 126))
     for titre, texte in PRINCIPES_ORCHESTRATION:
         add_heading(doc, titre, level=3, color=(74, 20, 140))
         add_paragraph(doc, clean_text(texte), size=10)
