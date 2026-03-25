@@ -238,6 +238,35 @@ dominante</strong> — terminologie plus exacte que « formant » pour ces famil
     # Fp
     html += FP_EXPLANATION
 
+    # ── Note méthodologique : deux représentations complémentaires ──
+    html += """
+<div style="background:#fff3e0;border:2px solid #e65100;border-radius:8px;padding:16px 20px;margin:24px 0;">
+<h4 style="color:#bf360c;margin:0 0 10px 0;">⚠ Deux représentations complémentaires : Profil formantique vs Carte spectrale vocalique</h4>
+<p style="margin:0;">Ce document utilise deux types de graphiques pour chaque instrument. Ils ne mesurent pas
+exactement la même chose et peuvent donc montrer des valeurs légèrement différentes :</p>
+<table style="margin:12px 0;width:100%;border-collapse:collapse;font-size:0.9em;">
+<tr style="background:#fff8e1;"><td style="padding:8px;border:1px solid #e0e0e0;width:50%;vertical-align:top;">
+<strong>Profil formantique moyen</strong> (courbes de cloche)<br/>
+Données : <em>CSV v3</em> — médiane des positions de pics F1–F6 calculée sur chaque échantillon
+individuellement, puis agrégée. L'amplitude (dB) est lue sur l'enveloppe spectrale moyenne
+à la fréquence médiane du formant.<br/>
+<em>Ce qu'il montre :</em> la position « typique » de chaque formant et sa largeur de bande (BW -3 dB).
+</td>
+<td style="padding:8px;border:1px solid #e0e0e0;width:50%;vertical-align:top;">
+<strong>Carte spectrale vocalique</strong> (enveloppe + zones vocaliques)<br/>
+Données : <em>enveloppe specenv Orchidea</em> — moyenne de toutes les enveloppes spectrales
+du registre, puis détection des pics directement sur cette moyenne.<br/>
+<em>Ce qu'il montre :</em> la forme réelle du spectre moyen avec ses zones de résonance,
+ses vallées, et le contexte vocalique.
+</td></tr>
+</table>
+<p style="margin:8px 0 0 0;">Les deux approches convergent pour les formants bien définis (instruments à anche, cuivres)
+mais peuvent diverger pour les instruments à grande tessiture (cordes, flûtes) où la moyenne
+de l'enveloppe « lisse » les pics individuels. <strong>Le profil formantique donne les positions
+de référence ; la carte spectrale donne le contexte acoustique complet par registre.</strong></p>
+</div>
+"""
+
     # Tableau voyelles
     html += '<h3 id="voyelles">Correspondance voyelles–fréquences (Meyer 2009)</h3>\n'
     html += """
@@ -405,6 +434,29 @@ def build_docx(output_path):
     for row_obj in table3.rows:
         for cell, w in zip(row_obj.cells, [3.5, 1.5, 1.5, 1.5, 1.5, 2.0]):
             cell.width = Cm(w)
+
+    # ── Note méthodologique : deux représentations ──
+    doc.add_paragraph()
+    add_heading(doc, "Deux représentations complémentaires", level=2, color=(230, 81, 0))
+    add_paragraph(doc,
+        "Ce document utilise deux types de graphiques pour chaque instrument :", size=10)
+    add_paragraph(doc,
+        "Profil formantique moyen (courbes de cloche) — Données CSV v3 : médiane des positions "
+        "de pics F1–F6 calculée sur chaque échantillon individuellement, puis agrégée. "
+        "L'amplitude (dB) est lue sur l'enveloppe spectrale moyenne à la fréquence médiane du formant. "
+        "Montre la position « typique » de chaque formant et sa largeur de bande (BW -3 dB).",
+        size=10)
+    add_paragraph(doc,
+        "Carte spectrale vocalique (enveloppe + zones vocaliques) — Données specenv Orchidea : "
+        "moyenne de toutes les enveloppes spectrales du registre, puis détection des pics sur cette moyenne. "
+        "Montre la forme réelle du spectre moyen avec ses zones de résonance, ses vallées, et le contexte vocalique.",
+        size=10)
+    add_paragraph(doc,
+        "Les deux approches convergent pour les formants bien définis (instruments à anche, cuivres) "
+        "mais peuvent diverger pour les instruments à grande tessiture (cordes, flûtes). "
+        "Le profil formantique donne les positions de référence ; "
+        "la carte spectrale donne le contexte acoustique complet par registre.",
+        italic=True, size=10)
 
     # ── Point F (v5) : σ comme proxy de bandwidth/Q ──
     doc.add_paragraph()
