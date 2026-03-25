@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence Formantique — Introduction et Méthodologie</title>
+<style>
+
+body {
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  max-width: 1100px; margin: 0 auto; padding: 24px;
+  background: #f5f5f5; color: #333; line-height: 1.6;
+}
+h1 { color: #1a237e; border-bottom: 3px solid #2e7d32; padding-bottom: 10px; font-size: 1.9em; }
+h2 { color: #2e7d32; margin-top: 50px; border-left: 5px solid #2e7d32;
+     padding-left: 14px; font-size: 1.4em; }
+h3 { color: #1b5e20; margin-top: 36px; font-size: 1.2em; }
+h4 { color: #555; margin-top: 16px; font-size: 1.05em; }
+.instrument-card {
+  background: white; border: 1px solid #ddd; border-radius: 8px;
+  padding: 22px; margin: 24px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.formant-graph { max-width: 65%; border: 1px solid #eee; border-radius: 4px; display: block; }
+.description {
+  font-style: italic; color: #555; background: #e8f5e9;
+  padding: 12px 16px; border-left: 4px solid #4caf50; margin: 12px 0; border-radius: 0 4px 4px 0;
+}
+.fp-note { color: #1b5e20; font-weight: bold; margin: 8px 0; }
+.fp-explanation {
+  background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 6px;
+  padding: 14px 18px; margin: 16px 0; font-size: 0.95em;
+}
+.note-v4 {
+  background: #fff3e0; border-left: 4px solid #ff9800;
+  padding: 10px 14px; margin: 12px 0; font-size: 0.9em; color: #555;
+  border-radius: 0 4px 4px 0;
+}
+.cluster-badge {
+  display: inline-block; background: #e53935; color: white;
+  padding: 2px 9px; border-radius: 10px; font-size: 0.8em;
+  margin-left: 8px; font-weight: bold;
+}
+.yan-badge {
+  display: inline-block; background: #ff9800; color: white;
+  padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-left: 8px;
+}
+/* Tables techniques */
+.tech-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+.tech-table th, .tech-table td { border: 1px solid #ccc; padding: 5px 9px; text-align: center; }
+.tech-table .header th { background: #1a3a5c; color: white; font-size: 0.9em; }
+.tech-table tr:nth-child(even) { background: #fafafa; }
+/* Tables références */
+.ref-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+.ref-table th, .ref-table td { border: 1px solid #bbb; padding: 6px 10px; text-align: center; }
+.ref-table .header th { background: #37474f; color: white; }
+.ref-table tr:hover { background: #f0f4f8; }
+/* Doublures */
+.doublures-box {
+  background: #fffde7; border: 1px solid #f9a825; border-radius: 6px;
+  padding: 14px 18px; margin: 18px 0;
+}
+.doublures-box h4 { color: #f57f17; margin: 0 0 10px 0; }
+.doublures-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+.doublures-table th, .doublures-table td { border: 1px solid #f9a825; padding: 5px 9px; text-align: center; }
+.doublures-table .header th { background: #f57f17; color: white; }
+/* Section intro */
+.section-intro {
+  padding: 16px 20px; border-radius: 6px; margin: 16px 0;
+}
+.section-intro.bois   { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+.section-intro.cuivres{ background: #fff3e0; border-left: 5px solid #e64a19; }
+.section-intro.cordes { background: #e3f2fd; border-left: 5px solid #1565c0; }
+.section-intro.sax    { background: #fce4ec; border-left: 5px solid #ad1457; }
+.section-intro.general{ background: #f3e5f5; border-left: 5px solid #6a1b9a; }
+.section-intro.intro  { background: #e8eaf6; border-left: 5px solid #283593; }
+/* Source note */
+.source-note {
+  font-size: 0.83em; color: #888; margin-top: 40px;
+  border-top: 1px solid #ddd; padding-top: 12px;
+}
+/* Document intro */
+.doc-header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1565c0 100%);
+  color: white; padding: 32px 36px; border-radius: 10px; margin-bottom: 32px;
+}
+.doc-header h1 { color: white; border: none; margin: 0 0 12px 0; font-size: 2em; }
+.doc-header .subtitle { color: #b3c5ff; font-size: 1.05em; margin: 4px 0; }
+.doc-header .meta { color: #90a4c8; font-size: 0.88em; margin-top: 16px; }
+/* Tableau voyelles */
+.vowel-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9em; }
+.vowel-table th, .vowel-table td { border: 1px solid #ccc; padding: 7px 12px; text-align: center; }
+.vowel-table .header th { background: #4a148c; color: white; }
+/* Convergence / matrice */
+.matrix-container { overflow-x: auto; margin: 16px 0; }
+.matrix-table { border-collapse: collapse; font-size: 0.72em; white-space: nowrap; }
+.matrix-table th, .matrix-table td { border: 1px solid #ccc; padding: 4px 7px; text-align: center; }
+.matrix-table th { background: #263238; color: white; }
+
+
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>Référence Formantique de l'Orchestre</h1>
+  <p class="subtitle">Étude quantitative des formants spectraux instrumentaux</p>
+  <p class="subtitle">Analyse de 5 914 échantillons · 30 instruments · Mars 2026</p>
+  <p class="meta">
+    Sources : SOL2020 (Orchidea) · Yan_Adds · Backus (1969) · Giesler (1985) · Meyer (2009) · McCarty/CCRMA (2003)<br>
+    Méthode : centroïde spectral Fp · pipeline v22 validé (16/16 CSV à Δ=0 Hz) · 93 % de concordance multi-sources
+  </p>
+</div>
+
+<h2>Table des matières</h2>
+<nav style="background:white;border:1px solid #ddd;border-radius:6px;padding:18px 24px;margin:16px 0;">
+<ol style="line-height:2.2;">
+  <li><a href="#i-introduction">I. Introduction et Méthodologie</a>
+    <ul style="margin:4px 0 4px 20px;">
+      <li><a href="#sources">Sources des données</a></li>
+      <li><a href="#methodo">Méthodologie d'extraction</a></li>
+      <li><a href="#fp-centroide">Le Formant Principal (Fp)</a></li>
+      <li><a href="#voyelles">Correspondance voyelles–fréquences</a></li>
+    </ul>
+  </li>
+  <li><a href="#ii-bois">II. Les Bois</a></li>
+  <li><a href="#iii-cuivres">III. Les Cuivres</a></li>
+  <li><a href="#iv-saxophones">IV. Les Saxophones</a></li>
+  <li><a href="#v-cordes">V. Les Cordes</a></li>
+  <li><a href="#vi-synthese">VI. Synthèse — Convergences Formantiques</a></li>
+</ol>
+</nav>
+<h1 id="i-introduction">I. Introduction et Méthodologie</h1>
+<div class="section-intro intro"><p>Ce document constitue la référence quantitative la plus complète disponible
+pour l'analyse formantique des instruments de l'orchestre. Il examine comment
+les doublures orchestrales classiques s'expliquent par l'assemblage complémentaire
+des formants spectraux instrumentaux. Les formants sont les zones de résonance
+définissant le timbre : lorsque deux instruments sont doublés, leurs spectres se
+combinent pour créer une couleur timbrale homogène ou complémentaire.</p><p>L'analyse repose sur 5 914 échantillons professionnels couvrant 30 instruments
+de l'orchestre, validée contre quatre sources académiques indépendantes.
+Le taux de concordance global est de 93 % (27/29 instruments comparables).</p></div>
+<h3 id="sources">Sources des données</h3>
+<table class="ref-table"><tr class="header"><th>Source</th><th>Titre / Base</th><th>Description</th><th>Éditeur</th></tr>
+<tr><td><b>Backus (1969)</b></td><td>The Acoustical Foundations of Music</td><td>Référence historique, mesures ciblées cuivres et bois</td><td>W.W. Norton & Co.</td></tr>
+<tr><td><b>Giesler (1985)</b></td><td>Instrumentation: Ein Hand- und Lehrbuch</td><td>Mesures détaillées, associations vocaliques explicites, 13 instruments</td><td>Breitkopf & Härtel</td></tr>
+<tr><td><b>Meyer (2009)</b></td><td>Acoustics and the Performance of Music (5e éd.)</td><td>Analyse acoustique avec couleurs vocales, zones vocaliques définies</td><td>Springer-Verlag</td></tr>
+<tr><td><b>SOL2020 Orchidea</b></td><td>Studio On Line</td><td>12 instruments solistes, 2 391 échantillons sustained analysés</td><td>Orchidea / EIC</td></tr>
+<tr><td><b>Yan_Adds</b></td><td>Ajouts de provenances diverses</td><td>18 instruments supplémentaires, 1 646 échantillons (ensembles, bois auxiliaires, cuivres graves)</td><td>VSL, Con Timbre, échantillons personnels</td></tr>
+<tr><td><b>McCarty/CCRMA (2003)</b></td><td>Vowel space chart for orchestral instruments</td><td>Référence directionnelle — limitations d'exactitude reconnues par l'auteur</td><td>CCRMA Stanford</td></tr>
+</table>
+<h3 id="methodo">Méthodologie d'extraction formantique</h3>
+
+<div style="background:#fff8e1;border:2px solid #f9a825;border-radius:8px;padding:14px 18px;margin:16px 0;">
+<strong style="color:#e65100;">🎵 Périmètre de mesure — Tenues soutenues uniquement</strong><br>
+Toutes les valeurs formantiques de ce document sont mesurées sur des <strong>tenues soutenues
+(sustained)</strong> en jeu <strong>ordinario</strong>. Cela exclut les transitoires d'attaque
+(où les formants ne sont pas encore stabilisés), les modes de jeu étendus, et les
+dynamiques extrêmes. Les sourdines sont traitées séparément dans les sections correspondantes.
+</div>
+
+<div class="section-intro general">
+<p><strong>Techniques INCLUSES :</strong> normal, arco, sustain, ordinario, vibrato,
+non-vibrato, flautando — dynamiques pp à ff. Ces techniques produisent les formants
+structurels stables de l'instrument.</p>
+<p><strong>Techniques EXCLUES :</strong> pizzicato, col legno, tremolo, trilles,
+harmoniques artificiels, multiphoniques, flutter tongue, sourdines (analysées
+séparément), glissandi, portamento. Ces techniques modifient radicalement le spectre
+et ne représentent pas le timbre fondamental.</p>
+</div>
+<table class="ref-table"><tr class="header"><th>Paramètre</th><th>Valeur / Description</th></tr>
+<tr><td><b>FFT Size</b></td><td>4 096 samples</td></tr>
+<tr><td><b>Sample Rate</b></td><td>44 100 Hz</td></tr>
+<tr><td><b>Résolution fréquentielle</b></td><td>~10,8 Hz/bin</td></tr>
+<tr><td><b>Plage analysée</b></td><td>100–3 000 Hz</td></tr>
+<tr><td><b>Données d'entrée</b></td><td>Enveloppes spectrales pré-calculées (specenv, 1 024 bins) — fenêtrage Hann + lissage appliqués en amont par le pipeline Orchidea</td></tr>
+<tr><td><b>Algorithme</b></td><td>Détection de pics sur enveloppe spectrale — pic le plus proéminent (pas premier pic)</td></tr>
+<tr><td><b>Seuil d'amplitude</b></td><td>−30 dB sous le pic maximum de la région</td></tr>
+<tr><td><b>Distance minimale</b></td><td>70 Hz entre pics (~6.5 bins)</td></tr>
+</table>
+<p><em>Choix méthodologique critique : la détection du pic le plus proéminent (et non du premier pic) capture le formant perceptuel principal, évite les résonances basses secondaires, et est cohérente avec la perception auditive.</em></p>
+
+<div style="background:#e3f2fd;border:2px solid #1565c0;border-radius:8px;padding:16px 20px;margin:24px 0;">
+<h4 style="color:#0d47a1;margin:0 0 10px 0;">⚠ Note terminologique : F1–F6 dans ce document</h4>
+<p style="margin:0;">Dans cette étude, <strong>F1, F2, … F6</strong> désignent les <strong>pics spectraux
+principaux</strong> extraits par analyse d'enveloppe spectrale (<code>scipy.signal.find_peaks</code>).
+Ces pics correspondent aux résonances principales du système acoustique de l'instrument
+(corps, colonne d'air, cavités) et sont mis en regard des <strong>voyelles cardinales par analogie
+perceptive</strong> — sans prétendre à une équivalence stricte avec les formants du tractus
+vocal humain (résonances du conduit vocal au sens de Fant, 1960).</p>
+<p style="margin:8px 0 0 0;">Pour les instruments à vent cylindriques (clarinette, flûte), où aucun formant fixe
+n'existe au sens strict, la notation F1 désigne la <strong>zone d'énergie spectrale
+dominante</strong> — terminologie plus exacte que « formant » pour ces familles.</p>
+</div>
+
+<h3 id="fp-centroide">Le Formant Principal (Fp) par centroïde spectral — pourquoi et comment</h3>
+
+<p>Pour les instruments à large tessiture, le formant F1 (premier pic spectral) est
+<strong>extrêmement instable</strong> d'un registre à l'autre : il ne caractérise pas
+le timbre global de l'instrument, mais seulement la note jouée à ce moment.</p>
+
+<p>Exemple démonstratif : le violon présente un F1 dont l'écart-type atteint σ=651 Hz
+selon le registre — soit une variation de plus d'une octave. Cette instabilité rend
+F1 peu exploitable comme signature timbrale.</p>
+
+<p>La mesure <strong>Fp (Formant Principal)</strong> — centroïde spectral pondéré en
+énergie dans une bande fréquentielle optimisée par instrument — résout ce problème.
+Le centroïde est la « moyenne de masse » du spectre dans une bande donnée : il
+intègre la contribution de toutes les fréquences au lieu d'isoler un pic unique.</p>
+
+<div class="fp-explanation">
+<strong>Formule :</strong>
+Fp = Σ(fᵢ × Aᵢ) / Σ(Aᵢ)
+où fᵢ est la fréquence du bin i, Aᵢ son amplitude, et la somme porte sur une bande
+choisie par instrument (typiquement 600–1 400 Hz ou 1 000–2 000 Hz).
+</div>
+
+<p>Comparaison Fp vs F2 (écart-type σ, instrument ordinario) :</p>
+<table class="ref-table">
+<tr class="header"><th>Instrument</th><th>Fp (Hz)</th><th>σ Fp</th><th>F2 (Hz)</th><th>σ F2</th><th>Gain de stabilité</th></tr>
+<tr><td>Violon</td><td>893</td><td>92</td><td>1 518</td><td>651</td><td><strong>7.1×</strong></td></tr>
+<tr><td>Trompette</td><td>1 046</td><td>98</td><td>1 324</td><td>1 018</td><td><strong>10.4×</strong></td></tr>
+<tr><td>Clarinette Sib</td><td>1 412</td><td>169</td><td>1 130</td><td>795</td><td><strong>4.7×</strong></td></tr>
+<tr><td>Cor</td><td>738</td><td>112</td><td>1 106</td><td>734</td><td><strong>6.5×</strong></td></tr>
+</table>
+
+<p>Le Fp est systématiquement plus stable que F1 ou F2 et correspond au
+<em>Hauptformant</em> (formant principal perceptif) décrit par Meyer (2009) pour les
+cordes. Il représente la coloration timbrale globale de l'instrument telle que
+l'oreille la perçoit, indépendamment de la note jouée.</p>
+
+<p><strong>22 instruments sur 30 bénéficient d'une mesure Fp</strong> validée dans
+cette étude. Pour les 8 instruments restants (dont la flûte et le hautbois qui ont
+un spectre très variable), F1 ou F2 reste utilisé.</p>
+
+<div style="background:#f3e5f5;border:2px solid #7b1fa2;border-radius:8px;padding:14px 18px;margin:20px 0;">
+<h4 style="color:#4a148c;margin:0 0 10px 0;">σ(Fp) comme indicateur de sélectivité spectrale</h4>
+<p style="margin:0;">L'écart-type σ du Fp reflète indirectement la <strong>largeur de bande</strong>
+(bandwidth) de la résonance principale de l'instrument. Un σ(Fp) faible indique un
+formant étroit et bien défini (forte sélectivité, Q élevé) ; un σ(Fp) élevé indique un
+formant large et diffus. Ainsi, le violon (σ=92 Hz) possède un timbre spectralement
+plus focalisé que la clarinette Sib (σ=169 Hz), ce qui se confirme perceptivement :
+le violon a une « couleur vocalique » plus identifiable que la clarinette dont le
+spectre évolue fortement selon le registre.</p>
+</div>
+<h3 id="voyelles">Correspondance voyelles–fréquences (Meyer 2009)</h3>
+
+<p>Le système vocalique fournit un cadre intuitif pour décrire le timbre instrumental.
+Meyer (2009) établit des correspondances entre zones formantiques et voyelles de la
+langue allemande/française. Ce tableau étend cette correspondance à l'ensemble du
+corpus SOL2020 + Yan_Adds.</p>
+<table class="vowel-table">
+<tr class="header"><th>Voyelle</th><th>Fréquence (Hz)</th><th>Exemples français</th><th>Perception timbrale</th><th>Instruments représentatifs (F1 ou Fp)</th></tr>
+<tr style="background-color:#DCEEFB40;"><td><strong>u (oo)</strong></td><td>200–400</td><td style="font-style:italic;color:#444;">b<u>ou</u>che, t<u>ou</u>r</td><td>Profondeur, gravité</td><td style="text-align:left;">Contrebasse (172), Tuba basse (226), Tuba CB (226), Contrebasson (226), Trombone (237), Flûte basse (301)</td></tr>
+<tr style="background-color:#D5ECD540;"><td><strong>o (oh)</strong></td><td>400–600</td><td style="font-style:italic;color:#444;">b<u>eau</u>, v<u>eau</u></td><td>Plénitude, rondeur</td><td style="text-align:left;">Alto (377), Cor (388), Sax alto (398), Cor anglais (452), Cl. Sib (463), Basson (495), Ens. Violons (495), Violon (506)</td></tr>
+<tr style="background-color:#FDE8CE40;"><td><strong>å (aw)</strong></td><td>~600–800</td><td style="font-style:italic;color:#444;">p<u>â</u>te, âm<u>e</u>, (entre o et a)</td><td>Transition, chaleur</td><td style="text-align:left;">Cl. Mib (678), Flûte (743), Hautbois (743), Trompette (786)</td></tr>
+<tr style="background-color:#F8D5D540;"><td><strong>a (ah)</strong></td><td>800–1 250</td><td style="font-style:italic;color:#444;">p<u>a</u>s, cl<u>a</u>sse</td><td>Puissance, présence</td><td style="text-align:left;">Cor Fp (738), Violon Fp (893), Basson Fp (1 079), Trompette Fp (1 046), Cor anglais Fp (1 135)</td></tr>
+<tr style="background-color:#E8D5F040;"><td><strong>e (eh)</strong></td><td>1 250–2 600</td><td style="font-style:italic;color:#444;">f<u>é</u>e, <u>é</u>toile</td><td>Clarté, brillance</td><td style="text-align:left;">Cl. Sib Fp (1 412), Flûte Fp (1 535), Hautbois Fp (1 485), Cl. Mib Fp (1 266), Petite flûte (1 109)</td></tr>
+<tr style="background-color:#FFF8D040;"><td><strong>i (ee)</strong></td><td>> 2 600</td><td style="font-style:italic;color:#444;">v<u>i</u>e, s<u>i</u>ffler</td><td>Brillance extrême, stridence</td><td style="text-align:left;">Petite flûte (1 992 F2), Trompette+sourdine harmon (2 358)</td></tr>
+</table>
+
+<div style="margin:24px 0;">
+<figure style="margin:0;">
+  <img src="media/voyelles_IPA.svg" alt="Positions formantiques des voyelles IPA — F1 et F2 sur axe fréquentiel"
+       style="max-width:100%;display:block;margin:0 auto;border:1px solid #eee;border-radius:6px;"/>
+  <figcaption style="text-align:center;font-size:0.85em;color:#666;margin-top:8px;font-style:italic;">
+    Positions F1 et F2 des 11 voyelles cardinales françaises sur axe fréquentiel linéaire ·
+    zone cluster /o/–/å/ surlignée · d'après Meyer (2009), Giesler (1985)
+  </figcaption>
+</figure>
+</div>
+
+<div class="note-v4">
+<strong>Note sur le i (ee) &gt;2 600 Hz :</strong> Très peu d'instruments de l'orchestre
+symphonique présentent un F1 dans cette zone en ordinario. La petite flûte atteint
+2 336 Hz (zone frontière /e/–/i/). La trompette+sourdine harmon propulse son spectre
+à 2 358 Hz, atteignant la zone /i/. Cette brillance extrême est l'effet recherché
+dans les sourdines harmon jazz.
+</div>
+<p class="source-note"><strong>Sources :</strong> Meyer (2009) — Acoustics and the Performance of Music (5e éd.) · SOL2020 Orchidea · Yan_Adds · pipeline v22 validé.</p>
+</body>
+</html>

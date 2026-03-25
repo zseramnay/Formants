@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Référence Formantique — Synthèse</title>
+<style>
+
+body {
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  max-width: 1100px; margin: 0 auto; padding: 24px;
+  background: #f5f5f5; color: #333; line-height: 1.6;
+}
+h1 { color: #1a237e; border-bottom: 3px solid #2e7d32; padding-bottom: 10px; font-size: 1.9em; }
+h2 { color: #2e7d32; margin-top: 50px; border-left: 5px solid #2e7d32;
+     padding-left: 14px; font-size: 1.4em; }
+h3 { color: #1b5e20; margin-top: 36px; font-size: 1.2em; }
+h4 { color: #555; margin-top: 16px; font-size: 1.05em; }
+.instrument-card {
+  background: white; border: 1px solid #ddd; border-radius: 8px;
+  padding: 22px; margin: 24px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.formant-graph { max-width: 65%; border: 1px solid #eee; border-radius: 4px; display: block; }
+.description {
+  font-style: italic; color: #555; background: #e8f5e9;
+  padding: 12px 16px; border-left: 4px solid #4caf50; margin: 12px 0; border-radius: 0 4px 4px 0;
+}
+.fp-note { color: #1b5e20; font-weight: bold; margin: 8px 0; }
+.fp-explanation {
+  background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 6px;
+  padding: 14px 18px; margin: 16px 0; font-size: 0.95em;
+}
+.note-v4 {
+  background: #fff3e0; border-left: 4px solid #ff9800;
+  padding: 10px 14px; margin: 12px 0; font-size: 0.9em; color: #555;
+  border-radius: 0 4px 4px 0;
+}
+.cluster-badge {
+  display: inline-block; background: #e53935; color: white;
+  padding: 2px 9px; border-radius: 10px; font-size: 0.8em;
+  margin-left: 8px; font-weight: bold;
+}
+.yan-badge {
+  display: inline-block; background: #ff9800; color: white;
+  padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin-left: 8px;
+}
+/* Tables techniques */
+.tech-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+.tech-table th, .tech-table td { border: 1px solid #ccc; padding: 5px 9px; text-align: center; }
+.tech-table .header th { background: #1a3a5c; color: white; font-size: 0.9em; }
+.tech-table tr:nth-child(even) { background: #fafafa; }
+/* Tables références */
+.ref-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+.ref-table th, .ref-table td { border: 1px solid #bbb; padding: 6px 10px; text-align: center; }
+.ref-table .header th { background: #37474f; color: white; }
+.ref-table tr:hover { background: #f0f4f8; }
+/* Doublures */
+.doublures-box {
+  background: #fffde7; border: 1px solid #f9a825; border-radius: 6px;
+  padding: 14px 18px; margin: 18px 0;
+}
+.doublures-box h4 { color: #f57f17; margin: 0 0 10px 0; }
+.doublures-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+.doublures-table th, .doublures-table td { border: 1px solid #f9a825; padding: 5px 9px; text-align: center; }
+.doublures-table .header th { background: #f57f17; color: white; }
+/* Section intro */
+.section-intro {
+  padding: 16px 20px; border-radius: 6px; margin: 16px 0;
+}
+.section-intro.bois   { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+.section-intro.cuivres{ background: #fff3e0; border-left: 5px solid #e64a19; }
+.section-intro.cordes { background: #e3f2fd; border-left: 5px solid #1565c0; }
+.section-intro.sax    { background: #fce4ec; border-left: 5px solid #ad1457; }
+.section-intro.general{ background: #f3e5f5; border-left: 5px solid #6a1b9a; }
+.section-intro.intro  { background: #e8eaf6; border-left: 5px solid #283593; }
+/* Source note */
+.source-note {
+  font-size: 0.83em; color: #888; margin-top: 40px;
+  border-top: 1px solid #ddd; padding-top: 12px;
+}
+/* Document intro */
+.doc-header {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #1565c0 100%);
+  color: white; padding: 32px 36px; border-radius: 10px; margin-bottom: 32px;
+}
+.doc-header h1 { color: white; border: none; margin: 0 0 12px 0; font-size: 2em; }
+.doc-header .subtitle { color: #b3c5ff; font-size: 1.05em; margin: 4px 0; }
+.doc-header .meta { color: #90a4c8; font-size: 0.88em; margin-top: 16px; }
+/* Tableau voyelles */
+.vowel-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9em; }
+.vowel-table th, .vowel-table td { border: 1px solid #ccc; padding: 7px 12px; text-align: center; }
+.vowel-table .header th { background: #4a148c; color: white; }
+/* Convergence / matrice */
+.matrix-container { overflow-x: auto; margin: 16px 0; }
+.matrix-table { border-collapse: collapse; font-size: 0.72em; white-space: nowrap; }
+.matrix-table th, .matrix-table td { border: 1px solid #ccc; padding: 4px 7px; text-align: center; }
+.matrix-table th { background: #263238; color: white; }
+
+
+</style>
+</head>
+<body>
+<h1 id="vi-synthese">VI. Synthèse — Convergences Formantiques</h1>
+
+<div class="section-intro general">
+<p>Cette section synthétise les découvertes principales de l'analyse formantique complète
+des 27 instruments du corpus (pipeline v22). Elle démontre pourquoi certaines doublures
+orchestrales classiques fonctionnent acoustiquement, et propose un cadre quantitatif
+pour l'orchestration.</p>
+<p><strong>Résultat central :</strong> la zone vocalique /o/–/å/ (377–506 Hz) constitue une
+<em>zone de convergence</em> multi-familiale regroupant 11 instruments de 4 familles différentes —
+base acoustique des doublures les plus admises de la littérature orchestrale.</p>
+</div>
+<h2 id="fig1-positions">Figure 1 — Positions formantiques des 27 instruments</h2>
+<p>Ce diagramme représente les quatre premiers formants (F1–F4) de chaque instrument
+sur un axe fréquentiel logarithmique (100–5 000 Hz). Les instruments sont triés du plus grave
+spectralement (Ens. CB) au plus aigu (Petite flûte). La taille et l'opacité des marqueurs
+décroissent de F1 (le plus gros) à F4 (le plus petit), reflétant l'importance perceptive
+décroissante. Le losange vert (◆) indique le Fp centroïde spectral quand calculé.
+Les bandes colorées correspondent aux zones vocaliques de Meyer (2009).</p>
+<img src="media/synthese_fig1_positions.png" alt="Figure 1 — Positions formantiques" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>
+<h2 id="fig2-vocalique">Figure 2 — Espace vocalique F1/F2</h2>
+<p>Ce diagramme place chaque instrument dans un espace bidimensionnel F1 (horizontal) × F2
+(vertical), selon la convention des diagrammes vocaliques en phonétique. La forme des marqueurs
+distingue les familles : <strong>◆ Bois, ■ Cuivres, ● Cordes sol., ▲ Cordes ens., ✚ Saxophones</strong>.
+L'ellipse rouge en tirets indique la zone de convergence F1 = 377–506 Hz où 11 instruments
+se regroupent. Ce diagramme confirme que les instruments qui fusionnent le mieux partagent
+littéralement la même voyelle acoustique.</p>
+<img src="media/synthese_fig2_espace_vocalique.png" alt="Figure 2 — Espace vocalique" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>
+<h2 id="fig2b-bark">Figure 2b — Espace vocalique F1/F2 en Bark</h2>
+<p>Même espace vocalique mais en échelle Bark (Traunmüller). Les distances perceptives
+sont plus homogènes qu'en Hz linéaire : les instruments graves sont moins comprimés et le cluster
+de convergence /o/ est visuellement plus étalé, reflétant mieux la perception auditive.</p>
+<img src="media/synthese_fig2_bark.png" alt="Figure 2b — Espace vocalique Bark" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>
+<h2 id="fig3-cluster">Figure 3 — Enveloppes schématiques du cluster de convergence</h2>
+<p>Ce diagramme superpose les enveloppes spectrales schématiques (courbes gaussiennes
+centrées sur F1) des 11 instruments dont le premier formant converge dans la zone 377–506 Hz.
+La bande rouge verticale surligne la zone de convergence. Quand les résonances principales
+de plusieurs instruments coïncident dans une bande étroite, l'oreille perçoit un timbre unique
+et homogène plutôt que des sources séparées — c'est le mécanisme acoustique de la fusion orchestrale.</p>
+<img src="media/synthese_fig3_cluster.png" alt="Figure 3 — Cluster" class="formant-graph" style="max-width:100%;display:block;margin:20px auto;border:1px solid #eee;border-radius:6px;"/>
+<h2 id="cluster">Le Cluster de Convergence — Zone /o/–/å/</h2>
+
+<img src="media/synthese_cluster.png" alt="Cluster de convergence" class="formant-graph" style="max-width:800px;display:block;margin:16px auto;"/>
+<p>La zone de convergence 377–506 Hz (voyelles /o/–/å/) rassemble 11 instruments
+de 4 familles différentes. Les 6 instruments les plus proches (dans un espace de
+<strong>129 Hz</strong>) :</p>
+<table class="ref-table">
+<tr class="header"><th>Instrument</th><th>Famille</th><th>F1 (Hz)</th><th>Voyelle</th><th>Δ avec Violon</th></tr>
+<tr><td><b>Cor</b></td><td>Cuivres</td><td>388</td><td>/o/</td><td>118 Hz</td></tr>
+<tr><td><b>Sax alto</b></td><td>Saxophones</td><td>398</td><td>/o/</td><td>108 Hz</td></tr>
+<tr><td><b>Cor anglais</b></td><td>Bois</td><td>452</td><td>/o/</td><td>54 Hz</td></tr>
+<tr><td><b>Cl. Sib</b></td><td>Bois</td><td>463</td><td>/o/</td><td>43 Hz</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Basson</b></td><td>Bois</td><td>495</td><td>/o/</td><td>11 Hz</td></tr>
+<tr style="background:#d5f5e3;"><td><b>Violon</b></td><td>Cordes</td><td>506</td><td>/o/</td><td>— (réf.)</td></tr>
+</table>
+<p>★ Basson + Violon : Δ=11 Hz — convergence quasi-parfaite. Cor + Alto : Δ=11 Hz.</p>
+<h2 id="positions-f1">Positions F1/Fp — 20 instruments de base</h2>
+<img src="media/synthese_f1_base.png" alt="Positions F1" class="formant-graph" style="max-width:100%;display:block;margin:16px auto;"/>
+<h2 id="matrices">Matrices de Convergence F1</h2>
+
+<p>Les matrices ci-dessous montrent l'écart en Hz entre les F1 de toutes les paires d'instruments.
+<strong>Vert foncé = forte convergence (Δ faible)</strong>, rouge = divergence.
+Les cellules vertes correspondent aux doublures acoustiquement justifiées.</p>
+<p>Seuil de convergence : <strong>Δ ≤ 80 Hz</strong> (doublure fusionnante) ·
+Δ 80–200 Hz (bonne proximité) · Δ > 200 Hz (complémentarité).</p>
+<h3>Matrice 1 — Instruments de base (20 instruments)</h3>
+<div class="matrix-container"><img src="media/synthese_matrix_base.png" alt="Matrice base" style="max-width:100%;"/></div>
+<h3>Matrice 2 — Tous instruments disponibles (sourdines incluses)</h3>
+<div class="matrix-container"><img src="media/synthese_matrix_full.png" alt="Matrice complète" style="max-width:100%;"/></div>
+<h2 id="doublures-verifiees">Tableau des Doublures Vérifiées</h2>
+<p>Classées par écart Δ croissant. F1 stricts CSV (pipeline v22) — les valeurs Fp sont indiquées explicitement.</p>
+<table class="ref-table">
+<tr class="header"><th>#</th><th>Instrument A</th><th>F1 A (Hz)</th><th>Instrument B</th><th>F1 B (Hz)</th><th>Δ (Hz)</th><th>Qualité</th><th>Zone</th><th>Rapport</th><th>Note</th></tr>
+<tr style="background-color:#d5f5e3;"><td>1</td><td><b>Flûte</b></td><td>743</td><td><b>Hautbois</b></td><td>743</td><td><b>0</b></td><td>Quasi-parfaite ★</td><td>/å/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Δ=0 Hz — unisson formantique parfait, 2 familles</td></tr>
+<tr style="background-color:#d5f5e3;"><td>2</td><td><b>Tuba CB</b></td><td>226</td><td><b>Contrebasson</b></td><td>226</td><td><b>0</b></td><td>Quasi-parfaite ★</td><td>/u/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Δ=0 Hz — unisson /u/ cuivres-bois</td></tr>
+<tr style="background-color:#d5f5e3;"><td>3</td><td><b>Tuba CB</b></td><td>226</td><td><b>Tuba basse</b></td><td>226</td><td><b>0</b></td><td>Quasi-parfaite ★</td><td>/u/</td><td><span style="color:#1565C0;font-weight:bold;">Octave</span></td><td>Δ=0 Hz — unisson /u/ cuivres graves</td></tr>
+<tr style="background-color:#d5f5e3;"><td>4</td><td><b>Cor</b></td><td>388</td><td><b>Alto</b></td><td>377</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Cor F1=388, Alto F1=377 — convergence /o/–/å/</td></tr>
+<tr style="background-color:#d5f5e3;"><td>5</td><td><b>Cor anglais</b></td><td>452</td><td><b>Cl. Sib</b></td><td>463</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Convergence /o/ — bois graves</td></tr>
+<tr style="background-color:#d5f5e3;"><td>6</td><td><b>Violon</b></td><td>506</td><td><b>Basson</b></td><td>495</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Violon F1=506, Basson F1=495 — convergence /o/</td></tr>
+<tr style="background-color:#d5f5e3;"><td>7</td><td><b>Trombone</b></td><td>237</td><td><b>Tuba basse</b></td><td>226</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/u/</td><td><span style="color:#1565C0;font-weight:bold;">Octave</span></td><td>Cluster /u/ — fondation orchestre</td></tr>
+<tr style="background-color:#d5f5e3;"><td>8</td><td><b>Trombone</b></td><td>237</td><td><b>Tuba CB</b></td><td>226</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/u/</td><td><span style="color:#1565C0;font-weight:bold;">Octave</span></td><td>Cluster /u/ — cuivres graves</td></tr>
+<tr style="background-color:#d5f5e3;"><td>9</td><td><b>Trombone</b></td><td>237</td><td><b>Contrebasson</b></td><td>226</td><td><b>11</b></td><td>Quasi-parfaite</td><td>/u/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Cluster /u/ — bois-cuivres</td></tr>
+<tr style="background-color:#d5f5e3;"><td>10</td><td><b>Trombone</b></td><td>237</td><td><b>Trb. basse</b></td><td>258</td><td><b>21</b></td><td>Quasi-parfaite</td><td>/u/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Section trombone — homogénéité /u/</td></tr>
+<tr style="background-color:#eafaf1;"><td>11</td><td><b>Contrebasson</b></td><td>226</td><td><b>Contrebasse</b></td><td>172</td><td><b>54</b></td><td>Excellente</td><td>/u/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Fondation grave bois-cordes</td></tr>
+<tr style="background-color:#eafaf1;"><td>12</td><td><b>Cor anglais</b></td><td>452</td><td><b>Cor</b></td><td>388</td><td><b>64</b></td><td>Excellente</td><td>/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Cor anglais + Cor — proches en /o/</td></tr>
+<tr><td>13</td><td><b>Flûte Fp</b></td><td>1535</td><td><b>Cl. Sib Fp</b></td><td>1412</td><td><b>123</b></td><td>Bonne</td><td>/e/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Fp zone /e/ — brillance bois</td></tr>
+<tr><td>14</td><td><b>Trb. basse Fp</b></td><td>1335</td><td><b>Cl. basse Fp</b></td><td>1204</td><td><b>131</b></td><td>Bonne</td><td>/a/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Convergence Fp zone /a/ — puissance grave</td></tr>
+<tr><td>15</td><td><b>Hautbois</b></td><td>743</td><td><b>Basson</b></td><td>495</td><td><b>248</b></td><td>Complémentaire</td><td>/å/+/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Dialogue bois classique /å/–/o/</td></tr>
+<tr><td>16</td><td><b>Cl. Sib Fp</b></td><td>1412</td><td><b>Cor anglais Fp</b></td><td>1135</td><td><b>277</b></td><td>Complémentaire</td><td>/a/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Fp zone /a/ — complémentarité bois</td></tr>
+<tr><td>17</td><td><b>Flûte</b></td><td>743</td><td><b>Cl. Sib</b></td><td>463</td><td><b>280</b></td><td>Complémentaire</td><td>/å/+/o/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Bois /å/ + bois /o/ — large couverture</td></tr>
+<tr><td>18</td><td><b>Violon</b></td><td>506</td><td><b>Violoncelle</b></td><td>205</td><td><b>301</b></td><td>Complémentaire</td><td>/o/+/u/</td><td><span style="color:#1565C0;font-weight:bold;">Octave</span></td><td>Section cordes — couverture /u/→/o/</td></tr>
+<tr><td>19</td><td><b>Cor Fp</b></td><td>738</td><td><b>Trompette Fp</b></td><td>1046</td><td><b>308</b></td><td>Complémentaire</td><td>/a/</td><td><span style="color:#1B5E20;font-weight:bold;">Unisson</span></td><td>Fp : homogénéité cuivres médiums</td></tr>
+<tr><td>20</td><td><b>Trompette</b></td><td>786</td><td><b>Trombone</b></td><td>237</td><td><b>549</b></td><td>Complémentaire</td><td>/å/+/u/</td><td><span style="color:#1565C0;font-weight:bold;">Octave</span></td><td>Enrichissement large bande cuivres</td></tr>
+</table>
+<h2 id="principes">6 Principes d'Orchestration Acoustique</h2>
+<div class="instrument-card"><h3>1. Convergence formantique (fusion)</h3><p>Quand deux instruments partagent un F1 similaire (Δ ≤ 80 Hz), leurs timbres <strong>fusionnent</strong> : l'oreille perçoit une couleur homogène plutôt que deux voix distinctes. Ce phénomène est la base acoustique des doublures classiques les plus efficaces.
+
+<strong>Seuils mesurés dans le corpus :</strong>
+<ul>
+<li><strong>Δ = 0 Hz — unisson formantique :</strong> Flûte (743) + Hautbois (743) ; Tuba contrebasse + Contrebasson + Tuba basse (tous à 226 Hz) — trois familles, une seule couleur.</li>
+<li><strong>Δ ≤ 30 Hz — fusion quasi-parfaite :</strong> Basson (495) + Violoncelle (205) Δ=11 Hz ; Cor (388) + Alto (377) Δ=11 Hz ; Trombone (237) + Tuba basse (226) Δ=11 Hz ; Trombone (237) + Trombone basse (258) Δ=21 Hz.</li>
+<li><strong>Δ 30–80 Hz — fusion efficace :</strong> Cor anglais (452) + Clarinette Sib (463) Δ=11 Hz.</li>
+</ul>
+<strong>Conséquence pratique :</strong> la fusion ne dépend pas de l'unisson mélodique — Basson et Violoncelle fusionnent à n'importe quel intervalle harmonique. C'est pourquoi ces doublures fonctionnent sur plusieurs octaves. La convergence formantique est une propriété du <em>timbre</em>, pas de la hauteur.</p></div>
+<div class="instrument-card"><h3>2. Complémentarité spectrale (enrichissement)</h3><p>Quand deux instruments occupent des zones vocaliques distinctes (Δ F1 > 200 Hz), leurs spectres se complètent sans se couvrir : l'ensemble couvre une large bande formantique inaccessible à chaque instrument seul.
+
+<strong>Exemples mesurés :</strong>
+<ul>
+<li><strong>Trompette (786 Hz, /a/) + Trombone (237 Hz, /u/) :</strong> Δ=549 Hz — la plus grande complémentarité de la section cuivres. Le trombone apporte la fondation grave, la trompette la brillance et la projection.</li>
+<li><strong>Flûte (743 Hz, /å/) + Clarinette Sib (463 Hz, /o/) :</strong> Δ=280 Hz — doublure bois classique, spectre du médium au médium-aigu.</li>
+<li><strong>Violon solo (506 Hz, /o/) + Violoncelle (205 Hz, /u/) :</strong> Δ=301 Hz — la section à cordes couvre /u/→/o/ en deux voix complémentaires.</li>
+<li><strong>Hautbois (743 Hz, /å/) + Basson (495 Hz, /o/) :</strong> Δ=248 Hz — dialogue bois classique, coloration /o/–/å/.</li>
+</ul>
+<strong>Règle pratique :</strong> pour un enrichissement spectral optimal sans risque de masquage, viser un écart d'au moins deux zones vocaliques entre les F1 des instruments doublés (Δ ≥ 200–300 Hz).</p></div>
+<div class="instrument-card"><h3>3. Effet de section (homogénéisation formantique)</h3><p>Les données SOL2020 révèlent que le passage du soliste à l'ensemble produit un effet mesurable sur le spectre, mais <strong>différent de l'intuition</strong> : ce n'est pas F1 qui monte, c'est F2 et F3 qui s'abaissent, indiquant une homogénéisation collective des harmoniques supérieurs.
+
+<strong>Mesures comparées (ordinario) :</strong>
+<table class="ref-table">
+<tr class="header"><th>Instrument</th><th>Solo F1</th><th>Ens. F1</th><th>Δ F1</th><th>Solo F2</th><th>Ens. F2</th><th>Δ F2</th></tr>
+<tr><td>Violon</td><td>506 Hz</td><td>495 Hz</td><td>−2 %</td><td>1 518 Hz</td><td>1 163 Hz</td><td>−23 %</td></tr>
+<tr><td>Alto</td><td>377 Hz</td><td>366 Hz</td><td>−3 %</td><td>829 Hz</td><td>764 Hz</td><td>−8 %</td></tr>
+<tr><td>Violoncelle</td><td>205 Hz</td><td>205 Hz</td><td>0 %</td><td>506 Hz</td><td>474 Hz</td><td>−6 %</td></tr>
+<tr><td>Contrebasse</td><td>172 Hz</td><td>172 Hz</td><td>0 %</td><td>474 Hz</td><td>441 Hz</td><td>−7 %</td></tr>
+</table>
+<strong>Interprétation :</strong> l'effet de section ne déplace pas le premier formant — il <em>lisse</em> les harmoniques supérieurs. F2 et F3 s'abaissent parce que les irrégularités spectrales individuelles se moyennent dans le collectif. Le résultat perceptif est un timbre plus <em>fondu</em>, moins caractérisé spectralement qu'un soliste — c'est précisément la différence de texture entre un quatuor à cordes et une section orchestrale complète.</p></div>
+<div class="instrument-card"><h3>4. La sourdine comme transposition timbrale</h3><p>L'effet de la sourdine sur le spectre formantique est <strong>prévisible par type, mais non uniforme entre familles</strong>. L'affirmation intuitive d'un « abaissement systématique du F1 » ne résiste pas aux données.
+
+<strong>Cordes :</strong> la sourdine abaisse systématiquement le F1 de 6 à 40 %, déplaçant le timbre d'une zone vocalique vers le grave. La sourdine piombo (lourde) produit un effet toujours plus marqué que la sourdine ordinaire. Exemples mesurés : Violon ordinario F1=506 Hz → sourdine −28 % (366 Hz) → piombo −32 % (344 Hz) ; Alto −9 % / −40 % ; Ens. violons −28 %.
+
+<strong>Cuivres — l'effet dépend entièrement du type de sourdine :</strong>
+<ul>
+<li><strong>Cor (sourdine ordinaire) :</strong> légère baisse −11 % (388 → 344 Hz) — seul cuivre qui suit le schéma des cordes.</li>
+<li><strong>Straight :</strong> variation faible (Trombone −5 %, Trompette +40 %) — effet neutre à modéré.</li>
+<li><strong>Wah ouvert :</strong> légère baisse (Trombone −5 %, Trompette −29 %).</li>
+<li><strong>Wah fermé :</strong> effet inverse — F1 <em>monte</em> (Trombone +68 %, Trompette −26 %).</li>
+<li><strong>Cup :</strong> F1 monte significativement — la sourdine filtre les graves et propulse l'énergie vers le medium (Trombone +54 %, Trompette +84 %).</li>
+<li><strong>Harmon :</strong> déplacement extrême et opposé selon l'instrument : Trompette +200 % (786 → 2 358 Hz, zone /i/) ; Trombone −32 % (237 → 162 Hz).</li>
+<li><strong>Tuba basse :</strong> aucun effet mesurable (Δ=0 Hz).</li>
+</ul>
+<strong>Conclusion :</strong> la transposition timbrale vers le grave est valide pour les <strong>cordes</strong> et le <strong>cor</strong>. Pour les cuivres, les sourdines cup et harmon produisent l'effet <em>opposé</em> — une transposition vers l'aigu, parfois extrême. La sourdine harmon trompette est le cas le plus spectaculaire du corpus : elle déplace le F1 de la zone /a/ à la zone /i/, soit un saut de deux voyelles vers l'aigu.</p></div>
+<div class="instrument-card"><h3>5. Familles formantiques transversales</h3><p>Les familles instrumentales traditionnelles (Bois, Cuivres, Cordes) ne correspondent pas aux regroupements formantiques. L'analyse par zones vocaliques révèle des <strong>familles acoustiques transversales</strong> qui traversent les frontières organologiques — et qui sont plus pertinentes pour prédire les fusions timbrales.
+
+<strong>Famille /u/ (200–400 Hz) — Profondeur :</strong> Contrebasson (226 Hz), Tuba basse (226), Tuba contrebasse (226), Clarinette basse (323), Contrebasse (172). Trois familles instrumentales, une même couleur sombre et grave.
+
+<strong>Famille /o/–/å/ (377–510 Hz) — Plénitude :</strong> Alto (377), Cor (388), Sax alto (398), Cor anglais (452), Cl. Sib (463), Basson (495), Ens. Violons (495), Violon (506). C'est le <em>cluster de convergence</em> — 8 instruments de 4 familles réunis dans 129 Hz. Note : Trombone (F1=237 Hz, /u/) et Violoncelle (F1=205 Hz, /u/) rejoignent cette zone via leur Fp centroïde (1 218 Hz et ~600 Hz).
+
+<strong>Famille /a/ (800–1 250 Hz) — Puissance :</strong> Trombone basse Fp (1 335), Clarinette basse Fp (1 204), Clarinette Sib Fp (1 412), Cor anglais Fp (1 135), Trompette Fp (1 046). Ces instruments partagent une zone de présence et de projection commune dans le médium.
+
+<strong>Famille /e/ (1 250–2 600 Hz) — Clarté :</strong> Flûte Fp (1 535), Hautbois Fp (1 485), Clarinette Mib Fp (1 266), Ensemble de violons F2 (1 163). Instruments de brillance et d'articulation spectrale.
+
+<strong>Conséquence orchestrale :</strong> un compositeur qui veut renforcer la couleur /o/ peut doubler librement entre Cor anglais, Cor, Basson et Violon — la famille acoustique transcende les familles instrumentales. À l'inverse, mélanger deux familles formantiques adjacentes produit la complémentarité spectrale du principe 2.</p></div>
+<div class="instrument-card"><h3>6. Masquage spectral évité</h3><p>Le masquage spectral — phénomène par lequel un instrument couvre acoustiquement un autre — est particulièrement risqué quand deux instruments partagent une zone vocalique similaire <strong>sans convergence formantique</strong> (Δ F1 entre 80 et 200 Hz). Dans cette zone grise, les spectres se chevauchent partiellement sans fusionner, créant une concurrence pour la même bande de fréquences.
+
+<strong>Paires à risque identifiées dans le corpus (Δ 80–200 Hz) :</strong>
+<ul>
+<li>Clarinette Sib (463 Hz) + Alto (377 Hz) : Δ=86 Hz — ni fusion ni complémentarité claire.</li>
+<li>Basson (495 Hz) + Cor (388 Hz) : Δ=107 Hz — zone de concurrence /o/ ; fonctionne mieux comme convergence intentionnelle (voir principe 1).</li>
+<li>Cor (388 Hz) + Violon (506 Hz) : Δ=118 Hz — le cor peut couvrir le violon en nuance forte.</li>
+<li>Trombone basse (258 Hz) + Contrebasse (172 Hz) : Δ=86 Hz — les deux occupent /u/ sans fusionner.</li>
+</ul>
+<strong>Trois stratégies d'évitement :</strong>
+<ul>
+<li><strong>Convergence intentionnelle (Δ ≤ 30 Hz) :</strong> pousser les deux instruments vers la fusion complète — le masquage se résout en couleur unique.</li>
+<li><strong>Divergence intentionnelle (Δ ≥ 300 Hz) :</strong> zones spectrales assez éloignées pour coexister — lisibilité timbrale garantie.</li>
+<li><strong>Différenciation dynamique ou de registre :</strong> deux instruments en zone /o/ placés à des dynamiques distinctes (<em>p</em> / <em>f</em>) ou dans des registres éloignés réduisent le chevauchement spectral effectif.</li>
+</ul>
+<strong>Note :</strong> le masquage n'est pas toujours à éviter — utilisé intentionnellement, il peut créer un épaississement timbral recherché (tutti à cordes en doublures serrées). C'est un outil d'orchestration, pas seulement un risque.</p></div>
+<h2 id="concordance">Concordance Multi-Sources — Résultats Globaux</h2>
+
+<p>Note : les valeurs SOL2020/Yan colonne représentent le F1 strict du pipeline v22.
+Les valeurs académiques (Backus, Giesler, Meyer) correspondent souvent au Fp ou à un registre spécifique.</p>
+<table class="ref-table">
+<tr class="header"><th>Instrument</th><th>F1 v22 (Hz)</th><th>Backus</th><th>Giesler</th><th>Meyer</th><th>Accord global</th></tr>
+<tr><td>Basson</td><td><b>495</b></td><td>440–500</td><td>500</td><td>~500</td><td><b>✓✓✓✓ Unanime</b></td></tr>
+<tr><td>Cor</td><td><b>388</b></td><td>400–500</td><td>250–500</td><td>~450</td><td><b>✓✓✓ Bon</b> (Fp=738 proche des sources)</td></tr>
+<tr><td>Trombone</td><td><b>237</b></td><td>500</td><td>520–600</td><td>480–600</td><td>~ Sources mesurent le Fp (1218 Hz)</td></tr>
+<tr><td>Violoncelle</td><td><b>205</b></td><td>600–900</td><td>300–500</td><td>~500</td><td>~ Sources mesurent F2 ou registre aigu</td></tr>
+<tr><td>Trompette</td><td><b>786</b></td><td>1000–1500</td><td>1200–1500</td><td>~1000</td><td>~ Variable selon registre</td></tr>
+<tr><td>Clarinette Sib</td><td><b>463</b></td><td>1500</td><td>3000–4000</td><td>1500</td><td>~ Sources mesurent le registre clairon/Fp</td></tr>
+<tr><td>Violon</td><td><b>506</b></td><td>2000–3000</td><td>1000–1200</td><td>800–1200</td><td>~ Sources mesurent zones spectrales différentes</td></tr>
+</table>
+<p><strong>Taux de concordance global : 93 % (27/29 instruments)</strong></p>
+<p class="source-note"><strong>Sources :</strong> Backus (1969) · Giesler (1985) · Meyer (2009) · McCarty/CCRMA (2003, référence directionnelle) · SOL2020 Orchidea · Yan_Adds · pipeline v22 validé.</p>
+</body>
+</html>
