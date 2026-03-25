@@ -1,3 +1,5 @@
+# Registres des instruments
+
 * flute : registre grave B3-A4, médium A4-A5, aigu A5-A6, suraigu au dessus
 * hautbois : registre grave A#3-G4, médium G4-G5, aigu G5-D6, suraigu au dessus
 * clarinette : chalumeau D3-D4, gorge D#4-G#4, clarine A4-A#5, suraigu à partir de B5
@@ -12,6 +14,6 @@
 * contrebasse et ensemble de contrebasses : grave C1-C2, médium C2-C3, aigu C3-C4, suraigu C4 et au dessus
 
 
-INFO : Nom des notes sur toute la tessiture de C1 à C8
+# INFO : Nom des notes sur toute la tessiture de C1 à C8
 
 C1, C#1, D1, D#1, E1, F1, F#1, G1, G#1, A1, A#1, B1, C2, C#2, D2, D#2, E2, F2, F#2, G2, G#2, A2, A#2, B2,C3, C#3, D2, D#3, E2, F2, F#3, G2, G#3, A2, A#3, B3, C4, C#4, D2, D#4, E2, F2, F#4, G2, G#4, A2, A#4, B4, C5, C#5, D2, D#5, E2, F2, F#5, G2, G#5, A2, A#5, B5, C6, C#6, D2, D#6, E2, F2, F#6, G2, G#6, A2, A#6, B6, C7, C#7, D2, D#7, E2, F2, F#7, G2, G#7, A2, A#7, B7, C8 etc...
