@@ -198,8 +198,8 @@ def make_convergence_matrix(instruments_dict, filename, title, threshold=80):
     im = ax.imshow(np.clip(delta_matrix, 0, vmax), cmap=cmap, aspect='auto', vmin=0, vmax=vmax)
 
     # Taille de police: valeurs et légendes renforcées pour la matrice complète
-    tick_fs = 8 if n <= 22 else 9
-    cell_fs = 5.5 if n <= 22 else 7
+    tick_fs = 9 if n <= 22 else 9
+    cell_fs = 8 if n <= 22 else 7
 
     ax.set_xticks(range(n))
     ax.set_yticks(range(n))
