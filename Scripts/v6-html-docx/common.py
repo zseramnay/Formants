@@ -1236,7 +1236,7 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
     fp = sum(linear[i]*(lo_b+i)*FREQ_RES for i in range(len(linear)))/total if total > 0 else None
     fp_bin = min(int(fp/FREQ_RES), len(mean_env)-1) if fp else None
 
-    y_min = mean_env[mask].min() - 6
+    y_min = mean_env[mask].min() - 8
     y_max = mean_env[mask].max() + 18
     VOWEL_Y = y_max - 2
 
@@ -1282,7 +1282,7 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
         ax.plot(fp, mean_env[fp_bin], 'D', color='#1B5E20', markersize=5,
                 markeredgecolor='black', markeredgewidth=0.8, zorder=6)
 
-    # Set up axes BEFORE label placement (needed for transforms)
+    # Set up axes BEFORE label placement (needed for pixel transforms)
     ax.set_xscale('log')
     ticks = [t for t in [100,150,200,300,400,500,600,800,1000,1500,2000,3000,4000,5000] if t<=mf]
     ax.set_xticks(ticks)
@@ -1294,31 +1294,30 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
     trans = ax.transData
     inv_trans = ax.transData.inverted()
 
-    # Pre-compute curve in pixel space for collision checking
+    # Pre-compute curve pixels for curve-collision checking
     curve_freqs = _freqs[mask]
     curve_vals = mean_env[mask]
     curve_px = np.array([trans.transform((f, v)) for f, v in zip(curve_freqs, curve_vals)])
 
     placed_px = []  # (px_left, px_right, py_bottom, py_top)
-    PX_PAD = 8
 
     def _collides(px_l, px_r, py_b, py_t):
-        # Check label-label collision
+        # Label-label collision (8px padding)
         for ol, orr, ob, ot in placed_px:
-            if px_l < orr + PX_PAD and px_r > ol - PX_PAD:
-                if py_b < ot + PX_PAD and py_t > ob - PX_PAD:
+            if px_l < orr + 8 and px_r > ol - 8:
+                if py_b < ot + 4 and py_t > ob - 4:
                     return True
-        # Check label-curve collision (does the curve cross through the label box?)
+        # Label-curve collision: only reject if curve LINE passes through the label box
         curve_in_x = curve_px[(curve_px[:,0] >= px_l - 4) & (curve_px[:,0] <= px_r + 4)]
         if len(curve_in_x) > 0:
-            # curve_px y is in display coords (y=0 at top)
-            curve_y_min = curve_in_x[:,1].min()
-            curve_y_max = curve_in_x[:,1].max()
-            if py_b < curve_y_max + 6 and py_t > curve_y_min - 6:
+            # In display coords: smaller y = higher on screen
+            curve_y_top = curve_in_x[:,1].min()
+            curve_y_bot = curve_in_x[:,1].max()
+            if py_b < curve_y_bot + 4 and py_t > curve_y_top - 4:
                 return True
         return False
 
-    # Place labels
+    # Place labels: try above, below, shifted — pick lowest cost
     for lab in labels:
         is_fp = lab['type'] == 'fp'
         clr = '#1B5E20' if is_fp else '#333'
@@ -1330,15 +1329,16 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
 
         best = None
         best_cost = 999
-        # In display coords, y DECREASES going up
-        offsets_y_above = [18, 32, 46, 60, 76, 92, 110, 130]
-        offsets_y_below = [20, 34, 48, 62, 78, 94]
-        offsets_x = [0, -55, 55, -110, 110, -165, 165]
+        # Display y: smaller = higher on screen
+        y_above = [16, 28, 40, 54, 70, 88, 108, 130]
+        y_below = [18, 30, 42, 56, 72, 90]
+        x_shifts = [0, -55, 55, -110, 110, -170, 170]
 
-        for ox in offsets_x:
+        for ox in x_shifts:
             tx = ax_x + ox
-            for oy in offsets_y_above:
-                ty = ax_y - oy  # up in display = lower y
+            # Above the anchor
+            for oy in y_above:
+                ty = ax_y - oy
                 px_l, px_r = tx - txt_w/2, tx + txt_w/2
                 py_b, py_t = ty - txt_h/2, ty + txt_h/2
                 if not _collides(px_l, px_r, py_b, py_t):
@@ -1347,19 +1347,20 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
                         best = (tx, ty, px_l, px_r, py_b, py_t)
                         best_cost = cost
                     break
-            for oy in offsets_y_below:
-                ty = ax_y + oy  # down in display = higher y
+            # Below the anchor
+            for oy in y_below:
+                ty = ax_y + oy
                 px_l, px_r = tx - txt_w/2, tx + txt_w/2
                 py_b, py_t = ty - txt_h/2, ty + txt_h/2
                 if not _collides(px_l, px_r, py_b, py_t):
-                    cost = oy + 3 + abs(ox) * 0.3
+                    cost = oy + 2 + abs(ox) * 0.3
                     if cost < best_cost:
                         best = (tx, ty, px_l, px_r, py_b, py_t)
                         best_cost = cost
                     break
 
         if best is None:
-            tx, ty = ax_x, ax_y - 18
+            tx, ty = ax_x, ax_y - 16
             best = (tx, ty, tx-txt_w/2, tx+txt_w/2, ty-txt_h/2, ty+txt_h/2)
 
         tx, ty, px_l, px_r, py_b, py_t = best
