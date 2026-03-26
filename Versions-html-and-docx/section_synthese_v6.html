@@ -223,9 +223,10 @@ car elles n'existent que lorsque les deux instruments jouent dans un registre sp
 
 <strong>Seuils mesurés dans le corpus :</strong>
 <ul>
-<li><strong>Δ = 0 Hz — unisson formantique :</strong> Flûte (743) + Hautbois (743) ; Tuba contrebasse + Contrebasson + Tuba basse (tous à 226 Hz) — trois familles, une seule couleur.</li>
-<li><strong>Δ ≤ 30 Hz — fusion quasi-parfaite :</strong> Basson (495) + Violoncelle (205) Δ=11 Hz ; Cor (388) + Alto (377) Δ=11 Hz ; Trombone (237) + Tuba basse (226) Δ=11 Hz ; Trombone (237) + Trombone basse (258) Δ=21 Hz.</li>
-<li><strong>Δ 30–80 Hz — fusion efficace :</strong> Cor anglais (452) + Clarinette Sib (463) Δ=11 Hz.</li>
+<li><strong>Δ = 0 Hz (0 Bark) — unisson formantique :</strong> Flûte (743) + Hautbois (743) ; Tuba contrebasse + Contrebasson + Tuba basse (tous à 226 Hz) — trois familles, une seule couleur.</li>
+<li><strong>Δ ≤ 30 Hz (≤ 0,3 Bark) — fusion quasi-parfaite :</strong> Basson (495) + Violoncelle (205) Δ=11 Hz ; Cor (388) + Alto (377) Δ=11 Hz ; Trombone (237) + Tuba basse (226) Δ=11 Hz ; Trombone (237) + Trombone basse (258) Δ=21 Hz.</li>
+<li><strong>Δ 30–80 Hz (0,3–0,7 Bark) — fusion efficace :</strong> Cor anglais (452) + Clarinette Sib (463) Δ=11 Hz.</li>
+<li><strong>Δ ≥ 200 Hz (≥ 1,5 Bark) — complémentarité spectrale :</strong> les spectres coexistent sans masquage.</li>
 </ul>
 <strong>Conséquence pratique :</strong> la fusion ne dépend pas de l'unisson mélodique — Basson et Violoncelle fusionnent à n'importe quel intervalle harmonique. C'est pourquoi ces doublures fonctionnent sur plusieurs octaves. La convergence formantique est une propriété du <em>timbre</em>, pas de la hauteur.</p></div>
 <div class="instrument-card"><h3>2. Complémentarité spectrale (enrichissement)</h3><p>Quand deux instruments occupent des zones vocaliques distinctes (Δ F1 > 200 Hz), leurs spectres se complètent sans se couvrir : l'ensemble couvre une large bande formantique inaccessible à chaque instrument seul.
@@ -314,6 +315,28 @@ Cela confirme que le Fp capture une caractéristique <strong>structurelle</stron
 <strong>Conséquence :</strong> les convergences Fp inter-instruments sont robustes quel que soit le registre. Le trombone (Fp ≈ 1 217–1 260 Hz) converge avec la contrebasse (Fp ≈ 1 283–1 297 Hz) dans tous les registres. Le basson (Fp ≈ 1 063–1 109 Hz) converge avec la trompette (Fp ≈ 1 043–1 088 Hz) de manière stable.
 
 Le Fp est donc la mesure la plus fiable pour prédire la fusion timbrale entre instruments à grande tessiture — là où F1 et F2 sont trop instables pour servir de référence.</p></div>
+<h2 id="fp-ref-table">Tableau de référence Fp — bandes de calcul et contexte</h2>
+<p>Ce tableau centralise les valeurs Fp de référence, la bande de calcul utilisée, et le contexte
+(solo, ensemble, sourdine). Pour la reproductibilité, la bande Fp est optimisée par instrument pour capturer
+la zone de résonance structurelle (corps, pavillon, caisse).</p>
+<table class="ref-table">
+<tr class="header"><th>Instrument</th><th>Fp réf. (Hz)</th><th>Bande Fp (Hz)</th><th>σ(Fp)</th><th>Contexte</th><th>N</th><th>Notes</th></tr>
+<tr><td>Flûte</td><td><b>1 535</b></td><td>1 000–2 000</td><td>~150</td><td>Solo ordinario</td><td>118</td><td>—</td></tr>
+<tr><td>Hautbois</td><td><b>1 485</b></td><td>1 000–2 000</td><td>~90</td><td>Solo ordinario</td><td>107</td><td>Stable par registre (6 %)</td></tr>
+<tr><td>Clarinette Sib</td><td><b>1 412</b></td><td>1 000–2 000</td><td>169</td><td>Solo ordinario</td><td>126</td><td>Réf. principale ; variante 1 296 Hz (bande 800–1 600)</td></tr>
+<tr><td>Basson</td><td><b>1 079</b></td><td>800–1 600</td><td>~60</td><td>Solo ordinario</td><td>126</td><td>Très stable (4 %)</td></tr>
+<tr><td>Cor</td><td><b>738</b></td><td>600–1 400</td><td>112</td><td>Solo ordinario</td><td>134</td><td>Le plus stable (&lt; 4 %)</td></tr>
+<tr><td>Trompette</td><td><b>1 046</b></td><td>600–1 400</td><td>98</td><td>Solo ordinario</td><td>96</td><td>10,4× plus stable que F2</td></tr>
+<tr><td>Trombone</td><td><b>1 218</b></td><td>1 000–2 000</td><td>~100</td><td>Solo ordinario</td><td>117</td><td>Variation 6 % par registre</td></tr>
+<tr><td>Tuba basse</td><td><b>1 239</b></td><td>1 000–2 000</td><td>~110</td><td>Solo ordinario</td><td>108</td><td>—</td></tr>
+<tr><td>Violon solo</td><td><b>893</b></td><td>600–1 400</td><td>92</td><td>Solo ordinario</td><td>284</td><td>Ens. = 970 Hz, sourdine = variable</td></tr>
+<tr><td>Alto solo</td><td><b>1 300</b></td><td>800–1 600</td><td>~120</td><td>Solo ordinario</td><td>309</td><td>Ens. = 954 Hz</td></tr>
+<tr><td>Violoncelle solo</td><td><b>1 242</b></td><td>600–1 400</td><td>~80</td><td>Solo ordinario</td><td>291</td><td>Ens. = 1 471 Hz (↑ brillance)</td></tr>
+<tr><td>Contrebasse solo</td><td><b>1 235</b></td><td>1 000–2 000</td><td>~50</td><td>Solo ordinario</td><td>309</td><td>Ens. = 1 146 Hz</td></tr>
+</table>
+<p><em>Les Fp varient selon le contexte : le Fp d'un ensemble est généralement différent du Fp solo
+(effet de section spectral). Les valeurs ci-dessus sont celles du <strong>soliste en technique ordinario</strong>,
+qui constituent la référence de base. Les variantes (ensemble, sourdine) sont documentées dans les sections instrumentales.</em></p>
 <h2 id="concordance">Concordance Multi-Sources — Résultats Globaux</h2>
 
 <p>Note : les valeurs SOL2020/Yan colonne représentent le F1 strict du pipeline v22.
