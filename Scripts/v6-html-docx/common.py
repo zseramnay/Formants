@@ -1209,7 +1209,7 @@ def load_spectrum_by_register(instrument_key, techs=('ordinario',)):
 def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,1800),
                          family_color='#333', cep_env_db=None, note_range=''):
     """
-    Generate a 'Carte spectrale vocalique' image (v7 anti-collision, above+below placement).
+    Generate a 'Carte spectrale vocalique' image (v8 anti-collision).
     mean_env: mean specenv array (dB values).
     cep_env_db: optional cepstral envelope in dB (normalized to match specenv level).
     Returns output path.
@@ -1218,8 +1218,8 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
     mf = 5500
     mask = (_freqs >= 80) & (_freqs <= mf)
     log_range = np.log10(mf) - np.log10(80)
-    LW = 0.10 * log_range
-    LH = 3.5
+    LW = 0.09 * log_range
+    LH = 3.0
 
     # Find peaks
     lo = max(int(80/FREQ_RES),1); hi = min(int(6000/FREQ_RES), len(mean_env)-1)
@@ -1244,13 +1244,12 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
     fp = sum(linear[i]*(lo_b+i)*FREQ_RES for i in range(len(linear)))/total if total > 0 else None
     fp_bin = min(int(fp/FREQ_RES), len(mean_env)-1) if fp else None
 
-    y_min = mean_env[mask].min() - 8
-    y_max = mean_env[mask].max() + 22
+    y_min = mean_env[mask].min() - 12
+    y_max = mean_env[mask].max() + 25
     VOWEL_Y = y_max - 2
     MAX_LY = VOWEL_Y - 5
     MIN_LY = y_min + 2
 
-    # Labels — all compact 1-line
     labels = []
     for i, (f, a) in enumerate(sel):
         bin_idx = min(int(f/FREQ_RES), len(mean_env)-1)
@@ -1267,11 +1266,11 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
 
     def _col(lx, ty):
         for px, pb, pt, pw in placed:
-            if abs(lx-px) < (LW+pw)*0.5:
-                if ty < pt+0.3 and (ty+LH) > pb-0.3: return True
+            if abs(lx-px) < (LW+pw)*0.55:
+                if ty < pt+0.5 and (ty+LH) > pb-0.5: return True
         return False
 
-    fig, ax = plt.subplots(figsize=(8, 4), dpi=150)
+    fig, ax = plt.subplots(figsize=(10, 5.5), dpi=150)
 
     for lo_hz, hi_hz, color, label in VOWEL_ZONES:
         if lo_hz < mf:
@@ -1285,66 +1284,110 @@ def make_carte_spectrale(display, filename, mean_env, n_samples, fp_band=(800,18
     ax.text(485, y_min+1, 'cluster /o/', ha='center', fontsize=6,
             color='#C62828', fontstyle='italic')
 
-    ax.plot(_freqs[mask], mean_env[mask], color=family_color, lw=2.5, zorder=3,
+    ax.plot(_freqs[mask], mean_env[mask], color=family_color, lw=1.5, zorder=3,
             label=f'Enveloppe specenv (n={n_samples})')
 
     if cep_env_db is not None:
-        ax.plot(_freqs[mask], cep_env_db[mask], '--', color='#9C27B0', lw=1.0, alpha=0.6,
-                zorder=2, label='Cepstrale (ord.20)')
+        ax.plot(_freqs[mask], cep_env_db[mask], '--', color='#9C27B0', lw=0.8, alpha=0.5,
+                zorder=2, label='Cepstrale (ord.30)')
 
     for i, (f, a) in enumerate(sel):
         bin_idx = min(int(f/FREQ_RES), len(mean_env)-1)
-        ax.plot(f, mean_env[bin_idx], 'v', color='#D32F2F', markersize=6, zorder=5)
+        ax.plot(f, mean_env[bin_idx], 'v', color='#D32F2F', markersize=5, zorder=5)
     if fp:
-        ax.plot(fp, mean_env[fp_bin], 'D', color='#1B5E20', markersize=6,
+        ax.plot(fp, mean_env[fp_bin], 'D', color='#1B5E20', markersize=5,
                 markeredgecolor='black', markeredgewidth=0.8, zorder=6)
 
-    # Anti-collision: above AND below
-    for lab in labels:
-        lx = np.log10(lab['x'])
-        base_y = lab['y']
-        best = None
-        cands = []
-        for yp in [1.5, 4, 7, 10.5, 14, 17.5]:
-            ty = base_y + yp
-            if ty+LH > MAX_LY: continue
-            if not _col(lx, ty): cands.append((lx, ty, yp)); break
-        for yp in [4, 7, 10.5, 14, 17.5]:
-            ty = base_y - yp - LH
-            if ty < MIN_LY: continue
-            if not _col(lx, ty): cands.append((lx, ty, yp+0.5)); break
-        if cands:
-            cands.sort(key=lambda c: c[2])
-            best = (cands[0][0], cands[0][1])
-        if best is None:
-            for ox in [-LW*0.55, LW*0.55]:
-                tx = lx + ox
-                if tx < np.log10(80) or tx > np.log10(mf): continue
-                for yp in [1.5, 4, 7, 10.5]:
-                    ty = base_y + yp
-                    if ty+LH > MAX_LY: continue
-                    if not _col(tx, ty): best = (tx, ty); break
-                if best: break
-        if best is None:
-            best = (lx, base_y + 1.5)
-
-        bx, by = best
-        placed.append((bx, by, by+LH, LW))
-        is_fp = lab['type'] == 'fp'
-        clr = '#1B5E20' if is_fp else '#333'
-        ax.annotate(lab['text'], xy=(lab['x'], lab['y']),
-                    xytext=(10**bx, by), ha='center', va='bottom',
-                    fontsize=6, fontweight='bold', color=clr,
-                    arrowprops=dict(arrowstyle='->', color='#1B5E20' if is_fp else '#999',
-                                  lw=0.8, ls='--'),
-                    zorder=8 if is_fp else 6)
-
+    # v8: pixel-based anti-collision placement
+    # Render figure first to get transforms, then place labels
     ax.set_xscale('log')
     ticks = [t for t in [100,150,200,300,400,500,600,800,1000,1500,2000,3000,4000,5000] if t<=mf]
     ax.set_xticks(ticks)
     ax.set_xticklabels([str(t) for t in ticks], fontsize=7)
     ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     ax.set_xlim(80, mf); ax.set_ylim(y_min, y_max)
+    fig.canvas.draw()
+
+    trans = ax.transData
+    inv_trans = ax.transData.inverted()
+
+    # Sort labels by priority (highest first: Fp=7, F1=5, F2=4...)
+    labels.sort(key=lambda l: -l['priority'])
+
+    placed_px = []  # list of (px_left, px_right, py_bottom, py_top)
+    PX_PAD = 12  # pixels padding between labels
+
+    def _px_collides(px_l, px_r, py_b, py_t):
+        for ol, orr, ob, ot in placed_px:
+            if px_l < orr + PX_PAD and px_r > ol - PX_PAD:
+                if py_b < ot + PX_PAD and py_t > ob - PX_PAD:
+                    return True
+        return False
+
+    for i, lab in enumerate(labels):
+        is_fp = lab['type'] == 'fp'
+        clr = '#1B5E20' if is_fp else '#333'
+        # Estimate label width in pixels (fontsize 5.5, ~5.5px per char)
+        txt_w = len(lab['text']) * 5.8
+        txt_h = 10  # approx height at fontsize 5.5
+
+        # Anchor point in pixels
+        anchor_px = trans.transform((lab['x'], lab['y']))
+        ax_x, ax_y = anchor_px
+
+        # Try positions: above then below, with alternating x-offsets
+        best = None
+        best_cost = 999
+        offsets_y_above = [20, 36, 52, 68, 84, 100, 116, 132]
+        offsets_y_below = [22, 38, 54, 70, 86, 102]
+        offsets_x = [0, -60, 60, -120, 120, -180, 180]
+
+        for ox in offsets_x:
+            tx = ax_x + ox
+            # Above — try ALL positions, don't break
+            for oy in offsets_y_above:
+                ty = ax_y - oy
+                px_l = tx - txt_w/2
+                px_r = tx + txt_w/2
+                py_b = ty - txt_h/2
+                py_t = ty + txt_h/2
+                if not _px_collides(px_l, px_r, py_b, py_t):
+                    cost = oy + abs(ox) * 0.3
+                    if cost < best_cost:
+                        best = (tx, ty, px_l, px_r, py_b, py_t)
+                        best_cost = cost
+                    break  # found best at this x-offset above, no need to go further up
+            # Below
+            for oy in offsets_y_below:
+                ty = ax_y + oy
+                px_l = tx - txt_w/2
+                px_r = tx + txt_w/2
+                py_b = ty - txt_h/2
+                py_t = ty + txt_h/2
+                if not _px_collides(px_l, px_r, py_b, py_t):
+                    cost = oy + 3 + abs(ox) * 0.3
+                    if cost < best_cost:
+                        best = (tx, ty, px_l, px_r, py_b, py_t)
+                        best_cost = cost
+                    break
+
+        if best is None:
+            tx, ty = ax_x, ax_y - 14
+            best = (tx, ty, tx-txt_w/2, tx+txt_w/2, ty-txt_h/2, ty+txt_h/2)
+
+        tx, ty, px_l, px_r, py_b, py_t = best
+        placed_px.append((px_l, px_r, py_b, py_t))
+
+        # Convert pixel position back to data coordinates
+        data_pos = inv_trans.transform((tx, ty))
+
+        ax.annotate(lab['text'], xy=(lab['x'], lab['y']),
+                    xytext=data_pos, ha='center', va='center',
+                    fontsize=5.5, fontweight='bold', color=clr,
+                    arrowprops=dict(arrowstyle='->', color='#1B5E20' if is_fp else '#999',
+                                  lw=0.7, ls='--'),
+                    zorder=8 if is_fp else 6)
+
     ax.set_xlabel('Frequence (Hz) — echelle logarithmique', fontsize=9, fontweight='bold')
     ax.set_ylabel('Amplitude (dB)', fontsize=9, fontweight='bold')
     subtitle = f' — {note_range}' if note_range else ''
@@ -1399,7 +1442,7 @@ def compute_register_profiles(instrument_key, techs=('ordinario',), fp_band=(800
         cep_db = None
         if spectra_lin is not None and len(spectra_lin) > 0:
             mean_spec = np.mean(spectra_lin, axis=0)
-            cep_log = cepstral_envelope(mean_spec, order=20)
+            cep_log = cepstral_envelope(mean_spec, order=30)
             cep_db_raw = (20/np.log(10)) * cep_log
             mask = (_freqs >= 200) & (_freqs <= 4000)
             if mask.any() and len(cep_db_raw) == len(mean_env):
