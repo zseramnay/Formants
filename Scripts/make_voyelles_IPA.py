@@ -142,8 +142,9 @@ def build_svg():
 
     # Titre
     a(f'  {text(550, 26, "POSITIONS FORMANTIQUES DES VOYELLES — ALPHABET PHONÉTIQUE INTERNATIONAL", 14, "#1a1a2e", weight="bold")}')
-    a(f'  {text(550, 42, "F1 et F2 sur axe fréquentiel linéaire · d\'après Meyer (2009), Giesler (1985)", 9.5, "#666", style="italic")}')
-
+    # a(f'  {text(550, 42, "F1 et F2 sur axe fréquentiel linéaire · d\'après Meyer (2009), Giesler (1985)", 9.5, "#666", style="italic")}')
+    a(f'  {text(550, 42, "F1 et F2 sur axe fréquentiel linéaire d’après Meyer (2009), Giesler (1985)", 9.5, "#666", style="italic")}')
+    
     # Zone cluster (420–550 Hz)
     x_cl1 = f2_to_x(420)
     w_cl  = f2_to_x(550) - x_cl1
