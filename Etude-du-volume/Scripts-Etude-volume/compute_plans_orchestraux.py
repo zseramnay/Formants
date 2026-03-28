@@ -18,7 +18,10 @@ import numpy as np
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'v6-html-docx'))
 import common
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
+RESULTS_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'Resultats-volume'))
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # ═══════════════════════════════════════════
 # 1. Extraire F1 + Fp par registre depuis common.py
@@ -85,7 +88,7 @@ def get_profiles():
 # ═══════════════════════════════════════════
 def load_homo_matrix():
     """Returns {(instrA, instrB): H_value}"""
-    path = os.path.join(BASE, 'Resultats', 'homogeneite_matrix_v3.csv')
+    path = os.path.join(RESULTS_DIR, 'homogeneite_matrix_v3.csv')
     with open(path) as f:
         reader = csv.reader(f)
         header = next(reader)
@@ -103,7 +106,7 @@ def load_homo_matrix():
 # ═══════════════════════════════════════════
 def load_volume_indices():
     """Returns {(instr, register): volume_index}"""
-    path = os.path.join(BASE, 'Resultats', 'volume_koechlin_v3.csv')
+    path = os.path.join(RESULTS_DIR, 'volume_koechlin_v3.csv')
     data = {}
     with open(path, newline='') as f:
         for row in csv.DictReader(f):
@@ -297,7 +300,7 @@ def main():
     # ═══════════════════════════════════════════
     # CSV output
     # ═══════════════════════════════════════════
-    out_path = os.path.join(BASE, 'Resultats', 'plans_orchestraux_koechlin.csv')
+    out_path = os.path.join(RESULTS_DIR, 'plans_orchestraux_koechlin.csv')
     with open(out_path, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument_A','register_A','instrument_B','register_B',
@@ -314,7 +317,7 @@ def main():
                 f"{p['H']:.3f}", f"{p['fusion_score']:.3f}", p['category'],
             ])
 
-    out2 = os.path.join(BASE, 'Resultats', 'convergences_par_registre.csv')
+    out2 = os.path.join(RESULTS_DIR, 'convergences_par_registre.csv')
     with open(out2, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument_A','register_A','instrument_B','register_B',

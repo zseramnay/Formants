@@ -16,7 +16,10 @@ from scipy.fft import dct
 from scipy.stats import spearmanr
 from scipy.spatial.distance import cosine
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))  # repo root
+RESULTS_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'Resultats-volume'))
+os.makedirs(RESULTS_DIR, exist_ok=True)
 sys.path.insert(0, os.path.join(BASE, 'Scripts', 'v6-html-docx'))
 
 # ═══════════════════════════════════════════
@@ -367,7 +370,7 @@ def compute_volume(dynamic_filter=None, label='all'):
     return results
 
 def write_volume_csv(results, filename):
-    out = os.path.join(BASE, 'Resultats', filename)
+    out = os.path.join(RESULTS_DIR, filename)
     with open(out, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument','register','n_samples','mean_centroid_hz','mean_spread_hz',
@@ -391,7 +394,7 @@ def write_volume_csv(results, filename):
     return out
 
 def write_mfcc_csv(results, filename):
-    out = os.path.join(BASE, 'Resultats', filename)
+    out = os.path.join(RESULTS_DIR, filename)
     with open(out, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument','register','n_samples'] + [f'MFCC_{i}' for i in range(N_MFCC)])
@@ -435,7 +438,7 @@ def compute_homogeneity(results):
             matrix[(a,b)] = max(0, 1.0 - 0.5*delta_vol - 0.5*cos_d)
 
     # Write CSV
-    out = os.path.join(BASE, 'Resultats', 'homogeneite_matrix_v3.csv')
+    out = os.path.join(RESULTS_DIR, 'homogeneite_matrix_v3.csv')
     with open(out, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow([''] + instrs)
@@ -564,7 +567,7 @@ def compute_plans(results, homo_matrix, homo_instrs):
     pairs.sort(key=lambda x: -x['fusion_score'])
 
     # Write plans CSV
-    out1 = os.path.join(BASE, 'Resultats', 'plans_orchestraux_koechlin.csv')
+    out1 = os.path.join(RESULTS_DIR, 'plans_orchestraux_koechlin.csv')
     with open(out1, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument_A','register_A','instrument_B','register_B',
@@ -609,7 +612,7 @@ def compute_plans(results, homo_matrix, homo_instrs):
                         })
     cross.sort(key=lambda x: (x['delta_f1'], -x['H']))
 
-    out2 = os.path.join(BASE, 'Resultats', 'convergences_par_registre.csv')
+    out2 = os.path.join(RESULTS_DIR, 'convergences_par_registre.csv')
     with open(out2, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument_A','register_A','instrument_B','register_B',
@@ -700,7 +703,7 @@ def main():
     for f in ['volume_index_par_registre_all.csv','volume_index_par_registre_mf.csv',
               'volume_koechlin_v3.csv','homogeneite_matrix_v3.csv','mfcc_par_registre.csv',
               'plans_orchestraux_koechlin.csv','convergences_par_registre.csv']:
-        src = os.path.join(BASE, 'Resultats', f)
+        src = os.path.join(RESULTS_DIR, f)
         if os.path.exists(src):
             shutil.copy(src, os.path.join(out_dir, f))
 

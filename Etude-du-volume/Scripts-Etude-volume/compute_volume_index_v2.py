@@ -8,7 +8,10 @@ import os, re, csv, sys
 import numpy as np
 from collections import defaultdict
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
+RESULTS_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'Resultats-volume'))
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # ── Note utilities ──
 NOTE_MAP = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
@@ -228,7 +231,7 @@ def run(dynamic_filter=None, label='all'):
     results.sort(key=lambda x: -(x['Volume_index'] or -999))
     
     # Write CSV
-    out_path = os.path.join(BASE, 'Resultats', f'volume_index_par_registre_{label}.csv')
+    out_path = os.path.join(RESULTS_DIR, f'volume_index_par_registre_{label}.csv')
     with open(out_path, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument','register','n_samples','mean_centroid_hz','mean_spread_hz',

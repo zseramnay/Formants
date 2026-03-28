@@ -21,7 +21,10 @@ from scipy.fft import dct
 from scipy.stats import spearmanr
 from scipy.spatial.distance import cosine
 
-BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.abspath(os.path.join(SCRIPT_DIR, '..', '..'))
+RESULTS_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, '..', 'Resultats-volume'))
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # ═══════════════════════════════════════════
 # Utilitaires
@@ -285,7 +288,7 @@ def main():
     # ═══════════════════════════════════════════
     # OUTPUT 1: Volume index CSV
     # ═══════════════════════════════════════════
-    out1 = os.path.join(BASE, 'Resultats', 'volume_koechlin_v3.csv')
+    out1 = os.path.join(RESULTS_DIR, 'volume_koechlin_v3.csv')
     with open(out1, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument','register','n_samples',
@@ -444,7 +447,7 @@ def main():
         print(f"  {marker} {h:.3f}  {a:<25} + {b}")
 
     # Save homogeneity matrix CSV
-    out2 = os.path.join(BASE, 'Resultats', 'homogeneite_matrix_v3.csv')
+    out2 = os.path.join(RESULTS_DIR, 'homogeneite_matrix_v3.csv')
     with open(out2, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow([''] + instrs)
@@ -454,7 +457,7 @@ def main():
     # ═══════════════════════════════════════════
     # Write full MFCC profiles per register CSV (for future use)
     # ═══════════════════════════════════════════
-    out3 = os.path.join(BASE, 'Resultats', 'mfcc_par_registre.csv')
+    out3 = os.path.join(RESULTS_DIR, 'mfcc_par_registre.csv')
     with open(out3, 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(['instrument','register','n_samples'] +
