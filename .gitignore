@@ -5,6 +5,7 @@ __pycache__/
 uv.lock
 .python-version
 Discard/
+publications/older
 .~lock.*
 publications/*.gz
 publications/*.log
