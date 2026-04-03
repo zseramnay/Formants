@@ -50,7 +50,7 @@
 Cette étude présente la première analyse quantitative systématique des
 formants spectraux de 30~instruments de l'orchestre symphonique, à partir
 de \num{5914}~échantillons de tenues soutenues issus des bases SOL2020
-(Orchidea) et Yan\_Adds. En introduisant la mesure du \emph{Formant
+(Orchidea) et d'échantillons d'origines diverses (Yan\_Adds). En introduisant la mesure du \emph{Formant
 Principal}~(Fp) --- centroïde spectral pondéré en énergie ---, nous
 démontrons que les doublures orchestrales classiques s'expliquent par des
 convergences formantiques mesurables. Le résultat central est
@@ -58,7 +58,7 @@ l'identification d'un \emph{cluster de convergence} dans la zone
 vocalique /o/--/\r{a}/ (377--506~Hz), regroupant 11~instruments de
 4~familles différentes avec des écarts aussi faibles que $\Delta =
 \SI{0}{Hz}$ (flûte--hautbois) et $\Delta = \SI{11}{Hz}$
-(basson--violon, cor--alto). Neuf principes d'orchestration acoustique
+(basson--violon, cor--alto). Suite à ces analyses, neuf principes d'orchestration acoustique
 sont formulés, validés par un taux de concordance multi-sources de
 93\,\% (27/29~instruments comparables). L'ensemble constitue un cadre
 quantitatif pour l'analyse et la pratique de l'orchestration.
@@ -136,7 +136,6 @@ soutenues} (\emph{sustained}) en jeu \emph{ordinario}, excluant les
 transitoires d'attaque, les modes de jeu étendus et les dynamiques
 extrêmes. Les techniques incluses sont : normal, arco, sustain,
 ordinario, vibrato, non-vibrato, flautando, de \emph{pp} à \emph{ff}.
-Les sourdines sont traitées séparément.
 
 \subsection{Pipeline d'extraction formantique}
 
@@ -144,9 +143,7 @@ L'extraction des formants repose sur les paramètres suivants : FFT de
 \num{4096}~échantillons à \SI{44100}{Hz} (résolution
 $\sim$\SI{10.8}{Hz/bin}), plage analysée 100--\SI{3000}{Hz}, détection
 de pics sur enveloppe spectrale avec seuil d'amplitude à $-30$~dB sous
-le pic maximum et distance minimale de \SI{70}{Hz} entre pics. Le
-pipeline~v22 a été validé à $\Delta = \SI{0}{Hz}$ pour les 16
-instruments SOL2020.
+le pic maximum et distance minimale de \SI{70}{Hz} entre pics.
 
 Un choix méthodologique critique est la détection du \emph{pic le plus
 proéminent} (et non du premier pic), ce qui capture le formant perceptuel
