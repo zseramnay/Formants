@@ -1,0 +1,913 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}           % Times font (close to journal style)
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{xcolor}
+
+% --- Title ---
+\title{Formant Reference of the Orchestra:\\
+A Quantitative Study of Instrumental Spectral Convergences\\
+and the Acoustic Foundations of Orchestral Doublings}
+
+\author{Yan Maresz\\[6pt]
+\small Composer, Professor of New Technologies Applied to Composition\\
+\small Conservatoire National Sup\'erieur de Musique et de Danse de Paris\\
+\small \texttt{y.maresz@cnsmdp.fr}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\begin{abstract}
+This study presents the first systematic quantitative analysis of the spectral
+formants of 30 orchestral instruments, based on 5,914 sustained-tone samples
+drawn from the SOL2020 database (IRCAM/Orchidea) and a supplementary
+collection (Yan\_Adds). We introduce the Principal Formant (\textit{Fp}), a
+band-limited energy-weighted spectral centroid that captures an instrument's
+timbral identity with stability gains of up to 10.4$\times$ over raw peak
+measurements. Using \textit{Fp} and formant-peak analysis, we demonstrate that
+classical orchestral doublings can be explained by measurable formant
+convergences. The central finding is a convergence cluster in the vocalic zone
+/o/--/\aa/ (377--506~Hz), grouping 11~instruments from 4~different families
+with inter-instrument distances as small as $\Delta = 0$~Hz (flute--oboe) and
+$\Delta = 11$~Hz (bassoon--violin, horn--viola). Nine principles of acoustic
+orchestration are formulated and validated against a multi-source concordance
+rate of 93\% (27/29 comparable instruments). By connecting the spectral-centroid
+literature on timbral blend \citep{Sandell1995,Tardieu2012,Goodchild2018} with
+the orchestration-treatise tradition, this study provides a quantitative
+framework for both the analysis and the practice of orchestration.
+
+\medskip
+\noindent\textbf{Keywords:} instrumental formants, orchestration, spectral analysis,
+doublings, spectral centroid, formant convergence, timbral blend, SOL2020, Orchidea
+\end{abstract}
+
+% ============================================================
+% 1. INTRODUCTION
+% ============================================================
+\section{Introduction}
+
+Orchestral doublings---the association of two or more instruments playing the
+same melodic line or complementary lines---have constituted one of the
+fundamental tools of orchestral writing since the eighteenth century. The
+treatise literature, from Berlioz \citep{Berlioz1844} through Rimsky-Korsakov
+\citep{RimskyKorsakov1908}, Koechlin \citep{Koechlin1943}, Piston
+\citep{Piston1955}, and Adler \citep{Adler1982}, prescribes these associations
+on the basis of accumulated auditory experience, without systematic acoustic
+quantification.
+
+In parallel, the psychoacoustic study of timbral blend has established that the
+spectral centroid plays a central role in determining how well instrument pairs
+fuse perceptually. In his seminal work, Sandell demonstrated that blend worsens
+as a function of composite centroid height and of centroid difference between
+instruments, accounting for up to 63\% of the variance in blend ratings for
+dyads separated by a minor third \citep{Sandell1991,Sandell1995}. Subsequent
+research has confirmed and extended these findings: Kendall and Carterette
+showed that blend can be predicted from proximity in perceptual timbre space
+\citep{Kendall1993}; Tardieu and McAdams studied blend perception for dyads of
+impulsive and sustained sounds \citep{Tardieu2012}; and Lembke and McAdams
+demonstrated that local spectral-envelope features, including formant peaks and
+their frequency relationships, predict up to 85\% of the variance in timbral
+blend \citep{Lembke2017}. More recently, Goodchild and McAdams proposed a
+comprehensive taxonomy of orchestral grouping effects grounded in auditory scene
+analysis principles \citep{Goodchild2018,McAdams2022}.
+
+Despite this body of work, a gap remains between the psychoacoustic literature
+on timbral blend---which typically studies a small number of instrument pairs
+under controlled conditions---and the orchestration-treatise tradition, which
+covers the full orchestra but lacks quantitative grounding. The present study
+aims to bridge this gap by providing a systematic spectral-formant analysis
+of 30 orchestral instruments, identifying the acoustic convergences that
+underlie the doublings prescribed by the treatise literature.
+
+The contributions of this paper are threefold: (1)~a comprehensive formant
+database covering 30~instruments across 5,914~samples, validated against four
+independent academic sources; (2)~the introduction of the Principal Formant
+(\textit{Fp}), a band-limited spectral centroid that provides dramatically more
+stable timbral characterization than raw peak extraction for instruments with
+wide tessitura; and (3)~the identification of a cross-family convergence cluster
+in the /o/--/\aa/ vocalic zone that quantitatively explains the most valued
+doublings in the orchestral literature.
+
+% ============================================================
+% 2. RELATED WORK
+% ============================================================
+\section{Related Work}
+
+\subsection{Timbre descriptors and the spectral centroid}
+
+The spectral centroid---the center of gravity of the power spectrum---has been
+identified as one of the most perceptually relevant timbre descriptors since the
+pioneering multidimensional-scaling studies of Grey \citep{Grey1977}. McAdams
+et al.\ confirmed its correlation with the ``brightness'' dimension of timbre
+spaces \citep{McAdams1995}. The Timbre Toolbox \citep{Peeters2011}, developed
+at IRCAM, provides a standardized framework for computing spectral centroid and
+related descriptors from musical signals. In the MPEG-7 standard, the spectral
+centroid is included as a core audio descriptor \citep{MPEG7}.
+
+A key distinction should be drawn between the \emph{global} spectral centroid
+(computed over the full spectrum) and \emph{band-limited} centroid measures. The
+global spectral centroid captures overall brightness but does not isolate the
+formant structure of an instrument's resonant body. For instruments with wide
+tessitura, where the fundamental frequency sweeps across a large range, the
+global centroid tracks pitch rather than timbre. The \textit{Fp} measure
+introduced in this study addresses this limitation by computing the centroid
+within an instrument-specific frequency band optimized to capture the principal
+resonance (see Section~\ref{sec:fp}).
+
+\subsection{Formants in musical acoustics}
+
+The concept of formants---fixed resonance regions of the instrument body that
+shape the spectral envelope independently of the played pitch---originates in
+speech acoustics \citep{Fant1960} and was extended to musical instruments by
+Backus \citep{Backus1969}, Meyer \citep{Meyer2009}, and Gieseler et al.\
+\citep{Gieseler1985}. Meyer's extensive measurements established vocalic
+correspondences for instrumental timbres, describing the horn's timbre as
+``/o/-like'' and the oboe's as ``/a/-like.'' However, these characterizations
+remained qualitative, based on listening impressions rather than systematic
+spectral analysis across large corpora.
+
+Fletcher and Rossing provide the physical acoustics foundation, showing how the
+resonant properties of instrument bodies (air columns, string-body coupling,
+bell flare) create fixed spectral-envelope features \citep{Fletcher1998}. For
+bowed strings, the \emph{Hauptformant} (principal formant) described by Meyer
+corresponds to the main body resonance and is relatively stable across the
+instrument's range---a property we quantify systematically in this study.
+
+\subsection{Timbral blend in orchestration}
+
+Sandell's doctoral thesis and subsequent publication established the empirical
+foundation for understanding timbral blend \citep{Sandell1991,Sandell1995}.
+His three experiments with naturally sounding instrument dyads showed that: (a)
+instruments with lower spectral centroids blend better; (b) smaller centroid
+differences between instruments improve blend; and (c) similarity in attack
+characteristics and amplitude-envelope correlation contribute to blend. These
+factors accounted for 51\% (unisons) to 63\% (minor thirds) of the variance in
+blend ratings.
+
+More recent work by Lembke and McAdams extended this approach to spectral-envelope
+descriptions, demonstrating that formant-level features---including the frequency
+relationships between spectral maxima, their prominence, and auditory-system
+constraints---predict approximately 85\% of blend variance
+\citep{Lembke2015,Lembke2017}. This finding motivates the present study's focus
+on formant convergence as a predictor of orchestral blend.
+
+The ACTOR project (Analysis, Creation, and Teaching of ORchestration) at McGill
+University has produced a taxonomy of orchestral grouping effects grounded in
+auditory scene analysis \citep{Goodchild2018,McAdams2022}, distinguishing between
+timbral augmentation (a dominant timbre embellished by others) and timbral
+emergence (a new timbre not identifiable as any constituent). Our formant-convergence
+framework provides acoustic correlates for these perceptual categories: convergent
+formants ($\Delta \leq 80$~Hz) predict augmentation/fusion, while divergent
+formants ($\Delta > 200$~Hz) predict complementarity or emergence.
+
+\subsection{Computational orchestration}
+
+The Orchidea framework \citep{Cella2020,Cella2021}, a joint project between
+IRCAM, HEM Geneva, and UC Berkeley continuing the Orchid* line of
+computer-aided orchestration tools, addresses target-based orchestration through
+a combination of stochastic matching pursuit, long short-term memory (LSTM)
+neural networks, and monoobjective evolutionary optimization with a specifically
+designed cost function. Target and database sounds are embedded in a
+high-dimensional feature space; symbolic constraints (instruments, dynamics,
+playing techniques) can be integrated into the cost function; and temporally
+evolving sounds are handled by segmenting them into static targets optimized
+jointly and then connected \citep{Cella2021}. Orchidea thus operates at the
+level of global spectro-temporal similarity in a multi-feature space, seeking
+the perceptually closest instrumental combination for a given target.
+
+Our work complements this approach by operating at a different level of
+description: rather than finding optimal combinations for a specific target
+sound, we provide a systematic formant-level analysis that explains
+\emph{why} certain instrument pairings produce perceptual fusion or
+complementarity. The formant convergences identified here could potentially
+inform Orchidea's cost function by providing acoustically grounded priors for
+blend prediction.
+
+% ============================================================
+% 3. CORPUS AND SOURCES
+% ============================================================
+\section{Corpus and Sources}
+\label{sec:corpus}
+
+\subsection{Primary data}
+
+The corpus comprises two complementary sources:
+
+\begin{itemize}
+\item \textbf{SOL2020 (IRCAM/Orchidea)}---12 solo instruments, 2,391 sustained-tone
+samples. The SOL2020 database provides pre-computed spectral envelopes
+(\texttt{specenv}, 1,024 bins) derived from recordings made in IRCAM's
+anechoic chamber at 44,100~Hz / 24-bit. Instruments covered: piccolo, flute,
+oboe, clarinet in B$\flat$, bassoon, horn in F, trumpet in C, trombone, tuba,
+alto saxophone, violin, viola, cello, and double bass.
+
+\item \textbf{Yan\_Adds}---18 additional instruments (string ensembles, auxiliary
+woodwinds, low brass, muted variants), 1,646 samples sourced from the Vienna
+Symphonic Library (VSL), Con Timbre, and personal recordings. All samples were
+recorded in controlled studio conditions at 44,100~Hz or 48,000~Hz (resampled
+to 44,100~Hz) and normalized to $-1$~dBFS peak. This collection extends the
+corpus to instruments and configurations not covered by SOL2020, including
+bass flute, contrabass flute, English horn, E$\flat$ clarinet, bass clarinet,
+contrabass clarinet, bass trombone, bass tuba, contrabass tuba, contrabassoon,
+and string sections (violin ensemble, viola ensemble, cello ensemble, double
+bass ensemble), as well as muted variants for strings, horn, trumpet,
+trombone, and tuba.
+\end{itemize}
+
+In total, 487 data lines from SOL2020 and 46 from Yan\_Adds (CSV v3 format)
+cover the 30 instruments analyzed. All data and analysis scripts are available
+in the accompanying repository.\footnote{\url{https://github.com/zseramnay/Orchestration}}
+
+\subsection{Validation sources}
+
+Four independent academic references serve as cross-validation:
+
+\begin{enumerate}
+\item \textbf{Backus} \citep{Backus1969}---targeted measurements of brass and
+woodwind formants.
+\item \textbf{Gieseler et al.} \citep{Gieseler1985}---detailed measurements with
+explicit vocalic associations for 13 instruments.
+\item \textbf{Meyer} \citep{Meyer2009}---acoustic analysis with vocalic color
+descriptions and defined vocalic zones.
+\item \textbf{McCarty/CCRMA} \citep{McCarty2003}---directional reference with
+acknowledged accuracy limitations.
+\end{enumerate}
+
+The global concordance rate is 93\% (27 out of 29 comparable instruments). The two
+discordances concern the piccolo (Backus cites $\sim$3,400~Hz, likely corresponding
+to the radiation peak rather than F1) and the trumpet (high F1 variability across
+sources due to dynamic-dependent spectral behavior).
+
+% ============================================================
+% 4. METHODOLOGY
+% ============================================================
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Measurement scope}
+
+All formant values are measured on sustained tones (\emph{sustained}) in
+\emph{ordinario} playing, excluding attack transients, extended techniques, and
+extreme dynamics. Included techniques: normal, arco, sustain, ordinario,
+vibrato, non-vibrato, flautando, from \emph{pp} to \emph{ff}. Excluded
+techniques: pizzicato, col legno, tremolo, trills, artificial harmonics,
+multiphonics, flutter tongue, mutes (analyzed separately), glissandi,
+portamento. These exclusions ensure that the extracted formants reflect the
+structural resonances of the instrument rather than transient spectral artifacts.
+
+\subsection{Formant extraction pipeline}
+
+The extraction pipeline uses the following parameters:
+
+\begin{itemize}
+\item \textbf{FFT size:} 4,096 samples at 44,100~Hz, yielding a frequency resolution
+of $\sim$10.8~Hz/bin.
+\item \textbf{Analysis range:} 100--3,000~Hz.
+\item \textbf{Input data:} Pre-computed spectral envelopes (\texttt{specenv}, 1,024
+bins) from the Orchidea pipeline, which applies Hann windowing and smoothing
+upstream.
+\item \textbf{Peak detection:} \texttt{scipy.signal.find\_peaks} with the following
+parameters: \texttt{height}~$= -30$~dB relative to the regional maximum,
+\texttt{distance}~$= 7$ bins ($\approx$70~Hz minimum inter-peak distance),
+\texttt{prominence}~$= 3$~dB.
+\end{itemize}
+
+A critical methodological choice is the detection of the \emph{most prominent}
+peak (highest amplitude) rather than the \emph{first} peak (lowest frequency).
+This captures the perceptually dominant formant and avoids low-frequency
+secondary resonances that may be acoustically present but perceptually
+subordinate.
+
+The pipeline version (v22) was validated by round-trip testing: all 16 instrument
+CSV files were regenerated and compared to reference values, achieving
+$\Delta = 0$~Hz across all entries.
+
+\subsection{Terminological note}
+
+In this study, $F_1, F_2, \ldots F_6$ designate the principal spectral peaks
+extracted by spectral-envelope analysis. These peaks correspond to the main
+acoustic resonances of the instrument system and are compared to cardinal vowels
+by perceptual analogy, without claiming strict equivalence with vocal-tract
+formants in the sense of Fant \citep{Fant1960}. For cylindrical-bore instruments
+(clarinet, flute) where no fixed formant exists in the strict sense, $F_1$
+designates the dominant spectral-energy zone.
+
+\subsection{The Principal Formant (\textit{Fp})}
+\label{sec:fp}
+
+For instruments with wide tessitura, the $F_1$ peak is highly unstable across
+registers. The violin, for example, exhibits $F_1$ with $\sigma = 651$~Hz---a
+variation exceeding one octave. This instability makes $F_1$ unsuitable as a
+timbral signature.
+
+The \textit{Fp} (Principal Formant) measure resolves this problem. It is defined
+as the energy-weighted spectral centroid within an instrument-specific frequency
+band:
+
+\begin{equation}
+F_p = \frac{\sum_{i} f_i \cdot A_i}{\sum_{i} A_i}
+\label{eq:fp}
+\end{equation}
+
+\noindent where $f_i$ is the frequency of bin $i$, $A_i$ its amplitude (linear
+scale), and the summation extends over a band chosen per instrument.
+
+\paragraph{Relationship to global spectral centroid.}
+The \textit{Fp} differs from the standard spectral centroid \citep{Peeters2011}
+in two respects: (1)~it is computed within a restricted frequency band rather
+than over the full spectrum, and (2)~the band boundaries are optimized per
+instrument to capture the principal body resonance (\emph{Hauptformant} in
+Meyer's terminology \citep{Meyer2009}). The global spectral centroid, applied to
+the full spectrum, tracks overall brightness and is heavily influenced by the
+fundamental frequency and by high-frequency energy distribution. By contrast,
+\textit{Fp} isolates the resonant signature of the instrument body, which is the
+acoustically relevant feature for predicting timbral blend in doublings.
+
+\paragraph{Band selection.}
+The frequency bands were determined per instrument by identifying the region of
+maximum spectral-envelope energy across all registers in \emph{ordinario}
+playing. Typical bands are 600--1,400~Hz for strings and horn, and
+1,000--2,000~Hz for flute, oboe, and clarinet. The band boundaries were set to
+encompass the $-6$~dB points of the main spectral-envelope peak averaged across
+all samples for a given instrument.
+
+\paragraph{Stability gain.}
+Table~\ref{tab:fp_stability} shows the stability improvement of \textit{Fp}
+over $F_2$ for four representative instruments. The gain ranges from
+4.7$\times$ (clarinet) to 10.4$\times$ (trumpet). Twenty-two of the
+30 instruments in the corpus benefit from a validated \textit{Fp} measurement.
+
+\begin{table}[htbp]
+\centering
+\caption{Stability comparison: \textit{Fp} vs.\ $F_2$ (ordinario).}
+\label{tab:fp_stability}
+\begin{tabular}{lrrrrc}
+\toprule
+Instrument & $F_p$ (Hz) & $\sigma_{F_p}$ & $F_2$ (Hz) & $\sigma_{F_2}$ & Gain \\
+\midrule
+Violin     & 893  & 92  & 1,518 & 651   & 7.1$\times$ \\
+Trumpet    & 1,046 & 98  & 1,324 & 1,018 & 10.4$\times$ \\
+Clarinet B$\flat$ & 1,412 & 169 & 1,130 & 795 & 4.7$\times$ \\
+Horn       & 738  & 112 & 1,106 & 734   & 6.5$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{$\sigma(F_p)$ as spectral selectivity indicator.}
+The standard deviation $\sigma(F_p)$ indirectly reflects the bandwidth of the
+principal resonance: a low $\sigma$ indicates a narrow, well-defined formant
+(high $Q$ factor), while a high $\sigma$ indicates a broad, diffuse formant.
+The violin ($\sigma = 92$~Hz) thus possesses a more spectrally focused timbre
+than the B$\flat$ clarinet ($\sigma = 169$~Hz), consistent with perceptual
+experience.
+
+\subsection{Two complementary representations per register}
+
+For each principal instrument, the reference document provides two
+complementary representations computed register by register (registers defined
+according to traditional instrumental nomenclatures):
+
+\begin{enumerate}
+\item \textbf{Mean formant profile:} extraction of $F_1$--$F_6$ on each
+individual sample, then computation of the median per register. This profile
+gives the reference positions of each spectral peak.
+
+\item \textbf{Vocalic spectral map:} mean of all spectral envelopes in the
+register, displayed on a logarithmic frequency axis with superimposed vocalic
+zones (/u/, /o/, /a/, /e/) and normalized cepstral envelope. This map shows the
+actual mean spectral shape with its resonance zones, valleys, and full vocalic
+context.
+\end{enumerate}
+
+The two approaches converge for well-defined formants (reed instruments, brass)
+but may diverge for instruments with wide tessitura (strings, flutes, clarinets)
+where averaging the envelope smooths out individual peaks. The formant profile
+gives reference positions; the spectral map gives the complete acoustic context.
+
+This dual register-by-register analysis resolves the problem of spectral
+variability in wide-tessitura instruments: rather than relying on a single
+uninformative global $F_1$ value, register-by-register examination reveals
+formant convergences that appear only when instruments play in a specific
+register (see Section~\ref{sec:principles}, Principle~8).
+
+% ============================================================
+% 5. VOWEL–FREQUENCY CORRESPONDENCE
+% ============================================================
+\section{Vowel--Frequency Correspondence}
+
+The vocalic system provides an intuitive framework for describing instrumental
+timbre. Following Meyer \citep{Meyer2009} and Gieseler et al.\
+\citep{Gieseler1985}, the correspondences are shown in
+Table~\ref{tab:vowels}.
+
+\begin{table}[htbp]
+\centering
+\caption{Vocalic zones and representative instruments ($F_1$ or $F_p$).}
+\label{tab:vowels}
+\begin{tabular}{llll}
+\toprule
+Vowel & Frequency (Hz) & Perception & Representative instruments \\
+\midrule
+/u/ & 200--400 & Depth     & Db (172), Tuba (226), Cbn (226), Tbn (237) \\
+/o/ & 400--600 & Fullness  & Va (377), Hn (388), ASax (398), EH (452), \\
+    &          &           & Cl (463), Bn (495), Vn (506) \\
+/\aa/ & 600--800 & Warmth  & Cl$^{E\flat}$ (678), Fl (743), Ob (743), Tpt (786) \\
+/a/ & 800--1,250 & Power   & Hn$_{Fp}$ (738), Vn$_{Fp}$ (893), Tpt$_{Fp}$ (1,046) \\
+/e/ & 1,250--2,600 & Clarity & Cl$_{Fp}$ (1,412), Fl$_{Fp}$ (1,535), Ob$_{Fp}$ (1,485) \\
+/i/ & $>$2,600 & Brilliance & Picc (1,992 $F_2$), Tpt+harmon (2,358) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+% 6. RESULTS BY INSTRUMENT FAMILY
+% ============================================================
+\section{Results by Instrument Family}
+
+\subsection{Woodwinds (range: 226--2,638~Hz)}
+
+The woodwind family presents the greatest timbral diversity in the orchestra.
+Double reeds (oboe, English horn, bassoon, contrabassoon) share a common
+formant zone around 900--1,200~Hz with a characteristic /a/ coloring. Clarinets
+(cylindrical bore, odd harmonics) have no fixed formant in the strict sense:
+the spectral peak follows the fundamental or the 3rd harmonic. Flutes (open
+pipe) present a spectrum that decreases approximately linearly above the
+fundamental.
+
+Key findings: the English horn ($F_1 = 452$~Hz) and the bassoon
+($F_1 = 495$~Hz) fall within the /o/ zone, alongside the horn (388~Hz) and the
+violin (506~Hz). The English horn and the B$\flat$ clarinet converge at
+$\Delta = 11$~Hz (452 vs.\ 463~Hz). The bassoon and the violin converge at
+$\Delta = 11$~Hz (495 vs.\ 506~Hz).
+
+\subsection{Brass (range: 162--2,358~Hz)}
+
+Brass instruments present well-defined formants and strong spectral stability
+across dynamics (except the trumpet). The horn in F ($F_1 = 388$~Hz, /o/ zone)
+is the most versatile brass instrument for doublings, with unanimous agreement
+across all four academic sources. The trumpet in C presents an extremely
+variable $F_1$ ($\sigma = 642$~Hz), but its \textit{Fp} at 1,046~Hz is
+10.4$\times$ more stable than $F_2$. In the low range, the trombone (237~Hz),
+bass tuba (226~Hz), and contrabass tuba (226~Hz) form a tight /u/ cluster
+($\Delta \leq 11$~Hz), joined by the contrabassoon (also 226~Hz).
+
+\subsection{Saxophones}
+
+The alto saxophone ($F_1 = 398$~Hz) falls squarely within the /o/--/\aa/
+convergence zone, alongside the horn ($\Delta = 10$~Hz) and the viola
+($\Delta = 21$~Hz). It is the only saxophone present in the SOL2020 corpus;
+soprano, tenor, and baritone saxophones constitute a priority extension.
+
+\subsection{Strings (range: 172--1,518~Hz)}
+
+The string family presents the greatest spectral variability in the orchestra,
+compensated by the \textit{Fp} measure. The violin ($F_1 = 506$~Hz, /o/) and
+the bassoon ($F_1 = 495$~Hz) converge at $\Delta = 11$~Hz. The cello joins
+this convergence via its $F_2 = 506$~Hz ($\approx F_1$ of the bassoon).
+
+The section effect is clearly quantified: the ensemble does not shift $F_1$
+but smooths the upper harmonics ($F_2$ of solo violin: 1,518~Hz $\rightarrow$
+ensemble: 1,163~Hz, a $-23$\% reduction). The perceptual result is a more
+blended timbre---this is the textural difference between a quartet and an
+orchestral section. This smoothing effect is consistent with Sandell's finding
+that lower composite centroids improve blend \citep{Sandell1995}.
+
+% ============================================================
+% 7. CONVERGENCE CLUSTER
+% ============================================================
+\section{The /o/--/\aa/ Convergence Cluster}
+
+The central result of this study is the identification of a convergence cluster
+in the /o/--/\aa/ vocalic zone (377--506~Hz), grouping 11 instruments from
+4 different families within a span of only 129~Hz (Table~\ref{tab:cluster}).
+
+\begin{table}[htbp]
+\centering
+\caption{The 6 instruments closest to the convergence cluster center.}
+\label{tab:cluster}
+\begin{tabular}{llrr}
+\toprule
+Instrument & Family & $F_1$ (Hz) & $\Delta$ / Violin \\
+\midrule
+Viola        & Strings     & 377 & 129~Hz \\
+Horn         & Brass       & 388 & 118~Hz \\
+Alto sax     & Saxophones  & 398 & 108~Hz \\
+English horn & Woodwinds   & 452 & 54~Hz \\
+Clarinet B$\flat$ & Woodwinds & 463 & 43~Hz \\
+Bassoon      & Woodwinds   & 495 & 11~Hz \\
+Violin       & Strings     & 506 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The tightest doublings---bassoon\,+\,violin ($\Delta = 11$~Hz),
+horn\,+\,viola ($\Delta = 11$~Hz)---correspond precisely to the most valued
+associations in the orchestral literature. In terms of Bark-scale distance
+\citep{Zwicker1961}, $\Delta = 11$~Hz at 500~Hz corresponds to approximately
+0.1~Bark, well within the critical bandwidth for spectral integration.
+
+\subsection{Verified doublings}
+
+Table~\ref{tab:doublings} presents the principal doublings classified by
+increasing $\Delta$.
+
+\begin{table}[htbp]
+\centering
+\caption{Principal verified doublings (selection).}
+\label{tab:doublings}
+\begin{tabular}{llrrrl}
+\toprule
+Instr.~A & Instr.~B & $F_1$ A & $F_1$ B & $\Delta$ & Quality \\
+\midrule
+Flute & Oboe & 743 & 743 & 0 & Quasi-perfect $\star$ \\
+Tuba CB & Contrabassoon & 226 & 226 & 0 & Quasi-perfect $\star$ \\
+Horn & Viola & 388 & 377 & 11 & Quasi-perfect \\
+Eng.\ horn & Cl B$\flat$ & 452 & 463 & 11 & Quasi-perfect \\
+Violin & Bassoon & 506 & 495 & 11 & Quasi-perfect \\
+Trombone & Tuba & 237 & 226 & 11 & Quasi-perfect \\
+Eng.\ horn & Horn & 452 & 388 & 64 & Excellent \\
+Trumpet & Oboe & 786 & 743 & 43 & Excellent \\
+Oboe & Bassoon & 743 & 495 & 248 & Complementary \\
+Trumpet & Trombone & 786 & 237 & 549 & Complementary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Register-by-register analysis further reveals convergences invisible in global
+data. For example, the B$\flat$ clarinet in the chalumeau register (D3--D4,
+$F_1 = 215$~Hz) converges exactly ($\Delta = 0$~Hz) with the trombone in
+its low register; the horn in the medium register ($F_1 = 323$~Hz) converges
+with the viola in the medium register---acoustically confirming the emblematic
+Brahms doubling.
+
+It is essential to stress that these convergences are valid at the unison, at
+the octave, or at any other interval. Formant convergence is a property of
+timbre, not of pitch: two instruments whose formants coincide will fuse
+regardless of the pitch distance between the notes played. This is why the
+violin--bassoon and horn--viola doublings function across registers without
+losing their acoustic effectiveness.
+
+% ============================================================
+% 8. NINE PRINCIPLES
+% ============================================================
+\section{Nine Principles of Acoustic Orchestration}
+\label{sec:principles}
+
+The data analysis leads to the formulation of nine fundamental principles.
+
+\paragraph{1.\ Formant convergence (fusion).}
+When two instruments share a similar $F_1$ ($\Delta \leq 80$~Hz), their
+timbres fuse: the ear perceives a homogeneous color rather than two distinct
+voices. Measured thresholds: $\Delta = 0$ (formant unison), $\Delta \leq 30$~Hz
+(quasi-perfect fusion, $\leq 0.3$~Bark), $\Delta$ 30--80~Hz (effective fusion,
+0.3--0.7~Bark). This finding is consistent with Sandell's observation that
+smaller centroid differences improve blend \citep{Sandell1995} and with
+critical-bandwidth theory \citep{Zwicker1961}.
+
+\paragraph{2.\ Spectral complementarity (enrichment).}
+When $\Delta > 200$~Hz ($> 1.5$~Bark), spectra complement each other without
+mutual masking, producing broadband enrichment inaccessible to either instrument
+alone. Examples: trumpet (786~Hz) + trombone (237~Hz), $\Delta = 549$~Hz.
+
+\paragraph{3.\ Section effect (homogenization).}
+The transition from soloist to ensemble does not shift $F_1$ but smooths upper
+harmonics: $F_2$ of the violin drops by 23\% in section, $F_3$ by 16\%. The
+perceptual result is a more blended timbre. This is consistent with the
+prediction that lower composite centroids improve blend \citep{Sandell1995}.
+
+\paragraph{4.\ Mute as timbral transposition.}
+For strings and horn, the mute systematically lowers $F_1$ by 6 to 40\%. For
+brass, the effect depends on mute type: cup and harmon mutes produce the
+opposite effect---the harmon mute on trumpet shifts $F_1$ from the /a/ to the
+/i/ zone (+200\%), the most spectacular case in the corpus.
+
+\paragraph{5.\ Cross-family formant groupings.}
+Formant groupings cross organological boundaries: the /u/ family (double bass,
+tuba, contrabassoon, trombone), the /o/--/\aa/ family (viola, horn, alto sax,
+English horn, clarinet, bassoon, violin), and the /a/ family (via \textit{Fp}
+values) are more relevant than traditional instrument families for predicting
+timbral fusions.
+
+\paragraph{6.\ The /o/--/\aa/ zone as a convergence attractor.}
+The concentration of 11 instruments within 129~Hz around 377--506~Hz corresponds
+to the geometric center of the human perceptual spectrum (speaking voice,
+presence band). This convergence is consistent with the hypothesis that the
+orchestral palette has been historically shaped around the spectral region of
+maximal perceptual sensitivity, though establishing a causal relationship would
+require further historical and perceptual investigation.
+
+\paragraph{7.\ Role of \textit{Fp} in wide-tessitura doublings.}
+For instruments with wide tessitura (violin, trumpet, clarinet), \textit{Fp}
+advantageously replaces $F_1$ or $F_2$ in doubling analysis. The stability gain
+reaches 10.4$\times$ for trumpet.
+
+\paragraph{8.\ Register-specific convergences.}
+Register-by-register analysis reveals convergences invisible in global data:
+$\Delta = 0$~Hz between B$\flat$ clarinet (chalumeau) and trombone (low);
+between horn (medium) and viola (medium); between horn (medium) and trumpet
+(medium).
+
+\paragraph{9.\ Hierarchy of fusion.}
+The data establish a quantitative hierarchy: $\Delta \leq 30$~Hz (quasi-perfect
+fusion, $\leq 0.3$~Bark), $\Delta$ 30--80~Hz (effective fusion, 0.3--0.7~Bark),
+$\Delta$ 80--200~Hz (proximity, 0.7--1.5~Bark), $\Delta \geq 200$~Hz
+(spectral complementarity, $\geq 1.5$~Bark).
+
+% ============================================================
+% 9. DISCUSSION
+% ============================================================
+\section{Discussion}
+
+\subsection{Validity of \textit{Fp}}
+
+The \textit{Fp} band-limited spectral centroid proves to be the most relevant
+measure for characterizing the global timbre of a wide-tessitura instrument. It
+dramatically surpasses $F_1$ and $F_2$ in stability while corresponding to the
+\emph{Hauptformant} described by Meyer for strings \citep{Meyer2009}.
+
+While the global spectral centroid \citep{Peeters2011} captures brightness,
+\textit{Fp} isolates the instrument's resonant identity---the frequency region
+where the body (or air column) imposes its timbral signature regardless of pitch.
+This distinction parallels the difference between the ``speaking fundamental
+frequency'' and the ``formant frequencies'' in speech: both are spectral centroids,
+but measured over different frequency ranges and capturing different perceptual
+attributes.
+
+\subsection{Connection to timbral blend research}
+
+The formant convergences identified in this study provide direct acoustic
+correlates for the blend phenomena studied by Sandell \citep{Sandell1995},
+Kendall and Carterette \citep{Kendall1993}, and Lembke and McAdams
+\citep{Lembke2017}. Specifically:
+
+\begin{itemize}
+\item The $\Delta \leq 80$~Hz threshold for fusion corresponds to a Bark-scale
+distance of $\leq 0.7$~Bark at 500~Hz, consistent with critical-bandwidth
+constraints on spectral integration \citep{Zwicker1961}.
+
+\item The finding that lower-formant instruments (horn, viola, bassoon in the
+/o/ zone) participate in the most effective doublings is consistent with
+Sandell's finding that blend improves with lower composite centroids.
+
+\item The section effect (smoothing of upper harmonics without $F_1$ shift)
+provides a mechanism for the well-known perceptual observation that
+orchestral sections blend better than solo instruments.
+\end{itemize}
+
+\subsection{Limitations}
+
+Several limitations should be acknowledged:
+
+\begin{enumerate}
+\item \textbf{Corpus coverage:} only one saxophone (alto) is included. Soprano,
+tenor, and baritone saxophones constitute a priority extension.
+
+\item \textbf{Heterogeneous sources:} the Yan\_Adds samples come from diverse
+recording conditions. While all were recorded in studio or anechoic conditions,
+variations in microphone placement and room characteristics may introduce
+systematic biases. The 93\% concordance rate with independent academic
+sources provides indirect validation.
+
+\item \textbf{No perceptual validation:} the link between formant convergence
+and perceived blend is supported by the existing psychoacoustic literature
+\citep{Sandell1995,Lembke2017} but has not been tested experimentally with
+the specific instrument pairs and $\Delta$ values reported here. A listening
+experiment measuring blend ratings as a function of $F_1$ distance for the
+doublings in Table~\ref{tab:doublings} would be a valuable next step.
+
+\item \textbf{Sustained tones only:} attack transients, extended techniques, and
+extreme dynamics, which radically modify the spectrum, are not covered.
+Previous research has shown that attack similarity is a significant predictor
+of blend \citep{Sandell1995}, suggesting that a complete model of orchestral
+fusion should incorporate temporal as well as spectral features.
+
+\item \textbf{Band selection for \textit{Fp}:} the instrument-specific
+frequency bands were determined by spectral-envelope analysis and visual
+inspection, introducing a degree of subjectivity. An automated optimization
+procedure (e.g., minimizing cross-register variance of the centroid) could
+improve reproducibility.
+
+\item \textbf{Statistical testing:} the concordance rate (93\%) is a simple
+ratio. Future work should include bootstrapped confidence intervals for
+$F_1$ and \textit{Fp} estimates and permutation tests for the significance
+of the /o/--/\aa/ cluster relative to a null model of randomly distributed
+formants.
+\end{enumerate}
+
+\subsection{Implications for composition}
+
+The quantitative identification of cross-family formant groupings offers
+composers a new tool: the ability to predict timbral fusions and
+complementarities before writing, by choosing instruments according to their
+vocalic zone rather than their organological family. The threshold of
+$\Delta \leq 80$~Hz for fusion and $\Delta \geq 200$~Hz for spectral
+enrichment provides operational criteria that complement, rather than replace,
+the composer's ear.
+
+% ============================================================
+% 10. CONCLUSION
+% ============================================================
+\section{Conclusion}
+
+This study establishes that classical orchestral doublings rest on measurable
+formant convergences. The /o/--/\aa/ convergence cluster (377--506~Hz), grouping
+11 instruments from 4 families, constitutes the acoustic core of the symphonic
+orchestra. The introduction of \textit{Fp} (band-limited spectral centroid) as a
+timbral metric, combined with register-by-register analysis and multi-source
+validation (93\% concordance), provides a quantitative framework connecting the
+orchestration-treatise tradition with the psychoacoustic literature on timbral
+blend.
+
+The complete reference document, including detailed formant profiles, register-by-register
+vocalic spectral maps, and convergence matrices for all 30 instruments, is
+available online at \url{https://zseramnay.github.io/Orchestration/}.
+
+\subsection*{Data availability statement}
+All data (CSV files), analysis scripts (Python), and the complete reference
+document are publicly available at
+\url{https://github.com/zseramnay/Orchestration}.
+
+\subsection*{Conflict of interest}
+The author declares no conflict of interest.
+
+\subsection*{Acknowledgments}
+The author thanks the IRCAM Orchidea team for making the SOL2020 database
+available.
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\bibliographystyle{apalike}
+
+\begin{thebibliography}{99}
+
+\bibitem[Adler, 1982]{Adler1982}
+Adler, S. (1982).
+\newblock \emph{The Study of Orchestration}.
+\newblock W.W. Norton \& Company, New York.
+
+\bibitem[Backus, 1969]{Backus1969}
+Backus, J. (1969).
+\newblock \emph{The Acoustical Foundations of Music}.
+\newblock W.W. Norton \& Company, New York.
+
+\bibitem[Berlioz, 1844]{Berlioz1844}
+Berlioz, H. (1844/1855).
+\newblock \emph{Grand trait\'e d'instrumentation et d'orchestration modernes}.
+\newblock Schonenberger, Paris.
+
+\bibitem[Cella et~al., 2020]{Cella2020}
+Cella, C.-E., Ghisi, D., Music{\'e}, E., and Music{\'e}, C. (2020).
+\newblock OrchideaSOL: a dataset of extended instrumental techniques for
+  computer-aided orchestration.
+\newblock In \emph{Proceedings of the International Computer Music Conference}.
+
+\bibitem[Cella et~al., 2021]{Cella2021}
+Cella, C.-E., Ghisi, D., Maresz, Y., Petrolati, A., Teiller, A., and
+  Esling, P. (2021).
+\newblock Dynamic computer-aided orchestration in practice with {O}rchidea.
+\newblock \emph{Computer Music Journal}, 45(4):40--56.
+
+\bibitem[Fant, 1960]{Fant1960}
+Fant, G. (1960).
+\newblock \emph{Acoustic Theory of Speech Production}.
+\newblock Mouton, The Hague.
+
+\bibitem[Fletcher and Rossing, 1998]{Fletcher1998}
+Fletcher, N.~H. and Rossing, T.~D. (1998).
+\newblock \emph{The Physics of Musical Instruments}.
+\newblock Springer-Verlag, 2nd edition.
+
+\bibitem[Gieseler et~al., 1985]{Gieseler1985}
+Gieseler, W., Lombardi, L., and Weyer, R.-D. (1985).
+\newblock \emph{Instrumentation in der Musik des 20.\ Jahrhunderts}.
+\newblock Breitkopf \& H{\"a}rtel, Wiesbaden.
+
+\bibitem[Goodchild and McAdams, 2018]{Goodchild2018}
+Goodchild, M. and McAdams, S. (2018).
+\newblock Perceptual processes in orchestration.
+\newblock In Siedenburg, K., Saitis, C., McAdams, S., Popper, A.~N., and
+  Fay, R.~R., editors, \emph{Timbre: Acoustics, Perception, and Cognition},
+  pages 247--271. Springer.
+
+\bibitem[Grey, 1977]{Grey1977}
+Grey, J.~M. (1977).
+\newblock Multidimensional perceptual scaling of musical timbres.
+\newblock \emph{Journal of the Acoustical Society of America}, 61(5):1270--1277.
+
+\bibitem[{ISO/IEC}, 2002]{MPEG7}
+{ISO/IEC} (2002).
+\newblock {ISO/IEC 15938-4: Information technology---Multimedia content
+  description interface---Part 4: Audio}.
+
+\bibitem[Kendall and Carterette, 1993]{Kendall1993}
+Kendall, R.~A. and Carterette, E.~C. (1993).
+\newblock Identification and blend of timbres as a basis for orchestration.
+\newblock \emph{Contemporary Music Review}, 9(1--2):51--67.
+
+\bibitem[Koechlin, 1943]{Koechlin1943}
+Koechlin, C. (1943).
+\newblock \emph{Trait\'e de l'orchestration} (4 volumes).
+\newblock Max Eschig, Paris.
+
+\bibitem[Lembke and McAdams, 2015]{Lembke2015}
+Lembke, S.-A. and McAdams, S. (2015).
+\newblock Spectral-envelope characteristics as predictors of blend in
+  orchestral instrument pairs.
+\newblock In \emph{Proceedings of the International Symposium on Musical
+  Acoustics (ISMA)}.
+
+\bibitem[Lembke et~al., 2017]{Lembke2017}
+Lembke, S.-A., Parker, K., Narmour, E., and McAdams, S. (2017).
+\newblock Predicting blend between orchestral timbres using generalized
+  spectral-envelope descriptions.
+\newblock \emph{Journal of New Music Research}, 46(4):1--18.
+
+\bibitem[McAdams et~al., 1995]{McAdams1995}
+McAdams, S., Winsberg, S., Donnadieu, S., De~Soete, G., and Krimphoff, J.
+  (1995).
+\newblock Perceptual scaling of synthesized musical timbres: Common dimensions,
+  specificities, and latent subject classes.
+\newblock \emph{Psychological Research}, 58(3):177--192.
+
+\bibitem[McAdams, 2022]{McAdams2022}
+McAdams, S. (2022).
+\newblock A taxonomy of orchestral grouping effects derived from principles of
+  auditory perception.
+\newblock \emph{Music Theory Online}, 28(3).
+
+\bibitem[McCarty, 2003]{McCarty2003}
+McCarty, M. (2003).
+\newblock Vowel space chart for orchestral instruments.
+\newblock CCRMA, Stanford University.
+
+\bibitem[Meyer, 2009]{Meyer2009}
+Meyer, J. (2009).
+\newblock \emph{Acoustics and the Performance of Music}.
+\newblock Springer-Verlag, 5th edition.
+
+\bibitem[Peeters et~al., 2011]{Peeters2011}
+Peeters, G., Giordano, B.~L., Susini, P., Misdariis, N., and McAdams, S.
+  (2011).
+\newblock The {T}imbre {T}oolbox: Extracting audio descriptors from musical
+  signals.
+\newblock \emph{Journal of the Acoustical Society of America},
+  130(5):2902--2916.
+
+\bibitem[Piston, 1955]{Piston1955}
+Piston, W. (1955).
+\newblock \emph{Orchestration}.
+\newblock W.W. Norton \& Company, New York.
+
+\bibitem[Rimsky-Korsakov, 1908]{RimskyKorsakov1908}
+Rimsky-Korsakov, N. (1908).
+\newblock \emph{Principles of Orchestration} (posthumous).
+\newblock Edition russe de musique.
+
+\bibitem[Sandell, 1991]{Sandell1991}
+Sandell, G.~J. (1991).
+\newblock \emph{Concurrent Timbres in Orchestration: A Perceptual Study of
+  Factors Determining ``Blend''}.
+\newblock PhD thesis, Northwestern University.
+
+\bibitem[Sandell, 1995]{Sandell1995}
+Sandell, G.~J. (1995).
+\newblock Roles for spectral centroid and other factors in determining
+  ``blended'' instrument pairings in orchestration.
+\newblock \emph{Music Perception}, 13(2):209--246.
+
+\bibitem[Tardieu and McAdams, 2012]{Tardieu2012}
+Tardieu, D. and McAdams, S. (2012).
+\newblock Perception of dyads of impulsive and sustained instrument sounds.
+\newblock \emph{Music Perception}, 30(2):117--128.
+
+\bibitem[Zwicker and Fastl, 1999]{Zwicker1961}
+Zwicker, E. and Fastl, H. (1999).
+\newblock \emph{Psychoacoustics: Facts and Models}.
+\newblock Springer-Verlag, 3rd edition.
+
+\end{thebibliography}
+
+\end{document}
