@@ -136,7 +136,7 @@ TOC_STRUCTURE = [
     (1, "Méthodologie : Indice de Volume",                      "vol-methodo"),
     (1, "Indice de Volume par instrument",                      "vol-table"),
     (1, "Effet des sourdines",                                  "vol-mutes"),
-    (1, "Matrice d'homogénéité (53×53)",                        "vol-homo"),
+    (1, "Matrice d'homogénéité (51×51)",                        "vol-homo"),
     (1, "Plans orchestraux",                                    "vol-plans"),
     (1, "Convergences par zone vocalique",                      "vol-zones"),
     (2, "Tableau complet des convergences",                     "vol-conv-table"),

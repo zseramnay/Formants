@@ -89,7 +89,6 @@ _REG['Contrabass_Flute']    = [('grave',M('A2')+1,M('A3')),('médium',M('A3')+1,
 _REG['Piccolo']             = [('grave',M('A5')+1,M('D6')+1),('médium',M('E6'),M('A6')+1),('aigu',M('B6'),127)]
 # --- Hautbois ---
 _REG['Oboe']                = [('grave',M('A3')+1,M('G4')),('médium',M('G4')+1,M('G5')),('aigu',M('G5')+1,M('D6')),('suraigu',M('D6')+1,127)]
-_REG['Oboe+sordina']        = _REG['Oboe']
 _REG['English_Horn']        = [('grave',M('A3')+1,M('E4')),('médium',M('F4'),M('E5')),('aigu',M('F5'),127)]
 # --- Clarinettes ---
 _REG['Clarinet_Bb']         = [('chalumeau',M('D3'),M('D4')),('gorge',M('D4')+1,M('G4')+1),('clarine',M('A4'),M('A5')+1),('suraigu',M('B5'),127)]
@@ -98,7 +97,6 @@ _REG['Bass_Clarinet_Bb']    = [('grave',M('A1')+1,M('D3')),('médium',M('D3')+1,
 _REG['Contrabass_Clarinet_Bb']=[('grave',M('A0')+1,M('A1')+1),('médium',M('B1'),M('A2')+1),('aigu',M('B2'),127)]
 # --- Bassons ---
 _REG['Bassoon']             = [('grave',M('A1')+1,M('A2')),('bas_médium',M('A2')+1,M('A3')),('haut_médium',M('A3')+1,M('A4')),('aigu',M('A4')+1,127)]
-_REG['Bassoon+sordina']     = _REG['Bassoon']
 _REG['Contrebasson']        = [('grave',M('A0')+1,M('A1')+1),('médium',M('B1'),M('A2')+1),('aigu',M('B2'),127)]
 # --- Cuivres ---
 _REG['Horn']                = [('pédale',M('F1'),M('A1')),('grave',M('A1')+1,M('B2')),('médium',M('C3'),M('E4')),('aigu',M('F4'),M('F5')),('suraigu',M('F5')+1,127)]
@@ -162,7 +160,6 @@ INSTRUMENTS = {
     'Piccolo':                ('YAN','Piccolo',              _std()),
     # Hautbois
     'Oboe':                   ('SOL','Oboe',                 _std()),
-    'Oboe+sordina':           ('SOL','Oboe+sordina',         _std()),
     'English_Horn':           ('YAN','EnglishHorn',          _std()),
     # Clarinettes
     'Clarinet_Bb':            ('SOL','Clarinet_Bb',          _std()),
@@ -171,7 +168,6 @@ INSTRUMENTS = {
     'Contrabass_Clarinet_Bb': ('YAN','Contrabass-Clarinet-Bb',_std()),
     # Bassons
     'Bassoon':                ('SOL','Bassoon',              _std()),
-    'Bassoon+sordina':        ('SOL','Bassoon+sordina',      _std()),
     'Contrebasson':           ('YAN','Contrebasson',         ('non-vibrato',)),
     # Cuivres
     'Horn':                   ('SOL','Horn',                 _std()),

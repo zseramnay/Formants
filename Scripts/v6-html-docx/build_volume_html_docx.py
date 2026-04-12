@@ -21,11 +21,11 @@ VOL_DIR = os.path.join(BASE, 'Etude-Volume', 'Resultats-volume')
 NAME_FR = {
     'Piccolo':'Piccolo','Flute':'Flûte','Bass_Flute':'Flûte basse',
     'Contrabass_Flute':'Flûte contrebasse',
-    'Oboe':'Hautbois','Oboe+sordina':'Hautbois sourd.',
+    'Oboe':'Hautbois',
     'English_Horn':'Cor anglais',
     'Clarinet_Eb':'Clarinette Mib','Clarinet_Bb':'Clarinette Sib',
     'Bass_Clarinet_Bb':'Clarinette basse','Contrabass_Clarinet_Bb':'Clarinette cb',
-    'Bassoon':'Basson','Bassoon+sordina':'Basson sourd.','Contrebasson':'Contrebasson',
+    'Bassoon':'Basson','Contrebasson':'Contrebasson',
     'Sax_Alto':'Saxophone alto',
     'Horn':'Cor','Horn+sordina':'Cor sourd.',
     'Trumpet_C':'Trompette','Trumpet_C+sordina_straight':'Trp straight',
@@ -182,8 +182,8 @@ dans l'espace</em> : une note grave de flûte est volumineuse mais faible, tandi
 est mince mais intense. Koechlin illustre cette distinction par une métaphore astronomique : la flûte comme
 une étoile géante de densité minimale, le hautbois comme une étoile naine dense
 (Chiasson &amp; Duchesneau, 2008&nbsp;; Chiasson, 2010).</p>
-<p>Cette section opérationnalise ces concepts par l'analyse spectrale de <strong>53 instruments</strong>
-(sourdines comprises), totalisant <strong>5&nbsp;835 échantillons</strong> sur <strong>193 segments de registre</strong>.</p>
+<p>Cette section opérationnalise ces concepts par l'analyse spectrale de <strong>51 instruments</strong>
+(sourdines comprises), totalisant <strong>5&nbsp;758 échantillons</strong> sur <strong>185 segments de registre</strong>.</p>
 </div>\n"""
 
     # ── 8.2 Méthodologie ──
@@ -207,7 +207,7 @@ de la « taille » perçue d'un son :</p>
 
     # ── 8.3 Tableau Volume Index (sortable) ──
     html += '<h2 id="vol-table">Indice de Volume par instrument et registre</h2>\n'
-    html += '<p>53 instruments × 193 registres. Cliquez sur un en-tête pour trier. Utilisez le filtre pour chercher.</p>\n'
+    html += '<p>51 instruments × 185 registres. Cliquez sur un en-tête pour trier. Utilisez le filtre pour chercher.</p>\n'
     html += '<input type="text" class="filter-input" id="vol-filter" placeholder="Filtrer par instrument...">\n'
     html += '<div class="table-scroll" style="max-height:70vh;">\n'
     html += '<table class="sortable-table" id="vol-table-data">\n'
@@ -250,7 +250,7 @@ avec la harmon de trompette, qui produit l'effet inverse.
 </div>\n"""
 
     # ── 8.5 Matrice d'homogénéité ──
-    html += '<h2 id="vol-homo">Matrice d\'homogénéité (53 × 53)</h2>\n'
+    html += '<h2 id="vol-homo">Matrice d\'homogénéité (51 × 51)</h2>\n'
     html += """<div class="description">
 <p>L'homogénéité H(A,B) entre deux instruments combine la proximité de volume et la similarité
 du profil MFCC (coefficients 1–12, distance cosinus) :</p>
@@ -314,7 +314,7 @@ classe chaque paire en :</p>
     for r in plans_data:
         c = r['category']
         cats[c] = cats.get(c, 0) + 1
-    html += '<p><b>1 378 paires analysées :</b> '
+    html += '<p><b>1 275 paires analysées :</b> '
     for c in sorted(cats):
         html += f'{cats[c]} {c} · '
     html += '</p>\n'
@@ -362,7 +362,7 @@ classe chaque paire en :</p>
         zones[z] = zones.get(z, 0) + 1
 
     html += """<div class="description">
-<p>1 220 convergences formantiques (ΔF₁ ≤ 30 Hz) entre registres croisés,
+<p>1 173 convergences formantiques (ΔF₁ ≤ 30 Hz) entre registres croisés,
 classées en cinq zones vocaliques IPA :</p>
 </div>
 <table class="tech-table" style="max-width:700px;">
@@ -464,8 +464,8 @@ def build_docx(output_path):
         "généraux du timbre — volume, intensité, transparence, densité — permettant de prédire quels "
         "mélanges sonneront fondus ou hétérogènes. Le volume selon Koechlin n'est pas l'intensité sonore, "
         "mais la place qu'un son semble occuper dans l'espace. Cette section opérationnalise ces concepts "
-        "par l'analyse spectrale de 53 instruments (sourdines comprises), totalisant 5 835 échantillons "
-        "sur 193 segments de registre.")
+        "par l'analyse spectrale de 51 instruments (sourdines comprises), totalisant 5 758 échantillons "
+        "sur 185 segments de registre.")
 
     # ── Methodology ──
     add_heading(doc, "Méthodologie : Indice de Volume composite", level=2, color=RGBColor(46, 125, 50))
@@ -497,7 +497,7 @@ def build_docx(output_path):
         set_cell_text(row[3], f"{float(r['mean_centroid_hz']):.0f}", size=7)
         set_cell_text(row[4], r.get('Volume_index',''), bold=True, size=7)
         set_cell_text(row[5], r.get('Density_index',''), size=7)
-    add_paragraph(doc, "(Tableau complet : 193 entrées dans le fichier CSV et la version HTML en ligne.)",
+    add_paragraph(doc, "(Tableau complet : 185 entrées dans le fichier CSV et la version HTML en ligne.)",
                   italic=True, size=8, color=RGBColor(128,128,128))
 
     # ── Mutes table ──
@@ -525,16 +525,16 @@ def build_docx(output_path):
     cats = {}
     for r in plans_data:
         cats[r['category']] = cats.get(r['category'], 0) + 1
-    add_paragraph(doc, f"1 378 paires analysées (53 instruments × registre médium) :")
+    add_paragraph(doc, f"1 275 paires analysées (53 instruments × registre médium) :")
     for c in sorted(cats):
         add_paragraph(doc, f"  • {cats[c]} paires {c}", size=9)
 
     # ── Convergences zones ──
     add_heading(doc, "Convergences par zone vocalique", level=2, color=RGBColor(46, 125, 50))
     add_paragraph(doc,
-        "1 220 convergences (ΔF₁ ≤ 30 Hz) réparties en 5 zones : "
-        "/u/ (544, fondation), /o/ (423, cluster central), /å/ (125, transition), "
-        "/a/ (54, projection), /e/–/i/ (74, brillance/sourdines). "
+        "1 173 convergences (ΔF₁ ≤ 30 Hz) réparties en 5 zones : "
+        "/u/ (544, fondation), /o/ (423, cluster central), /å/ (103, transition), "
+        "/a/ (41, projection), /e/–/i/ (62, brillance/sourdines). "
         "79 % des convergences se situent dans /u/ et /o/ (F₁ ≤ 400 Hz).")
 
     # ── Discoveries ──
