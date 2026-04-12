@@ -214,7 +214,8 @@ de la « taille » perçue d'un son :</p>
     html += '<thead><tr><th>Instrument</th><th>Registre</th><th>N</th><th>Centroïde (Hz)</th>'
     html += '<th>V₁</th><th>V₂</th><th>V₃</th><th>V₄</th>'
     html += '<th>Volume 𝒱</th><th>Densité 𝒟</th></tr></thead>\n<tbody>\n'
-    for r in vol_data:
+    vol_sorted = sorted(vol_data, key=lambda r: -float(r.get('Volume_index') or '-999'))
+    for r in vol_sorted:
         vi = r.get('Volume_index', '')
         di = r.get('Density_index', '')
         html += f'<tr><td>{fr(r["instrument"])}</td><td>{r["register"]}</td>'
@@ -325,7 +326,8 @@ classe chaque paire en :</p>
     html += '<thead><tr><th>Instrument A</th><th>Instrument B</th>'
     html += '<th>F1 A</th><th>F1 B</th><th>ΔF1</th><th>Fp A</th><th>Fp B</th><th>ΔFp</th>'
     html += '<th>H</th><th>Fusion</th><th>Catégorie</th></tr></thead>\n<tbody>\n'
-    for r in plans_data:
+    plans_sorted = sorted(plans_data, key=lambda r: -float(r.get('fusion_score','0')))
+    for r in plans_sorted:
         cat = r['category']
         cls = 'cat-fondu' if 'FONDU' in cat else ('cat-semi' if 'SEMI' in cat else
               ('cat-conv' if cat == 'CONVERGENT' else 'cat-het'))
@@ -457,94 +459,251 @@ def build_docx(output_path):
     add_heading(doc, "VIII. Étude du Volume — Attributs du timbre selon Koechlin", level=1,
                 color=RGBColor(26, 35, 126))
 
-    # ── Intro ──
+    # ── 8.1 Intro ──
     add_heading(doc, "Cadre théorique", level=2, color=RGBColor(46, 125, 50))
     add_paragraph(doc,
         "Charles Koechlin, dans son Traité de l'orchestration (1954), a proposé un système d'attributs "
         "généraux du timbre — volume, intensité, transparence, densité — permettant de prédire quels "
         "mélanges sonneront fondus ou hétérogènes. Le volume selon Koechlin n'est pas l'intensité sonore, "
-        "mais la place qu'un son semble occuper dans l'espace. Cette section opérationnalise ces concepts "
-        "par l'analyse spectrale de 51 instruments (sourdines comprises), totalisant 5 758 échantillons "
-        "sur 185 segments de registre.")
+        "mais la place qu'un son semble occuper dans l'espace : une note grave de flûte est volumineuse "
+        "mais faible, tandis qu'une note médium de hautbois est mince mais intense. Koechlin illustre "
+        "cette distinction par une métaphore astronomique : la flûte comme une étoile géante de densité "
+        "minimale, le hautbois comme une étoile naine dense (Chiasson & Duchesneau, 2008 ; Chiasson, 2010).")
+    add_paragraph(doc,
+        "Cette section opérationnalise ces concepts par l'analyse spectrale de 51 instruments "
+        "(sourdines comprises), totalisant 5 758 échantillons sur 185 segments de registre.")
 
-    # ── Methodology ──
+    # ── 8.2 Methodology ──
     add_heading(doc, "Méthodologie : Indice de Volume composite", level=2, color=RGBColor(46, 125, 50))
     add_paragraph(doc,
-        "L'Indice de Volume combine quatre descripteurs spectraux : V₁ = Spread/Centroïde (largeur "
-        "spectrale relative), V₂ = énergie sous 1 kHz (poids grave), V₃ = dispersion formantique inverse "
-        "(taille du résonateur), V₄ = MFCC₁ (pente spectrale mel). Chaque composante est normalisée "
-        "en z-score puis moyennée. La corrélation de Spearman avec l'échelle de Koechlin atteint "
-        "ρ = −0,76 (p < 0,002, n = 17 instruments).")
+        "L'Indice de Volume combine quatre descripteurs spectraux, chacun capturant une facette "
+        "de la « taille » perçue d'un son :")
 
-    # ── Volume table (top 25) ──
-    add_heading(doc, "Indice de Volume — Extraits", level=2, color=RGBColor(46, 125, 50))
+    # Descriptors table
+    desc_t = doc.add_table(rows=1, cols=3)
+    desc_t.style = 'Table Grid'
+    for idx, label in enumerate(['Composante', 'Formule', 'Signification']):
+        set_cell_text(desc_t.rows[0].cells[idx], label, bold=True, size=8)
+        set_cell_shading(desc_t.rows[0].cells[idx], '1A237E')
+        for run in desc_t.rows[0].cells[idx].paragraphs[0].runs:
+            run.font.color.rgb = RGBColor(255,255,255)
+    descs = [
+        ('V₁', 'Spread / Centroïde', 'Largeur spectrale relative'),
+        ('V₂', 'E<1kHz / E_total', 'Ratio d\'énergie basse fréquence'),
+        ('V₃', '1 / ΔF̄ (formants)', 'Dispersion formantique inverse'),
+        ('V₄', 'MFCC₁', 'Pente spectrale mel'),
+    ]
+    for comp, form, sig in descs:
+        row = desc_t.add_row().cells
+        set_cell_text(row[0], comp, bold=True, size=8)
+        set_cell_text(row[1], form, size=8)
+        set_cell_text(row[2], sig, size=8)
+
+    add_paragraph(doc,
+        "Chaque composante est normalisée en z-score puis moyennée : "
+        "𝒱 = ¼ (V̂₁ + V̂₂ + V̂₃ + V̂₄). "
+        "Densité 𝒟 = −𝒱 (Stevens, 1965 : Loudness = Volume × Density). "
+        "La corrélation de Spearman avec l'échelle de Koechlin (vol. I, p. 288) atteint "
+        "ρ = −0,76 (p < 0,002, n = 17 instruments de base).")
+
+    # ── 8.3 Volume table COMPLET — trié par Volume_index décroissant ──
+    add_heading(doc, "Indice de Volume par instrument et registre", level=2, color=RGBColor(46, 125, 50))
+    add_paragraph(doc, "Classé du plus volumineux au plus mince (185 entrées).", italic=True, size=8)
+
     vol_data = load_csv('volume_koechlin_v3.csv')
-    table = doc.add_table(rows=1, cols=6)
+    # Sort by Volume_index descending
+    vol_sorted = sorted(vol_data, key=lambda r: -float(r.get('Volume_index') or '-999'))
+
+    table = doc.add_table(rows=1, cols=7)
     table.style = 'Table Grid'
-    hdr = table.rows[0].cells
-    for idx, label in enumerate(['Instrument','Registre','N','Centroïde','Volume 𝒱','Densité 𝒟']):
-        set_cell_text(hdr[idx], label, bold=True, size=8)
-        set_cell_shading(hdr[idx], '37474F')
-        for run in hdr[idx].paragraphs[0].runs:
+    headers = ['Instrument', 'Registre', 'N', 'Centroïde', 'V₁', 'V₂', 'Volume 𝒱']
+    for idx, label in enumerate(headers):
+        set_cell_text(table.rows[0].cells[idx], label, bold=True, size=7)
+        set_cell_shading(table.rows[0].cells[idx], '37474F')
+        for run in table.rows[0].cells[idx].paragraphs[0].runs:
             run.font.color.rgb = RGBColor(255,255,255)
 
-    # Show top 25 entries
-    for r in vol_data[:25]:
+    for r in vol_sorted:
         row = table.add_row().cells
         set_cell_text(row[0], fr(r['instrument']), size=7)
         set_cell_text(row[1], r['register'], size=7)
         set_cell_text(row[2], r['n_samples'], size=7)
         set_cell_text(row[3], f"{float(r['mean_centroid_hz']):.0f}", size=7)
-        set_cell_text(row[4], r.get('Volume_index',''), bold=True, size=7)
-        set_cell_text(row[5], r.get('Density_index',''), size=7)
-    add_paragraph(doc, "(Tableau complet : 185 entrées dans le fichier CSV et la version HTML en ligne.)",
-                  italic=True, size=8, color=RGBColor(128,128,128))
+        set_cell_text(row[4], r.get('V1_spread_centroid',''), size=7)
+        set_cell_text(row[5], r.get('V2_energy_1khz',''), size=7)
+        vi = r.get('Volume_index','')
+        set_cell_text(row[6], vi, bold=True, size=7)
+        # Color coding
+        if vi:
+            try:
+                v = float(vi)
+                if v > 0.5:
+                    set_cell_shading(row[6], 'C8E6C9')  # green = voluminous
+                elif v < -0.5:
+                    set_cell_shading(row[6], 'FFCDD2')  # red = thin
+            except: pass
 
-    # ── Mutes table ──
-    add_heading(doc, "Effet des sourdines", level=2, color=RGBColor(46, 125, 50))
+    # ── 8.4 Mutes table ──
+    add_heading(doc, "Effet des sourdines sur le volume spectral", level=2, color=RGBColor(46, 125, 50))
+    add_paragraph(doc,
+        "Les sourdines ne font pas qu'atténuer — elles restructurent le profil spectral, "
+        "créant des déplacements considérables de l'Indice de Volume.")
+
     mute_data = [
         ('Trompette + cup', '−0,72', 'Amincit fortement'),
         ('Trompette + harmon', '−0,69', 'Amincit fortement'),
+        ('Trompette + straight', '−0,35', 'Amincissement modéré'),
         ('Trombone + harmon', '+0,63', 'Augmente le volume'),
         ('Cor + sourdine', '−0,08', 'Négligeable'),
+        ('Cordes + sourdine', '≈ 0', 'Léger assombrissement'),
         ('Cordes + piombo', '−0,3 à −0,8', 'Amincissement prononcé'),
     ]
     t2 = doc.add_table(rows=1, cols=3)
     t2.style = 'Table Grid'
-    for idx, label in enumerate(['Combinaison','Δ𝒱','Effet']):
+    for idx, label in enumerate(['Combinaison', 'Δ𝒱', 'Effet']):
         set_cell_text(t2.rows[0].cells[idx], label, bold=True, size=8)
+        set_cell_shading(t2.rows[0].cells[idx], 'E64A19')
+        for run in t2.rows[0].cells[idx].paragraphs[0].runs:
+            run.font.color.rgb = RGBColor(255,255,255)
     for combo, dv, eff in mute_data:
         row = t2.add_row().cells
         set_cell_text(row[0], combo, size=8)
         set_cell_text(row[1], dv, bold=True, size=8)
         set_cell_text(row[2], eff, size=8)
 
-    # ── Plans summary ──
-    add_heading(doc, "Plans orchestraux", level=2, color=RGBColor(46, 125, 50))
+    add_paragraph(doc,
+        "Découverte : la sourdine harmon du trombone augmente le volume spectral de +0,63 en supprimant "
+        "les harmoniques supérieurs tout en renforçant l'énergie basse fréquence. Cela contraste fortement "
+        "avec la harmon de trompette, qui produit l'effet inverse.",
+        italic=True, size=9)
+
+    # ── 8.5 Homogeneity highlights ──
+    add_heading(doc, "Matrice d'homogénéité (51 × 51)", level=2, color=RGBColor(46, 125, 50))
+    add_paragraph(doc,
+        "L'homogénéité H(A,B) entre deux instruments combine la proximité de volume (50 %) "
+        "et la similarité du profil MFCC par distance cosinus (50 %). "
+        "H ≥ 0,85 → plan fondu probable ; H < 0,70 → timbres hétérogènes.")
+
+    add_heading(doc, "Paires inter-familles les plus homogènes", level=3, color=RGBColor(27, 94, 32))
+    highlights = [
+        ('Cor + Trombone', '0,99', 'Mélange archétypal Brahms/Wagner'),
+        ('Clarinette basse + Cor', '0,99', 'Pont spectral bois–cuivres'),
+        ('Clarinette basse + Trombone', '0,99', 'Tradition française (Debussy, Ravel)'),
+        ('Cor + Marimba', '0,96', 'F₁ quasi identiques — musique contemporaine'),
+        ('Trompette + Violon', '0,98', 'Doublure classique de la ligne mélodique'),
+        ('Tuba basse + Guitare', '0,94', 'La guitare : « tuba pincé »'),
+        ('Flûte basse + Alto sourd.', '0,97', 'Doublure d\'orchestre contemporain'),
+    ]
+    th = doc.add_table(rows=1, cols=3)
+    th.style = 'Table Grid'
+    for idx, label in enumerate(['Paire', 'H', 'Commentaire']):
+        set_cell_text(th.rows[0].cells[idx], label, bold=True, size=8)
+        set_cell_shading(th.rows[0].cells[idx], '2E7D32')
+        for run in th.rows[0].cells[idx].paragraphs[0].runs:
+            run.font.color.rgb = RGBColor(255,255,255)
+    for pair, h, comment in highlights:
+        row = th.add_row().cells
+        set_cell_text(row[0], pair, bold=True, size=8)
+        set_cell_text(row[1], h, size=8)
+        set_cell_text(row[2], comment, size=8)
+
+    add_paragraph(doc,
+        "Le hautbois présente une homogénéité systématiquement basse avec les cuivres et les cordes "
+        "graves (H < 0,70), confirmant la description de Koechlin d'un timbre « mince et solide » — "
+        "une « étoile naine de densité considérable ». Son profil spectral distinct explique son "
+        "efficacité comme voix soliste.",
+        italic=True, size=9)
+
+    # ── 8.6 Plans orchestraux — top fusions ──
+    add_heading(doc, "Plans orchestraux — Prédiction de fusion timbrale", level=2, color=RGBColor(46, 125, 50))
     plans_data = load_csv('plans_orchestraux_koechlin.csv')
+
+    # Stats
     cats = {}
     for r in plans_data:
         cats[r['category']] = cats.get(r['category'], 0) + 1
-    add_paragraph(doc, f"1 275 paires analysées (53 instruments × registre médium) :")
+    add_paragraph(doc, f"{len(plans_data)} paires analysées (51 instruments × registre médium) :")
     for c in sorted(cats):
         add_paragraph(doc, f"  • {cats[c]} paires {c}", size=9)
 
-    # ── Convergences zones ──
-    add_heading(doc, "Convergences par zone vocalique", level=2, color=RGBColor(46, 125, 50))
-    add_paragraph(doc,
-        "1 173 convergences (ΔF₁ ≤ 30 Hz) réparties en 5 zones : "
-        "/u/ (544, fondation), /o/ (423, cluster central), /å/ (103, transition), "
-        "/a/ (41, projection), /e/–/i/ (62, brillance/sourdines). "
-        "79 % des convergences se situent dans /u/ et /o/ (F₁ ≤ 400 Hz).")
+    # Top 30 fusions sorted by fusion_score
+    add_heading(doc, "Top 30 fusions prédites", level=3, color=RGBColor(27, 94, 32))
+    fondus = [r for r in plans_data if 'FONDU' in r['category']]
+    fondus.sort(key=lambda x: -float(x['fusion_score']))
 
-    # ── Discoveries ──
+    tp = doc.add_table(rows=1, cols=7)
+    tp.style = 'Table Grid'
+    for idx, label in enumerate(['Instrument A', 'Instrument B', 'H', 'ΔF₁', 'ΔFp', 'Score', 'Cat.']):
+        set_cell_text(tp.rows[0].cells[idx], label, bold=True, size=7)
+        set_cell_shading(tp.rows[0].cells[idx], '1565C0')
+        for run in tp.rows[0].cells[idx].paragraphs[0].runs:
+            run.font.color.rgb = RGBColor(255,255,255)
+
+    for r in fondus[:30]:
+        row = tp.add_row().cells
+        set_cell_text(row[0], fr(r['instrument_A']), size=7)
+        set_cell_text(row[1], fr(r['instrument_B']), size=7)
+        set_cell_text(row[2], r['Homogeneity_H'], size=7)
+        set_cell_text(row[3], r.get('delta_F1_hz',''), size=7)
+        set_cell_text(row[4], r.get('delta_Fp_hz',''), size=7)
+        set_cell_text(row[5], r['fusion_score'], bold=True, size=7)
+        cat_short = r['category'].replace('FONDU_Fp','F/Fp').replace('FONDU','F')
+        set_cell_text(row[6], cat_short, size=7)
+        set_cell_shading(row[6], 'C8E6C9')
+
+    add_paragraph(doc, "(Tableau complet : version HTML en ligne.)",
+                  italic=True, size=8, color=RGBColor(128,128,128))
+
+    # ── 8.7 Convergences zones ──
+    add_heading(doc, "Convergences par zone vocalique", level=2, color=RGBColor(46, 125, 50))
+    conv_data = load_csv('convergences_par_registre.csv')
+    zones = {}
+    for r in conv_data:
+        zones[r['zone']] = zones.get(r['zone'], 0) + 1
+    total_conv = sum(zones.values())
+
+    tz = doc.add_table(rows=1, cols=5)
+    tz.style = 'Table Grid'
+    for idx, label in enumerate(['Zone', 'Bande F₁', 'N paires', '%', 'Caractère orchestral']):
+        set_cell_text(tz.rows[0].cells[idx], label, bold=True, size=8)
+        set_cell_shading(tz.rows[0].cells[idx], '4A148C')
+        for run in tz.rows[0].cells[idx].paragraphs[0].runs:
+            run.font.color.rgb = RGBColor(255,255,255)
+    zone_info = [
+        ('/u/', '≤ 250 Hz', 'Fondation — plénitude matérielle'),
+        ('/o/', '251–400 Hz', 'Cluster de convergence central'),
+        ('/å/', '401–520 Hz', 'Chaleur de transition'),
+        ('/a/', '521–800 Hz', 'Présence, projection'),
+        ('/e/–/i/', '> 800 Hz', 'Brillance — cuivres avec sourdine'),
+    ]
+    for z, band, desc in zone_info:
+        n = zones.get(z, 0)
+        pct = f'{100*n/total_conv:.1f}' if total_conv > 0 else '0'
+        row = tz.add_row().cells
+        set_cell_text(row[0], z, bold=True, size=8)
+        set_cell_text(row[1], band, size=8)
+        set_cell_text(row[2], str(n), size=8)
+        set_cell_text(row[3], f'{pct} %', size=8)
+        set_cell_text(row[4], desc, size=8)
+
+    pct_uo = 100*(zones.get('/u/',0)+zones.get('/o/',0))/total_conv if total_conv else 0
+    add_paragraph(doc,
+        f"{int(pct_uo)} % des convergences se situent dans les zones /u/ et /o/ (F₁ ≤ 400 Hz), "
+        "confirmant que le fondement du fondu orchestral réside dans la région formantique basse fréquence "
+        "— le sous-médium de Koechlin, lieu de la plénitude matérielle.")
+
+    # ── 8.8 Discoveries ──
     add_heading(doc, "Découvertes au-delà du classicisme", level=2, color=RGBColor(46, 125, 50))
+    add_paragraph(doc,
+        "Le cadre de Koechlin, développé pour les instruments ouverts de son époque, acquiert une "
+        "puissance inattendue lorsqu'on l'étend aux sourdines et aux instruments non-classiques :")
     discoveries = [
-        "Trombone harmon + Violoncelle piombo (ΔFp = 12 Hz)",
-        "Tuba basse + Guitare (ΔFp = 1 Hz)",
-        "Cor + Marimba (ΔF₁ = 0, H = 0,96)",
-        "Clarinette Mib + Flûte (ΔF₁ = 0, ΔFp = 5 Hz)",
-        "Zone /e/–/i/ : cluster de sourdines cup, harmon et piccolo",
+        "Trombone harmon + Violoncelle piombo (ΔFp = 12 Hz) : la sourdine harmon déplace le spectre du trombone dans une zone qui converge avec le violoncelle sourdine de plomb.",
+        "Tuba basse + Guitare (ΔFp = 1 Hz) : la guitare fonctionne comme un « tuba pincé » en termes spectraux.",
+        "Cor + Marimba (ΔF₁ = 0, H = 0,96) : F₁ identiques au registre médium — paire de musique contemporaine.",
+        "Clarinette Mib + Flûte (ΔF₁ = 0, ΔFp = 5 Hz) : convergence quasi-parfaite entre deux familles.",
+        "Flûte contrebasse + Alto sourdine (ΔFp = 23 Hz) : doublure d'orchestre contemporain.",
+        "Zone /e/–/i/ (> 800 Hz) : cluster entièrement composé de sourdines cup, harmon et piccolo — sans équivalent dans la théorie classique de l'orchestration.",
     ]
     for d in discoveries:
         add_paragraph(doc, f"• {d}", size=9)
