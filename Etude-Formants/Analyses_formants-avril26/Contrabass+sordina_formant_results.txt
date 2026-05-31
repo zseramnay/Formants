@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrabass+sordina
+=================================================================
+  Instrument     : Contrabass+sordina
+  Files analyzed : 156
+  Technique      : 'ord'
+
+  lpc_F1                          median=1712 Hz  mean=1731 Hz  σ=545  N=156
+  lpc_F2                          median=3434 Hz  mean=3433 Hz  σ=438  N=32
+  fp_centroid                     median=1101 Hz  mean=1110 Hz  σ=77  N=156
+  cep_F1_order40                  median=2536 Hz  mean=2153 Hz  σ=676  N=148
+  cep_F1_order80                  median=2482 Hz  mean=2139 Hz  σ=792  N=156
+  cep_F1_order160                 median=172 Hz  mean=621 Hz  σ=842  N=156
+=================================================================

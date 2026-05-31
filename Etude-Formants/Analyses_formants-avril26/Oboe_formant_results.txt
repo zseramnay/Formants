@@ -1,0 +1,28 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Oboe
+=================================================================
+  Instrument     : Oboe
+  Files analyzed : 107
+  Technique      : 'ord'
+
+  lpc_F1                          median=1436 Hz  mean=1416 Hz  σ=280  N=107
+  lpc_F2                          median=2548 Hz  mean=2564 Hz  σ=706  N=101
+  fp_centroid                     median=1263 Hz  mean=1263 Hz  σ=167  N=107
+  cep_F1_order40                  median=1464 Hz  mean=1572 Hz  σ=373  N=107
+  cep_F1_order80                  median=1561 Hz  mean=1672 Hz  σ=436  N=107
+  cep_F1_order160                 median=1475 Hz  mean=1475 Hz  σ=499  N=107
+
+  Literature reference (Ob):
+    Backus F1                : F1=1300 Hz
+    Giesler F1               : F1=1100 Hz
+    Meyer F1                 : F1=1100 Hz
+    Pipeline F1              : F1=743 Hz
+    Pipeline Fp              : Fp=1485 Hz
+
+  Δ (LPC F1 median=1436 Hz vs literature F1):
+    vs Backus F1            : +136 Hz
+    vs Giesler F1           : +336 Hz
+    vs Meyer F1             : +336 Hz
+    vs Pipeline F1          : +693 Hz
+=================================================================

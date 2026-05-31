@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Viola-Ensemble
+=================================================================
+  Instrument     : Viola-Ensemble
+  Files analyzed : 148
+  Technique      : 'ord'
+
+  lpc_F1                          median=1390 Hz  mean=1356 Hz  σ=547  N=148
+  lpc_F2                          median=2791 Hz  mean=2869 Hz  σ=480  N=145
+  fp_centroid                     median=1110 Hz  mean=1121 Hz  σ=115  N=148
+  cep_F1_order40                  median=759 Hz  mean=917 Hz  σ=448  N=148
+  cep_F1_order80                  median=409 Hz  mean=793 Hz  σ=723  N=148
+  cep_F1_order160                 median=409 Hz  mean=932 Hz  σ=818  N=148
+=================================================================

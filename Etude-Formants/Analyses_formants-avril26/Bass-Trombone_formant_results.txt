@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Bass-Trombone
+=================================================================
+  Instrument     : Bass-Trombone
+  Files analyzed : 144
+  Technique      : 'ord'
+
+  lpc_F1                          median=1137 Hz  mean=1066 Hz  σ=239  N=144
+  lpc_F2                          median=2574 Hz  mean=2522 Hz  σ=586  N=139
+  fp_centroid                     median=1088 Hz  mean=1066 Hz  σ=96  N=144
+  cep_F1_order40                  median=829 Hz  mean=801 Hz  σ=103  N=141
+  cep_F1_order80                  median=926 Hz  mean=824 Hz  σ=298  N=144
+  cep_F1_order160                 median=775 Hz  mean=748 Hz  σ=228  N=144
+=================================================================

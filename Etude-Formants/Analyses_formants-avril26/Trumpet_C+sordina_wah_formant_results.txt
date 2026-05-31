@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Trumpet_C+sordina_wah
+=================================================================
+  Instrument     : Trumpet_C+sordina_wah
+  Files analyzed : 33
+  Technique      : 'ord'
+
+  lpc_F1                          median=1819 Hz  mean=1691 Hz  σ=460  N=33
+  lpc_F2                          median=2240 Hz  mean=2486 Hz  σ=610  N=26
+  fp_centroid                     median=1178 Hz  mean=1163 Hz  σ=164  N=33
+  cep_F1_order40                  median=2089 Hz  mean=2439 Hz  σ=632  N=33
+  cep_F1_order80                  median=1970 Hz  mean=2121 Hz  σ=564  N=33
+  cep_F1_order160                 median=1809 Hz  mean=1652 Hz  σ=642  N=33
+=================================================================

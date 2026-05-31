@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Sax_Alto
+=================================================================
+  Instrument     : Sax_Alto
+  Files analyzed : 99
+  Technique      : 'ord'
+
+  lpc_F1                          median=1042 Hz  mean=1272 Hz  σ=768  N=99
+  lpc_F2                          median=3067 Hz  mean=2922 Hz  σ=570  N=88
+  fp_centroid                     median=1069 Hz  mean=1064 Hz  σ=214  N=99
+  cep_F1_order40                  median=2067 Hz  mean=1882 Hz  σ=668  N=98
+  cep_F1_order80                  median=1066 Hz  mean=1230 Hz  σ=788  N=99
+  cep_F1_order160                 median=571 Hz  mean=926 Hz  σ=763  N=99
+=================================================================

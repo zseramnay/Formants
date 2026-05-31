@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Horn+sordina
+=================================================================
+  Instrument     : Horn+sordina
+  Files analyzed : 46
+  Technique      : 'ord'
+
+  lpc_F1                          median=505 Hz  mean=565 Hz  σ=184  N=46
+  lpc_F2                          median=1508 Hz  mean=1722 Hz  σ=785  N=25
+  fp_centroid                     median=970 Hz  mean=979 Hz  σ=114  N=46
+  cep_F1_order40                  median=700 Hz  mean=1148 Hz  σ=1105  N=30
+  cep_F1_order80                  median=441 Hz  mean=612 Hz  σ=512  N=46
+  cep_F1_order160                 median=415 Hz  mean=592 Hz  σ=502  N=46
+=================================================================

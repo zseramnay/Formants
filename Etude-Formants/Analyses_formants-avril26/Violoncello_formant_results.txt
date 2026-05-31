@@ -1,0 +1,25 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violoncello
+=================================================================
+  Instrument     : Violoncello
+  Files analyzed : 291
+  Technique      : 'ord'
+
+  lpc_F1                          median=1928 Hz  mean=1719 Hz  σ=503  N=291
+  lpc_F2                          median=2646 Hz  mean=2814 Hz  σ=665  N=169
+  fp_centroid                     median=1123 Hz  mean=1129 Hz  σ=85  N=291
+  cep_F1_order40                  median=2143 Hz  mean=2235 Hz  σ=509  N=291
+  cep_F1_order80                  median=1992 Hz  mean=1694 Hz  σ=916  N=291
+  cep_F1_order160                 median=1109 Hz  mean=1197 Hz  σ=1043  N=291
+
+  Literature reference (Vc):
+    Meyer F1                 : F1=220 Hz
+    Giesler F1               : F1=250 Hz
+    Pipeline F1              : F1=205 Hz
+
+  Δ (LPC F1 median=1928 Hz vs literature F1):
+    vs Meyer F1             : +1708 Hz
+    vs Giesler F1           : +1678 Hz
+    vs Pipeline F1          : +1723 Hz
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violoncello-Ensemble-sordina
+=================================================================
+  Instrument     : Violoncello-Ensemble-sordina
+  Files analyzed : 38
+  Technique      : 'ord'
+
+  lpc_F1                          median=925 Hz  mean=1289 Hz  σ=1137  N=37
+  lpc_F2                          median=3526 Hz  mean=3453 Hz  σ=491  N=25
+  fp_centroid                     median=1059 Hz  mean=1082 Hz  σ=96  N=38
+  cep_F1_order40                  median=2961 Hz  mean=2379 Hz  σ=1105  N=36
+  cep_F1_order80                  median=355 Hz  mean=422 Hz  σ=449  N=38
+  cep_F1_order160                 median=205 Hz  mean=305 Hz  σ=510  N=38
+=================================================================

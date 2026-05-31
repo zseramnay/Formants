@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Bass_Tuba+sordina
+=================================================================
+  Instrument     : Bass_Tuba+sordina
+  Files analyzed : 102
+  Technique      : 'ord'
+
+  lpc_F1                          median=653 Hz  mean=753 Hz  σ=297  N=102
+  lpc_F2                          median=2222 Hz  mean=1994 Hz  σ=574  N=62
+  fp_centroid                     median=975 Hz  mean=963 Hz  σ=136  N=102
+  cep_F1_order40                  median=797 Hz  mean=776 Hz  σ=546  N=80
+  cep_F1_order80                  median=409 Hz  mean=507 Hz  σ=340  N=102
+  cep_F1_order160                 median=463 Hz  mean=500 Hz  σ=308  N=102
+=================================================================

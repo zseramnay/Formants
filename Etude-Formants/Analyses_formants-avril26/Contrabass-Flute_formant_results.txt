@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrabass-Flute
+=================================================================
+  Instrument     : Contrabass-Flute
+  Files analyzed : 38
+  Technique      : 'ord'
+
+  lpc_F1                          median=849 Hz  mean=818 Hz  σ=348  N=37
+  lpc_F2                          median=3292 Hz  mean=3301 Hz  σ=364  N=14
+  fp_centroid                     median=995 Hz  mean=990 Hz  σ=90  N=38
+  cep_F1_order40                  median=1114 Hz  mean=1559 Hz  σ=986  N=36
+  cep_F1_order80                  median=1034 Hz  mean=1202 Hz  σ=767  N=38
+  cep_F1_order160                 median=759 Hz  mean=832 Hz  σ=563  N=38
+=================================================================

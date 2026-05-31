@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violoncello+sordina_piombo
+=================================================================
+  Instrument     : Violoncello+sordina_piombo
+  Files analyzed : 52
+  Technique      : 'ord'
+
+  lpc_F1                          median=2590 Hz  mean=2248 Hz  σ=1151  N=52
+  lpc_F2                          median=3403 Hz  mean=3442 Hz  σ=332  N=16
+  fp_centroid                     median=1077 Hz  mean=1075 Hz  σ=127  N=52
+  cep_F1_order40                  median=2487 Hz  mean=2498 Hz  σ=125  N=52
+  cep_F1_order80                  median=2492 Hz  mean=2255 Hz  σ=602  N=52
+  cep_F1_order160                 median=2514 Hz  mean=2131 Hz  σ=1049  N=52
+=================================================================

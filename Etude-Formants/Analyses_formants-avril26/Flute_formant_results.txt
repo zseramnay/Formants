@@ -1,0 +1,24 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Flute
+=================================================================
+  Instrument     : Flute
+  Files analyzed : 118
+  Technique      : 'ord'
+
+  lpc_F1                          median=1042 Hz  mean=1120 Hz  σ=496  N=118
+  lpc_F2                          median=2395 Hz  mean=2551 Hz  σ=629  N=100
+  fp_centroid                     median=1177 Hz  mean=1181 Hz  σ=240  N=118
+  cep_F1_order40                  median=1884 Hz  mean=1785 Hz  σ=361  N=117
+  cep_F1_order80                  median=1626 Hz  mean=1525 Hz  σ=574  N=118
+  cep_F1_order160                 median=985 Hz  mean=1099 Hz  σ=553  N=118
+
+  Literature reference (Fl):
+    Backus F1                : F1=1700 Hz
+    Pipeline F1              : F1=743 Hz
+    Pipeline Fp              : Fp=1535 Hz
+
+  Δ (LPC F1 median=1042 Hz vs literature F1):
+    vs Backus F1            : -658 Hz
+    vs Pipeline F1          : +299 Hz
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — EnglishHorn
+=================================================================
+  Instrument     : EnglishHorn
+  Files analyzed : 128
+  Technique      : 'ord'
+
+  lpc_F1                          median=1109 Hz  mean=1142 Hz  σ=196  N=128
+  lpc_F2                          median=2312 Hz  mean=2415 Hz  σ=710  N=105
+  fp_centroid                     median=1063 Hz  mean=1073 Hz  σ=103  N=128
+  cep_F1_order40                  median=980 Hz  mean=1059 Hz  σ=258  N=128
+  cep_F1_order80                  median=1055 Hz  mean=1123 Hz  σ=288  N=128
+  cep_F1_order160                 median=1044 Hz  mean=1027 Hz  σ=298  N=128
+=================================================================

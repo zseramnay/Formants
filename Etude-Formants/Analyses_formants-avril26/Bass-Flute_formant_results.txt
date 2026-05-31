@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Bass-Flute
+=================================================================
+  Instrument     : Bass-Flute
+  Files analyzed : 39
+  Technique      : 'ord'
+
+  lpc_F1                          median=870 Hz  mean=976 Hz  σ=598  N=37
+  lpc_F2                          median=3002 Hz  mean=3005 Hz  σ=827  N=20
+  fp_centroid                     median=996 Hz  mean=996 Hz  σ=104  N=39
+  cep_F1_order40                  median=1066 Hz  mean=1630 Hz  σ=1078  N=37
+  cep_F1_order80                  median=883 Hz  mean=1150 Hz  σ=883  N=39
+  cep_F1_order160                 median=603 Hz  mean=841 Hz  σ=713  N=39
+=================================================================

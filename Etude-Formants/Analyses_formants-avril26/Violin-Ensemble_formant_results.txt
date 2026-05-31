@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violin-Ensemble
+=================================================================
+  Instrument     : Violin-Ensemble
+  Files analyzed : 166
+  Technique      : 'ord'
+
+  lpc_F1                          median=1645 Hz  mean=1525 Hz  σ=524  N=166
+  lpc_F2                          median=2948 Hz  mean=2986 Hz  σ=564  N=153
+  fp_centroid                     median=1165 Hz  mean=1196 Hz  σ=150  N=166
+  cep_F1_order40                  median=786 Hz  mean=1200 Hz  σ=729  N=166
+  cep_F1_order80                  median=953 Hz  mean=1319 Hz  σ=998  N=166
+  cep_F1_order160                 median=1104 Hz  mean=1446 Hz  σ=1004  N=166
+=================================================================

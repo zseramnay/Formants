@@ -1,0 +1,24 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Piccolo
+=================================================================
+  Instrument     : Piccolo
+  Files analyzed : 111
+  Technique      : 'ord'
+
+  lpc_F1                          median=1664 Hz  mean=1786 Hz  σ=698  N=111
+  lpc_F2                          median=3123 Hz  mean=3151 Hz  σ=508  N=93
+  fp_centroid                     median=1227 Hz  mean=1218 Hz  σ=223  N=111
+  cep_F1_order40                  median=2261 Hz  mean=2133 Hz  σ=819  N=111
+  cep_F1_order80                  median=1938 Hz  mean=1995 Hz  σ=736  N=111
+  cep_F1_order160                 median=1669 Hz  mean=1789 Hz  σ=848  N=111
+
+  Literature reference (Picc):
+    Backus F1                : F1=3400 Hz
+    Pipeline F1              : F1=1109 Hz
+    Pipeline Fp              : Fp=1320 Hz
+
+  Δ (LPC F1 median=1664 Hz vs literature F1):
+    vs Backus F1            : -1736 Hz
+    vs Pipeline F1          : +555 Hz
+=================================================================

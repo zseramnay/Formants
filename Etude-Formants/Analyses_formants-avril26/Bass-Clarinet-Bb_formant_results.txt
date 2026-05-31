@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Bass-Clarinet-Bb
+=================================================================
+  Instrument     : Bass-Clarinet-Bb
+  Files analyzed : 173
+  Technique      : 'ord'
+
+  lpc_F1                          median=946 Hz  mean=995 Hz  σ=519  N=173
+  lpc_F2                          median=2137 Hz  mean=2172 Hz  σ=449  N=163
+  fp_centroid                     median=1110 Hz  mean=1112 Hz  σ=142  N=173
+  cep_F1_order40                  median=1260 Hz  mean=1401 Hz  σ=472  N=171
+  cep_F1_order80                  median=1195 Hz  mean=1291 Hz  σ=585  N=173
+  cep_F1_order160                 median=743 Hz  mean=890 Hz  σ=658  N=173
+=================================================================

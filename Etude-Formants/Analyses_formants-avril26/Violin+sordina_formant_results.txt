@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violin+sordina
+=================================================================
+  Instrument     : Violin+sordina
+  Files analyzed : 215
+  Technique      : 'ord'
+
+  lpc_F1                          median=1817 Hz  mean=1864 Hz  σ=923  N=213
+  lpc_F2                          median=3751 Hz  mean=3648 Hz  σ=330  N=80
+  fp_centroid                     median=1058 Hz  mean=1081 Hz  σ=161  N=215
+  cep_F1_order40                  median=635 Hz  mean=1449 Hz  σ=1036  N=215
+  cep_F1_order80                  median=904 Hz  mean=1532 Hz  σ=1268  N=215
+  cep_F1_order160                 median=1970 Hz  mean=1882 Hz  σ=1233  N=215
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violoncello-Ensemble
+=================================================================
+  Instrument     : Violoncello-Ensemble
+  Files analyzed : 147
+  Technique      : 'ord'
+
+  lpc_F1                          median=1535 Hz  mean=1446 Hz  σ=653  N=147
+  lpc_F2                          median=2829 Hz  mean=2899 Hz  σ=494  N=120
+  fp_centroid                     median=1086 Hz  mean=1103 Hz  σ=83  N=147
+  cep_F1_order40                  median=678 Hz  mean=955 Hz  σ=605  N=143
+  cep_F1_order80                  median=355 Hz  mean=356 Hz  σ=17  N=147
+  cep_F1_order160                 median=205 Hz  mean=426 Hz  σ=545  N=147
+=================================================================

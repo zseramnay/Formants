@@ -1,0 +1,22 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Clarinet-Eb
+=================================================================
+  Instrument     : Clarinet-Eb
+  Files analyzed : 45
+  Technique      : 'ord'
+
+  lpc_F1                          median=1340 Hz  mean=1401 Hz  σ=691  N=45
+  lpc_F2                          median=3077 Hz  mean=2994 Hz  σ=615  N=38
+  fp_centroid                     median=1139 Hz  mean=1196 Hz  σ=238  N=45
+  cep_F1_order40                  median=2056 Hz  mean=2286 Hz  σ=691  N=45
+  cep_F1_order80                  median=1658 Hz  mean=1832 Hz  σ=748  N=45
+  cep_F1_order160                 median=1120 Hz  mean=1212 Hz  σ=714  N=45
+
+  Literature reference (ClEb):
+    Pipeline F1              : F1=678 Hz
+    Pipeline Fp              : Fp=1266 Hz
+
+  Δ (LPC F1 median=1340 Hz vs literature F1):
+    vs Pipeline F1          : +662 Hz
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrebasson
+=================================================================
+  Instrument     : Contrebasson
+  Files analyzed : 110
+  Technique      : 'nonvib'
+
+  lpc_F1                          median=416 Hz  mean=447 Hz  σ=149  N=110
+  lpc_F2                          median=2108 Hz  mean=2184 Hz  σ=581  N=103
+  fp_centroid                     median=892 Hz  mean=902 Hz  σ=76  N=110
+  cep_F1_order40                  median=581 Hz  mean=1068 Hz  σ=875  N=87
+  cep_F1_order80                  median=377 Hz  mean=602 Hz  σ=659  N=110
+  cep_F1_order160                 median=226 Hz  mean=279 Hz  σ=212  N=110
+=================================================================

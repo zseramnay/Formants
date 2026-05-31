@@ -801,9 +801,18 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Multi-method formant analysis on a WAV sample collection."
     )
-    parser.add_argument("folder", help="Folder containing WAV files (searched recursively)")
+    parser.add_argument("folders", nargs="*", default=[],
+                        help="One or more folders containing WAV files (searched recursively)")
+    parser.add_argument("--folders-file", dest="folders_file", default=None,
+                        metavar="FILE",
+                        help="Text file with one folder path per line; "
+                             "optional technique as second word on the same line")
     parser.add_argument("--technique", default="ordinario",
-                        help="Filter filenames containing this technique string (default: ordinario)")
+                        help="Technique filter applied to all folders (default: ordinario)")
+    parser.add_argument("--techniques", nargs="*", default=[], dest="per_folder_techniques",
+                        metavar="T",
+                        help="Per-folder technique filters, matched by position to folders "
+                             "(overrides --technique for that folder; falls back to --technique if omitted)")
     parser.add_argument("--lpc-order", type=int, default=18, dest="lpc_order",
                         help="LPC order (default: 18; rule of thumb: 2 + sr/1000)")
     parser.add_argument("--cep-orders", type=int, nargs="+", default=[40, 80, 160],
@@ -839,50 +848,83 @@ def main():
         print("Error: --fp-band must be in format 'low,high' e.g. '600,1800'")
         sys.exit(1)
 
-    args.folder = os.path.expanduser(args.folder)
-    if not os.path.isdir(args.folder):
-        print(f"Error: folder not found: {args.folder}")
+    # Load folders from file, appending to any positional folders
+    if args.folders_file:
+        ff = Path(args.folders_file).expanduser()
+        if not ff.is_absolute():
+            ff = Path(__file__).parent / ff
+        if not ff.is_file():
+            print(f"Error: --folders-file not found: {ff}")
+            sys.exit(1)
+        for raw in ff.read_text(encoding="utf-8").splitlines():
+            raw = raw.strip()
+            if not raw or raw.startswith("#"):
+                continue
+            parts = raw.split(None, 1)  # path  [optional technique]
+            args.folders.append(parts[0])
+            args.per_folder_techniques.append(parts[1] if len(parts) > 1 else "")
+
+    if not args.folders:
+        print("Error: no folders specified. Use positional args or --folders-file.")
         sys.exit(1)
 
-    # Instrument name = second-to-last path component (e.g. Piccolo from .../Piccolo/ordinario)
-    args.instrument_name = Path(args.folder).parent.name
+    base_output = args.output       # preserve template for multi-folder runs
+    default_technique = args.technique  # preserve global default before loop mutates it
 
-    print(f"\nScanning: {args.folder}")
-    print(f"Technique filter: '{args.technique}'")
-    wav_files = collect_wav_files(args.folder, args.technique)
-    print(f"Found {len(wav_files)} matching WAV files\n")
+    for i, folder in enumerate(args.folders):
+        t = args.per_folder_techniques[i] if i < len(args.per_folder_techniques) else ""
+        args.technique = t if t else default_technique
+        args.folder = os.path.expanduser(folder)
+        if not os.path.isdir(args.folder):
+            print(f"\nWarning: folder not found, skipping: {args.folder}")
+            continue
 
-    if not wav_files:
-        print("No files found. Check folder path and --technique filter.")
-        sys.exit(1)
+        # Instrument name = second-to-last path component (e.g. Piccolo from .../Piccolo/ordinario)
+        args.instrument_name = Path(args.folder).parent.name
 
-    results = []
-    for i, wav_path in enumerate(wav_files):
-        name = os.path.basename(wav_path)
-        print(f"  [{i+1:4d}/{len(wav_files)}] {name}", end="")
-        row = analyze_file(wav_path, args)
-        if row:
-            lpc_str = f"  LPC-F1={row['lpc_F1']} Hz" if row['lpc_F1'] else ""
-            print(lpc_str)
-            results.append(row)
-        else:
-            print("  [skipped]")
+        # Prefix output filename with instrument name, then place next to the script
+        out = Path(base_output)
+        out = out.parent / f"{args.instrument_name}_{out.name}"
+        if not out.is_absolute():
+            out = Path(__file__).parent / out
+        args.output = str(out)
 
-    if not results:
-        print("No results produced.")
-        sys.exit(1)
+        print(f"\n{'='*65}")
+        print(f"Instrument : {args.instrument_name}")
+        print(f"Scanning   : {args.folder}")
+        print(f"Technique filter: '{args.technique}'")
+        wav_files = collect_wav_files(args.folder, args.technique)
+        print(f"Found {len(wav_files)} matching WAV files\n")
 
-    df = pd.DataFrame(results)
+        if not wav_files:
+            print("No files found. Check folder path and --technique filter.")
+            continue
 
-    # Save CSV
-    df.to_csv(args.output, index=False)
-    print(f"\nResults saved: {args.output} ({len(df)} rows)")
+        results = []
+        for i, wav_path in enumerate(wav_files):
+            name = os.path.basename(wav_path)
+            print(f"  [{i+1:4d}/{len(wav_files)}] {name}", end="")
+            row = analyze_file(wav_path, args)
+            if row:
+                lpc_str = f"  LPC-F1={row['lpc_F1']} Hz" if row['lpc_F1'] else ""
+                print(lpc_str)
+                results.append(row)
+            else:
+                print("  [skipped]")
 
-    txt_path = str(Path(args.output).with_suffix(".txt"))
-    print_summary(df, args, txt_path=txt_path)
+        if not results:
+            print("No results produced.")
+            continue
 
-    # Always save plot; show if --plot
-    plot_results(df, args)
+        df = pd.DataFrame(results)
+
+        df.to_csv(args.output, index=False)
+        print(f"\nResults saved: {args.output} ({len(df)} rows)")
+
+        txt_path = str(Path(args.output).with_suffix(".txt"))
+        print_summary(df, args, txt_path=txt_path)
+
+        plot_results(df, args)
 
 
 if __name__ == "__main__":

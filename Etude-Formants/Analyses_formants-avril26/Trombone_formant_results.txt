@@ -1,0 +1,27 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Trombone
+=================================================================
+  Instrument     : Trombone
+  Files analyzed : 117
+  Technique      : 'ord'
+
+  lpc_F1                          median=760 Hz  mean=834 Hz  σ=225  N=117
+  lpc_F2                          median=2120 Hz  mean=2065 Hz  σ=698  N=103
+  fp_centroid                     median=951 Hz  mean=952 Hz  σ=121  N=117
+  cep_F1_order40                  median=754 Hz  mean=736 Hz  σ=111  N=117
+  cep_F1_order80                  median=517 Hz  mean=647 Hz  σ=351  N=117
+  cep_F1_order160                 median=668 Hz  mean=628 Hz  σ=168  N=117
+
+  Literature reference (Tbn):
+    Backus F1                : F1=130 Hz
+    Meyer F1                 : F1=200 Hz
+    Giesler F1               : F1=230 Hz
+    Pipeline F1              : F1=237 Hz
+
+  Δ (LPC F1 median=760 Hz vs literature F1):
+    vs Backus F1            : +630 Hz
+    vs Meyer F1             : +560 Hz
+    vs Giesler F1           : +530 Hz
+    vs Pipeline F1          : +523 Hz
+=================================================================

@@ -1,0 +1,28 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Trumpet_C
+=================================================================
+  Instrument     : Trumpet_C
+  Files analyzed : 96
+  Technique      : 'ord'
+
+  lpc_F1                          median=1293 Hz  mean=1432 Hz  σ=408  N=96
+  lpc_F2                          median=2290 Hz  mean=2380 Hz  σ=761  N=77
+  fp_centroid                     median=1134 Hz  mean=1140 Hz  σ=99  N=96
+  cep_F1_order40                  median=1260 Hz  mean=1477 Hz  σ=522  N=96
+  cep_F1_order80                  median=1437 Hz  mean=1566 Hz  σ=530  N=96
+  cep_F1_order160                 median=1276 Hz  mean=1302 Hz  σ=631  N=96
+
+  Literature reference (TpC):
+    Backus F1                : F1=700 Hz
+    Meyer F1                 : F1=800 Hz
+    Giesler F1               : F1=900 Hz
+    Pipeline F1              : F1=786 Hz
+    Pipeline Fp              : Fp=1046 Hz
+
+  Δ (LPC F1 median=1293 Hz vs literature F1):
+    vs Backus F1            : +593 Hz
+    vs Meyer F1             : +493 Hz
+    vs Giesler F1           : +393 Hz
+    vs Pipeline F1          : +507 Hz
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Violin+sordina_piombo
+=================================================================
+  Instrument     : Violin+sordina_piombo
+  Files analyzed : 40
+  Technique      : 'ord'
+
+  lpc_F1                          median=1734 Hz  mean=1857 Hz  σ=440  N=40
+  lpc_F2                          median=3680 Hz  mean=3546 Hz  σ=488  N=16
+  fp_centroid                     median=1158 Hz  mean=1213 Hz  σ=166  N=40
+  cep_F1_order40                  median=2352 Hz  mean=2126 Hz  σ=594  N=40
+  cep_F1_order80                  median=2406 Hz  mean=2150 Hz  σ=770  N=40
+  cep_F1_order160                 median=2401 Hz  mean=2128 Hz  σ=871  N=40
+=================================================================

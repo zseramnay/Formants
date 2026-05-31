@@ -1,0 +1,23 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Viola
+=================================================================
+  Instrument     : Viola
+  Files analyzed : 309
+  Technique      : 'ord'
+
+  lpc_F1                          median=1650 Hz  mean=1636 Hz  σ=557  N=309
+  lpc_F2                          median=3133 Hz  mean=3096 Hz  σ=470  N=287
+  fp_centroid                     median=1120 Hz  mean=1130 Hz  σ=133  N=309
+  cep_F1_order40                  median=1992 Hz  mean=1857 Hz  σ=1012  N=309
+  cep_F1_order80                  median=409 Hz  mean=1405 Hz  σ=1192  N=309
+  cep_F1_order160                 median=2089 Hz  mean=1824 Hz  σ=1039  N=309
+
+  Literature reference (Va):
+    Meyer F1                 : F1=280 Hz
+    Pipeline F1              : F1=377 Hz
+
+  Δ (LPC F1 median=1650 Hz vs literature F1):
+    vs Meyer F1             : +1370 Hz
+    vs Pipeline F1          : +1273 Hz
+=================================================================

@@ -1,0 +1,21 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrabass-Tuba
+=================================================================
+  Instrument     : Contrabass-Tuba
+  Files analyzed : 158
+  Technique      : 'ord'
+
+  lpc_F1                          median=384 Hz  mean=404 Hz  σ=133  N=158
+  lpc_F2                          median=1162 Hz  mean=1199 Hz  σ=512  N=116
+  fp_centroid                     median=865 Hz  mean=868 Hz  σ=62  N=158
+  cep_F1_order40                  median=538 Hz  mean=916 Hz  σ=1038  N=136
+  cep_F1_order80                  median=366 Hz  mean=558 Hz  σ=735  N=158
+  cep_F1_order160                 median=226 Hz  mean=345 Hz  σ=411  N=158
+
+  Literature reference (CbTb):
+    Pipeline F1              : F1=226 Hz
+
+  Δ (LPC F1 median=384 Hz vs literature F1):
+    vs Pipeline F1          : +158 Hz
+=================================================================

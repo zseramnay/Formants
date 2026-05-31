@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrabass-Clarinet-Bb
+=================================================================
+  Instrument     : Contrabass-Clarinet-Bb
+  Files analyzed : 45
+  Technique      : 'ord'
+
+  lpc_F1                          median=2640 Hz  mean=2268 Hz  σ=691  N=45
+  lpc_F2                          median=2624 Hz  mean=2767 Hz  σ=518  N=19
+  fp_centroid                     median=1264 Hz  mean=1263 Hz  σ=69  N=45
+  cep_F1_order40                  median=1540 Hz  mean=1753 Hz  σ=560  N=45
+  cep_F1_order80                  median=1658 Hz  mean=1509 Hz  σ=453  N=45
+  cep_F1_order160                 median=1249 Hz  mean=1383 Hz  σ=394  N=45
+=================================================================

@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Contrabass-Ensemble
+=================================================================
+  Instrument     : Contrabass-Ensemble
+  Files analyzed : 76
+  Technique      : 'nonvib'
+
+  lpc_F1                          median=1190 Hz  mean=1135 Hz  σ=364  N=76
+  lpc_F2                          median=2438 Hz  mean=2437 Hz  σ=757  N=22
+  fp_centroid                     median=1077 Hz  mean=1076 Hz  σ=51  N=76
+  cep_F1_order40                  median=1335 Hz  mean=2153 Hz  σ=1294  N=38
+  cep_F1_order80                  median=344 Hz  mean=949 Hz  σ=1050  N=76
+  cep_F1_order160                 median=183 Hz  mean=179 Hz  σ=12  N=76
+=================================================================

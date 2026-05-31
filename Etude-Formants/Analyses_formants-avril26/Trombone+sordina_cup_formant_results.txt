@@ -1,0 +1,15 @@
+
+=================================================================
+SUMMARY — Formant Estimates — Trombone+sordina_cup
+=================================================================
+  Instrument     : Trombone+sordina_cup
+  Files analyzed : 31
+  Technique      : 'ord'
+
+  lpc_F1                          median=972 Hz  mean=966 Hz  σ=45  N=31
+  lpc_F2                          median=1734 Hz  mean=1831 Hz  σ=623  N=19
+  fp_centroid                     median=969 Hz  mean=967 Hz  σ=38  N=31
+  cep_F1_order40                  median=840 Hz  mean=848 Hz  σ=58  N=31
+  cep_F1_order80                  median=937 Hz  mean=947 Hz  σ=67  N=31
+  cep_F1_order160                 median=990 Hz  mean=955 Hz  σ=73  N=31
+=================================================================
