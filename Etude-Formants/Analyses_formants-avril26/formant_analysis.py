@@ -471,9 +471,11 @@ def plot_results(df: pd.DataFrame, args):
 
     # ── Figure layout: 3 rows × 2 cols ───────────────────────────────────────
     fig, axes = plt.subplots(3, 2, figsize=(16, 14))
+    instr_name = getattr(args, "instrument_name", "")
     folder_name = Path(args.folder).name
+    title_instr = f"{instr_name} / {folder_name}" if instr_name else folder_name
     fig.suptitle(
-        f"Formant Analysis — {folder_name}   |   technique filter: '{args.technique}'",
+        f"Formant Analysis — {title_instr}   |   technique filter: '{args.technique}'",
         fontsize=12, fontweight='bold'
     )
 
@@ -727,12 +729,17 @@ def _build_instrument_lit() -> dict:
 # Summary statistics
 # ─────────────────────────────────────────────────────────────────────────────
 
-def print_summary(df: pd.DataFrame, args):
-    print("\n" + "="*65)
-    print("SUMMARY — Formant Estimates")
-    print("="*65)
-    print(f"  Files analyzed : {len(df)}")
-    print(f"  Technique      : '{args.technique}'\n")
+def print_summary(df: pd.DataFrame, args, txt_path: str | None = None):
+    sep = "=" * 65
+    instr_name = getattr(args, "instrument_name", "")
+    lines = [""]
+    lines.append(sep)
+    lines.append(f"SUMMARY — Formant Estimates{' — ' + instr_name if instr_name else ''}")
+    lines.append(sep)
+    if instr_name:
+        lines.append(f"  Instrument     : {instr_name}")
+    lines.append(f"  Files analyzed : {len(df)}")
+    lines.append(f"  Technique      : '{args.technique}'\n")
 
     cols_to_summarize = ["lpc_F1", "lpc_F2", "fp_centroid"] + \
                         [f"cep_F1_order{o}" for o in args.cep_orders]
@@ -741,9 +748,9 @@ def print_summary(df: pd.DataFrame, args):
         vals = pd.to_numeric(df[col], errors='coerce').dropna()
         if vals.empty:
             continue
-        print(f"  {col:30s}  median={vals.median():.0f} Hz  "
-              f"mean={vals.mean():.0f} Hz  σ={vals.std():.0f}  "
-              f"N={len(vals)}")
+        lines.append(f"  {col:30s}  median={vals.median():.0f} Hz  "
+                     f"mean={vals.mean():.0f} Hz  σ={vals.std():.0f}  "
+                     f"N={len(vals)}")
 
     # Detect instrument and get literature refs (same logic as plot_results)
     INSTRUMENT_LIT = _build_instrument_lit()
@@ -762,21 +769,28 @@ def print_summary(df: pd.DataFrame, args):
 
     if matched_key:
         raw = INSTRUMENT_LIT[matched_key]
-        print(f"\n  Literature reference ({matched_key}):")
+        lines.append(f"\n  Literature reference ({matched_key}):")
         for label, (f1, fp) in raw.items():
             parts = []
             if f1 is not None: parts.append(f"F1={f1} Hz")
             if fp is not None: parts.append(f"Fp={fp} Hz")
             if parts:
-                print(f"    {label:25s}: {', '.join(parts)}")
+                lines.append(f"    {label:25s}: {', '.join(parts)}")
 
         lpc = pd.to_numeric(df["lpc_F1"], errors='coerce').dropna()
         if not lpc.empty:
-            print(f"\n  Δ (LPC F1 median={lpc.median():.0f} Hz vs literature F1):")
+            lines.append(f"\n  Δ (LPC F1 median={lpc.median():.0f} Hz vs literature F1):")
             for label, (f1, fp) in raw.items():
                 if f1 is not None:
-                    print(f"    vs {label:21s}: {lpc.median() - f1:+.0f} Hz")
-    print("="*65 + "\n")
+                    lines.append(f"    vs {label:21s}: {lpc.median() - f1:+.0f} Hz")
+    lines.append(sep + "\n")
+
+    text = "\n".join(lines)
+    print(text)
+
+    if txt_path:
+        Path(txt_path).write_text(text, encoding="utf-8")
+        print(f"Summary saved : {txt_path}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -830,6 +844,9 @@ def main():
         print(f"Error: folder not found: {args.folder}")
         sys.exit(1)
 
+    # Instrument name = second-to-last path component (e.g. Piccolo from .../Piccolo/ordinario)
+    args.instrument_name = Path(args.folder).parent.name
+
     print(f"\nScanning: {args.folder}")
     print(f"Technique filter: '{args.technique}'")
     wav_files = collect_wav_files(args.folder, args.technique)
@@ -861,7 +878,8 @@ def main():
     df.to_csv(args.output, index=False)
     print(f"\nResults saved: {args.output} ({len(df)} rows)")
 
-    print_summary(df, args)
+    txt_path = str(Path(args.output).with_suffix(".txt"))
+    print_summary(df, args, txt_path=txt_path)
 
     # Always save plot; show if --plot
     plot_results(df, args)
